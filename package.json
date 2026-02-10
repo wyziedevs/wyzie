@@ -4,11 +4,12 @@
     "build": "nitro build",
     "dev": "nitro dev",
     "format": "prettier --log-level warn --write \"src/**/*.{ts,json}\"",
-    "build:cloudflare": "NITRO_PRESET=cloudflare npm run build",
+    "build:cloudflare": "cross-env NITRO_PRESET=cloudflare npm run build",
     "prepare": "nitro prepare",
     "preview": "node .output/server/index.mjs"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "nitropack": "latest",
     "prettier": "3.3.3"
   },
