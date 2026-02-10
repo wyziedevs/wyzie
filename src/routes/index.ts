@@ -139,11 +139,26 @@ export default eventHandler(() => {
               <a href="https://proxy.wyzie.ru" alt="Wyzie Proxy" title="Wyzie Proxy">
                 <h3 class="font-semibold text-type-subheader text-primary-500 hover:text-primary-600 transition duration-100">Wyzie Proxy</h3>
               </a>
-              <a href="https://github.com/wyziedevs/wyzie-lib" class="text-sm text-primary-500 hover:text-primary-600 transition duration-100 break-words" alt="Source code for Wyzie Proxy" title="Source code for Wyzie Proxy">
+              <a href="https://github.com/wyziedevs/wyzie-proxy" class="text-sm text-primary-500 hover:text-primary-600 transition duration-100 break-words" alt="Source code for Wyzie Proxy" title="Source code for Wyzie Proxy">
                 Source Code
               </a>
             </div>
           </div>
+
+          <div class="bg-mono-accent shadow-xl p-4 rounded-md flex flex-col gap-1">
+              <a href="https://github.com/wyziedevs/i6.shark" alt="i6.shark" title="i6.shark">
+                <h3 class="font-semibold text-type-subheader text-primary-500 hover:text-primary-600 transition duration-100">i6.shark</h3>
+              </a>
+              <a href="https://github.com/wyziedevs/i6.shark" class="text-sm text-primary-500 hover:text-primary-600 transition duration-100 break-words" alt="Source code for i6.shark" title="Source code for i6.shark">
+                Source Code
+              </a>
+            </div>
+          </div>
+
+          <p class="text-type-dimmed text-sm mt-5">
+            This isn't all the projects in the Wyzie ecosystem. Check out more at
+            <a href="https://github.com/wyziedevs" class="text-primary-500 font-semibold hover:text-primary-600 transition duration-100 underline" target="_blank" rel="noopener noreferrer" title="Wyzie Organization">github.com/wyziedevs</a>
+          </p>
         </section>
 
         <section>
