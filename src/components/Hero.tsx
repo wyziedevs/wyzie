@@ -2,12 +2,26 @@ import { ArrowRight, Github, Terminal } from "lucide-react";
 
 const codeSample = `// Fetch subtitles for any content
 const res = await fetch(
-  'https://sub.wyzie.ru/search?id=tt3659388&language=en'
+  'https://sub.wyzie.io/search?id=tt3659388&language=en'
 );
 const { data } = await res.json();
 
 // Returns structured subtitle data instantly
 // → [{ id, display, language, format, source, ... }]`;
+
+function highlightLine(line: string): string {
+  const escaped = line
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+  if (escaped.trimStart().startsWith("//")) {
+    return `<span style="color:#475569">${escaped}</span>`;
+  }
+  return escaped
+    .replace(/'([^']*)'/g, `<span style="color:#86efac">'$1'</span>`)
+    .replace(/\b(const|await|async|fetch|return)\b/g, `<span style="color:#93c5fd">$1</span>`)
+    .replace(/\b(data)\b/g, `<span style="color:#fda4af">$1</span>`);
+}
 
 const badges = ["TypeScript", "Cloudflare Workers", "Go", "Open Source", "REST APIs"];
 
@@ -46,7 +60,7 @@ export function Hero() {
 
             <p className="text-[#94a3b8] text-lg leading-relaxed mb-8 max-w-lg">
               We build production-grade APIs, maintain open source projects
-              used by thousands, and are available for consulting and custom
+              used by millions, and are available for consulting and custom
               development.
             </p>
 
@@ -98,22 +112,16 @@ export function Hero() {
               </div>
 
               {/* Code */}
-              <div className="p-6 overflow-x-auto">
-                <pre className="text-sm leading-relaxed font-mono">
+              <div className="p-4 sm:p-6">
+                <pre className="text-xs sm:text-sm leading-relaxed font-mono whitespace-pre-wrap break-words">
                   {codeSample.split("\n").map((line, i) => (
                     <div key={i} className="flex">
-                      <span className="select-none w-8 shrink-0 text-[#334155] text-right mr-4 text-xs leading-6">
+                      <span className="select-none w-2 shrink-0 text-[#334155] text-right mr-4 text-xs leading-6">
                         {i + 1}
                       </span>
                       <span
                         className="text-[#e2e8f0]"
-                        dangerouslySetInnerHTML={{
-                          __html: line
-                            .replace(/\/\/.*/g, (m) => `<span style="color:#475569">${m}</span>`)
-                            .replace(/'([^']*)'/g, `<span style="color:#86efac">'$1'</span>`)
-                            .replace(/\b(const|await|async|fetch|return)\b/g, `<span style="color:#93c5fd">$1</span>`)
-                            .replace(/\b(data)\b/g, `<span style="color:#fda4af">$1</span>`),
-                        }}
+                        dangerouslySetInnerHTML={{ __html: highlightLine(line) }}
                       />
                     </div>
                   ))}
@@ -122,7 +130,7 @@ export function Hero() {
 
               {/* Shimmer beam */}
               <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-xl">
-                <div className="animate-beam absolute top-0 left-0 h-full w-1/3 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent skew-x-[-20deg]" />
+                <div className="animate-beam absolute top-0 left-0 h-full w-1/3 bg-gradient-to-r from-transparent via-white/[0.01] to-transparent skew-x-[-20deg]" />
               </div>
             </div>
 

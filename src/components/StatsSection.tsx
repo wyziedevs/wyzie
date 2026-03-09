@@ -1,5 +1,5 @@
 const stats = [
-  { value: "10M+", label: "API Requests Served", sublabel: "and counting" },
+  { value: "10M+", label: "Requests Served Daily", sublabel: "and counting" },
   { value: "99.9%", label: "Uptime SLA", sublabel: "across all services" },
   { value: "6+", label: "Open Source Projects", sublabel: "MIT licensed" },
   { value: "Global", label: "Edge Network", sublabel: "Cloudflare powered" },
@@ -16,9 +16,9 @@ export function StatsSection() {
           {stats.map((stat) => (
             <div
               key={stat.label}
-              className="flex flex-col items-center text-center py-10 px-6 bg-[#050508] hover:bg-[#0d0d16] transition-colors"
+              className="flex flex-col items-center text-center py-7 px-3 sm:py-10 sm:px-6 bg-[#050508] hover:bg-[#0d0d16] transition-colors"
             >
-              <span className="text-3xl sm:text-4xl font-extrabold text-[#2563eb] mb-1 tracking-tight">
+              <span className="text-2xl sm:text-4xl font-extrabold text-[#2563eb] mb-1 tracking-tight">
                 {stat.value}
               </span>
               <span className="text-sm font-semibold text-white mb-1">

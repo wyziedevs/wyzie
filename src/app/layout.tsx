@@ -13,13 +13,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Wyzie — Technology Solutions",
+  icons: {
+    icon: "/favicon.png",
+  },
+  title: "Wyzie - Technology Solutions",
   description:
     "Wyzie is a technology solutions company building production-grade APIs, open source tools, and offering consulting & custom development services.",
   keywords: ["Wyzie", "API", "open source", "consulting", "development", "technology"],
   metadataBase: new URL("https://wyzie.io"),
   openGraph: {
-    title: "Wyzie — Technology Solutions",
+    title: "Wyzie - Technology Solutions",
     description:
       "Production-grade APIs, open source development, and consulting services.",
     url: "https://wyzie.io",
@@ -28,7 +31,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wyzie — Technology Solutions",
+    title: "Wyzie - Technology Solutions",
     description: "Production-grade APIs, open source development, and consulting services.",
   },
 };

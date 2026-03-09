@@ -2,15 +2,14 @@ import { Github, MessageSquare } from "lucide-react";
 
 const footerLinks = {
   Products: [
-    { label: "Wyzie Subs API", href: "https://sub.wyzie.ru" },
+    { label: "Wyzie Subs API", href: "https://sub.wyzie.io" },
     { label: "Wyzie Lib (npm)", href: "https://www.npmjs.com/package/wyzie-lib" },
-    { label: "Wyzie Worker", href: "https://github.com/wyziedevs/wyzie-worker" },
     { label: "i6.shark Proxy", href: "https://github.com/wyziedevs/i6.shark" },
   ],
   Documentation: [
-    { label: "Getting Started", href: "https://docs.wyzie.ru" },
-    { label: "Subs API Reference", href: "https://docs.wyzie.ru/subs/intro" },
-    { label: "Usage Guide", href: "https://docs.wyzie.ru/subs/usage" },
+    { label: "Getting Started", href: "https://docs.wyzie.io" },
+    { label: "Subs API Reference", href: "https://docs.wyzie.io/subs/intro" },
+    { label: "Usage Guide", href: "https://docs.wyzie.io/subs/usage" },
     { label: "Donate", href: "https://donate.cozi.lol" },
   ],
   Company: [
@@ -28,9 +27,9 @@ export function Footer() {
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 mb-12">
           {/* Brand column */}
-          <div className="col-span-2 md:col-span-1">
+          <div className="col-span-2 md:col-span-1 mb-2 md:mb-0">
             <div className="flex items-center gap-2.5 mb-4">
               <div className="w-7 h-7 rounded-lg bg-[#2563eb] flex items-center justify-center shadow-md shadow-blue-600/25">
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="none">

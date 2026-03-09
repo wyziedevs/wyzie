@@ -5,7 +5,7 @@ const services = [
     icon: Server,
     title: "API Development & Hosting",
     description:
-      "We design, build, and host production-grade REST APIs on Cloudflare Workers — globally distributed, low-latency, and built to scale. From subtitle scrapers to proxy infrastructure.",
+      "We design, build, and host production-grade REST APIs on Cloudflare Workers - globally distributed, low-latency, and built to scale. From subtitle scrapers to proxy infrastructure.",
     highlights: ["REST APIs", "Cloudflare Workers", "Edge Computing", "High Availability"],
     cta: { label: "View our APIs", href: "#projects" },
     accent: "from-blue-600/20 to-blue-600/0",
@@ -16,7 +16,7 @@ const services = [
     icon: GitBranch,
     title: "Open Source Development",
     description:
-      "We're committed to building in the open. Our projects are freely available on GitHub for the community — from TypeScript libraries to Go infrastructure tooling.",
+      "We're committed to building in the open. Our projects are freely available on GitHub for the community - from TypeScript libraries to Go infrastructure tooling.",
     highlights: ["GitHub Organization", "TypeScript", "Go", "MIT Licensed"],
     cta: { label: "View GitHub", href: "https://github.com/wyziedevs", external: true },
     accent: "from-violet-600/20 to-violet-600/0",
@@ -27,7 +27,7 @@ const services = [
     icon: Briefcase,
     title: "Consulting & Custom Dev",
     description:
-      "Need a new API? A performance audit? A custom integration? We're available for hire — bring us in to help architect, build, or advise on your next technical project.",
+      "Need a new API? A performance audit? A custom integration? We're available for hire - bring us in to help architect, build, or advise on your next technical project.",
     highlights: ["Technical Consulting", "Custom APIs", "Code Reviews", "Architecture"],
     cta: { label: "Get in touch", href: "#contact" },
     accent: "from-emerald-600/20 to-emerald-600/0",
@@ -52,7 +52,7 @@ export function ServicesSection() {
             Technology built for the community
           </h2>
           <p className="text-[#94a3b8] text-lg max-w-xl mx-auto">
-            From public APIs to bespoke software — we cover the full spectrum
+            From public APIs to bespoke software, we cover the full spectrum
             of modern web technology.
           </p>
         </div>
