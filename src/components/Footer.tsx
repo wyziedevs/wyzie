@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Github, MessageSquare } from "lucide-react";
 
 const footerLinks = {
@@ -31,12 +32,7 @@ export function Footer() {
           {/* Brand column */}
           <div className="col-span-2 md:col-span-1 mb-2 md:mb-0">
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-7 h-7 rounded-lg bg-[#2563eb] flex items-center justify-center shadow-md shadow-blue-600/25">
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                  <path d="M2 4h5v2H2V4zm0 6h5v2H2v-2zm7-6l5 4-5 4V4z" fill="white" fillOpacity="0.95" />
-                </svg>
-              </div>
-              <span className="text-[15px] font-bold text-white">Wyzie</span>
+              <Image src="/logo-header.png" alt="Wyzie" width={100} height={32} className="h-8 w-auto" />
             </div>
             <p className="text-[#64748b] text-xs leading-relaxed mb-5">
               Technology solutions company building APIs, open source tools,
