@@ -15,24 +15,62 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   icons: {
     icon: "/favicon.png",
+    apple: "/favicon.png",
   },
-  title: "Wyzie - Technology Solutions",
+  title: {
+    default: "Wyzie - Technology Solutions",
+    template: "%s | Wyzie",
+  },
   description:
-    "Wyzie is a technology solutions company building production-grade APIs, open source tools, and offering consulting & custom development services.",
-  keywords: ["Wyzie", "API", "open source", "consulting", "development", "technology"],
+    "Wyzie builds production-grade APIs, open source tools, and offers consulting & custom development services. Serving 10M+ daily requests on Cloudflare's edge network with 99.9% uptime.",
+  keywords: [
+    "Wyzie",
+    "API development",
+    "open source",
+    "Cloudflare Workers",
+    "edge computing",
+    "REST API",
+    "TypeScript",
+    "consulting",
+    "custom development",
+    "subtitle API",
+    "technology solutions",
+  ],
   metadataBase: new URL("https://wyzie.io"),
+  alternates: {
+    canonical: "https://wyzie.io",
+  },
   openGraph: {
     title: "Wyzie - Technology Solutions",
     description:
-      "Production-grade APIs, open source development, and consulting services.",
+      "Production-grade APIs on Cloudflare's edge network, open source tools used by millions, and consulting services. 10M+ daily requests, 99.9% uptime.",
     url: "https://wyzie.io",
     siteName: "Wyzie",
     type: "website",
+    locale: "en_US",
+    images: [
+      {
+        url: "/header.png",
+        width: 1200,
+        height: 630,
+        alt: "Wyzie - Technology Solutions",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Wyzie - Technology Solutions",
-    description: "Production-grade APIs, open source development, and consulting services.",
+    description:
+      "Production-grade APIs, open source tools, and consulting services. 10M+ daily requests, 99.9% uptime.",
+    images: ["/header.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
   },
 };
 
