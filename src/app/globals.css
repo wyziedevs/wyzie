@@ -155,7 +155,8 @@ body {
     0 2px 16px rgba(0, 0, 0, 0.5);
   transition:
     box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .glow-card::before {
   content: "";
@@ -193,6 +194,24 @@ body {
   transform: translateY(-2px);
 }
 
+.glow-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(37, 99, 235, 0.04),
+    transparent 40%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.glow-card:hover::after {
+  opacity: 1;
+}
+
 .hero-grid {
   background-image:
     linear-gradient(rgba(37, 99, 235, 0.03) 1px, transparent 1px),
@@ -210,6 +229,73 @@ body {
     rgba(167, 139, 250, 0.08),
     transparent
   );
+}
+
+/* ---- Lightbar ---- */
+.lightbar,
+.lightbar-visual {
+  position: absolute;
+  width: 150vw;
+  height: 800px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.lightbar {
+  left: -25vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  --d: 3s;
+  --animation: cubic-bezier(0.75, 0, 0.25, 1);
+  animation: lightbar-boot var(--d) var(--animation) forwards;
+}
+
+.lightbar-visual {
+  left: 0;
+  --top: #050508;
+  --bottom: #2563eb;
+  --first: conic-gradient(from 90deg at 80% 50%, var(--top), var(--bottom));
+  --second: conic-gradient(from 270deg at 20% 50%, var(--bottom), var(--top));
+  mask-image: radial-gradient(100% 50% at center center, black, transparent);
+  background-image: var(--first), var(--second);
+  background-position-x: 1%, 99%;
+  background-position-y: 0%, 0%;
+  background-size: 50% 100%, 50% 100%;
+  opacity: 1;
+  transform: rotate(180deg) translateZ(0px) translateY(400px);
+  transform-origin: center center;
+  background-repeat: no-repeat;
+  animation: lightbar-visual-boot var(--d) var(--animation) forwards;
+}
+
+@keyframes lightbar-boot {
+  from {
+    opacity: 0.25;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lightbar-visual-boot {
+  0% {
+    transform: rotate(180deg) translateZ(0px) translateY(400px) scaleX(0.8);
+  }
+  100% {
+    transform: rotate(180deg) translateZ(0px) translateY(400px) scaleX(1);
+  }
+}
+
+@media (max-width: 640px) {
+  .lightbar,
+  .lightbar-visual {
+    width: 500vw;
+  }
+  .lightbar {
+    left: 50vw;
+    transform: translateX(-50%);
+  }
 }
 
 /* ---- Subtle grain overlay ---- */
