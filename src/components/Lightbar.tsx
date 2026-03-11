@@ -19,7 +19,7 @@ class Particle {
   reset(canvas: HTMLCanvasElement) {
     this.x = Math.round((Math.random() * canvas.width) / 2 + canvas.width / 4);
     this.y = Math.random() * 100 + 5;
-    this.radius = 1 + Math.floor(Math.random() * 0.5);
+    this.radius = 1 + Math.floor(Math.random() * 2);
     this.direction = (Math.random() * Math.PI) / 2 + Math.PI / 4;
     this.speed = 0.02 + Math.random() * 0.08;
     const second = 65;
@@ -70,8 +70,8 @@ function ParticlesCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    if (!canvasRef.current) return;
     const canvas = canvasRef.current;
-    if (!canvas) return;
 
     canvas.width = canvas.scrollWidth;
     canvas.height = canvas.scrollHeight;
@@ -86,17 +86,17 @@ function ParticlesCanvas() {
     let handle: ReturnType<typeof requestAnimationFrame> | null = null;
 
     function loop() {
-      const ctx = canvas!.getContext("2d");
+      const ctx = canvas.getContext("2d");
       if (!ctx) return;
 
       if (shouldTick) {
-        for (const p of particles) p.update(canvas!);
+        for (const p of particles) p.update(canvas);
         shouldTick = false;
       }
 
-      canvas!.width = canvas!.scrollWidth;
-      canvas!.height = canvas!.scrollHeight;
-      for (const p of particles) p.render(canvas!);
+      canvas.width = canvas.scrollWidth;
+      canvas.height = canvas.scrollHeight;
+      for (const p of particles) p.render(canvas);
 
       handle = requestAnimationFrame(loop);
     }

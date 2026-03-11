@@ -6,8 +6,8 @@ export function CursorLight() {
   const lightRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!lightRef.current) return;
     const el = lightRef.current;
-    if (!el) return;
 
     let mouseX = 0;
     let mouseY = 0;
@@ -23,8 +23,8 @@ export function CursorLight() {
     function animate() {
       currentX += (mouseX - currentX) * 0.15;
       currentY += (mouseY - currentY) * 0.15;
-      el!.style.setProperty("--cursor-x", `${currentX}px`);
-      el!.style.setProperty("--cursor-y", `${currentY}px`);
+      el.style.setProperty("--cursor-x", `${currentX}px`);
+      el.style.setProperty("--cursor-y", `${currentY}px`);
       rafId = requestAnimationFrame(animate);
     }
 
