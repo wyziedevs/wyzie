@@ -85,6 +85,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <div className="grain-overlay" aria-hidden="true" />
       </body>
     </html>
   );

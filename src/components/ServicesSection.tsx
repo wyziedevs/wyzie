@@ -1,115 +1,131 @@
 import { Server, GitBranch, Briefcase, ArrowRight } from "lucide-react";
+import { Reveal, StaggerContainer, StaggerItem } from "./Motion";
 
 const services = [
   {
     icon: Server,
     title: "API Development & Hosting",
     description:
-      "We design, build, and host production-grade REST APIs on Cloudflare Workers - globally distributed, low-latency, and built to scale. From subtitle scrapers to proxy infrastructure.",
-    highlights: ["REST APIs", "Cloudflare Workers", "Edge Computing", "High Availability"],
+      "Mission-critical REST APIs on Cloudflare Workers; globally distributed, ultra-low-latency, purpose-built for seamless integration.",
+    highlights: ["REST APIs", "Cloudflare Workers", "Edge Computing"],
     cta: { label: "View our APIs", href: "#projects" },
-    accent: "from-blue-600/20 to-blue-600/0",
-    iconBg: "bg-[#2563eb]/15",
+    accentColor: "#2563eb",
+    iconBg: "bg-[#2563eb]/10",
     iconColor: "text-[#60a5fa]",
   },
   {
     icon: GitBranch,
     title: "Open Source Development",
     description:
-      "We're committed to building in the open. Our projects are freely available on GitHub for the community - from TypeScript libraries to Go infrastructure tooling.",
-    highlights: ["GitHub Organization", "TypeScript", "Go", "MIT Licensed"],
-    cta: { label: "View GitHub", href: "https://github.com/wyziedevs", external: true },
-    accent: "from-violet-600/20 to-violet-600/0",
-    iconBg: "bg-violet-500/15",
+      "Battle-tested, community-driven projects powering ecosystems worldwide; from TypeScript libraries to Go infrastructure.",
+    highlights: ["GitHub Org", "TypeScript", "Go", "MIT Licensed"],
+    cta: {
+      label: "View GitHub",
+      href: "https://github.com/wyziedevs",
+      external: true,
+    },
+    accentColor: "#8b5cf6",
+    iconBg: "bg-violet-500/10",
     iconColor: "text-violet-400",
   },
   {
     icon: Briefcase,
     title: "Consulting & Custom Dev",
     description:
-      "Need a new API? A performance audit? A custom integration? We're available for hire - bring us in to help architect, build, or advise on your next technical project.",
-    highlights: ["Technical Consulting", "Custom APIs", "Code Reviews", "Architecture"],
+      "From strategic roadmapping to hands-on implementation, API design, performance optimization, architecture reviews.",
+    highlights: ["Consulting", "Custom APIs", "Architecture"],
     cta: { label: "Get in touch", href: "#contact" },
-    accent: "from-emerald-600/20 to-emerald-600/0",
-    iconBg: "bg-emerald-500/15",
+    accentColor: "#10b981",
+    iconBg: "bg-emerald-500/10",
     iconColor: "text-emerald-400",
   },
 ];
 
 export function ServicesSection() {
   return (
-    <section id="services" className="py-24 relative">
-      {/* Section separator gradient */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+    <section id="services" className="py-28 relative overflow-hidden">
+      <div className="section-divider absolute top-0 inset-x-0" />
+
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/3 -left-32 w-[500px] h-[500px] bg-[#2563eb]/4 rounded-full blur-[140px] animate-orb-drift" />
+        <div
+          className="absolute bottom-1/4 -right-32 w-[400px] h-[400px] bg-violet-600/3 rounded-full blur-[120px] animate-orb-drift"
+          style={{ animationDelay: "3s" }}
+        />
+      </div>
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <p className="text-[#2563eb] text-sm font-semibold uppercase tracking-wider mb-3">
+        <Reveal className="text-center mb-20">
+          <p className="text-[#2563eb] text-xs font-semibold uppercase tracking-[0.2em] mb-4">
             What We Do
           </p>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4">
-            Technology built for the community
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white mb-5">
+            Engineered for Impact
           </h2>
-          <p className="text-[#94a3b8] text-lg max-w-xl mx-auto">
-            From public APIs to bespoke software, we cover the full spectrum
-            of modern web technology.
+          <p className="text-[#8a95a8] text-lg max-w-lg mx-auto leading-relaxed">
+            High-performance APIs, open source tools, and bespoke software that
+            drives measurable results.
           </p>
-        </div>
+        </Reveal>
 
-        {/* Cards */}
-        <div className="grid md:grid-cols-3 gap-6">
+        <StaggerContainer
+          className="grid md:grid-cols-3 gap-5"
+          staggerDelay={0.15}
+        >
           {services.map((service) => {
             const Icon = service.icon;
             return (
-              <div
-                key={service.title}
-                className="relative flex flex-col rounded-2xl bg-[#0d0d16] border border-white/8 p-7 overflow-hidden glow-card group"
-              >
-                {/* Top gradient accent */}
-                <div className={`absolute top-0 inset-x-0 h-32 bg-gradient-to-b ${service.accent} opacity-60`} />
+              <StaggerItem key={service.title}>
+                <div className="group relative flex flex-col rounded-2xl bg-[#0a0a14] border border-white/[0.06] p-7 overflow-hidden glow-card h-full">
+                  <div
+                    className="absolute top-0 left-0 right-0 h-px opacity-40"
+                    style={{
+                      background: `linear-gradient(90deg, transparent, ${service.accentColor}40, transparent)`,
+                    }}
+                  />
 
-                {/* Content */}
-                <div className="relative flex flex-col flex-1">
-                  {/* Icon */}
-                  <div className={`w-11 h-11 rounded-xl ${service.iconBg} flex items-center justify-center mb-5`}>
-                    <Icon className={`w-5 h-5 ${service.iconColor}`} />
+                  <div className="relative flex flex-col flex-1">
+                    <div
+                      className={`w-11 h-11 rounded-xl ${service.iconBg} flex items-center justify-center mb-6 transition-transform duration-500 group-hover:scale-110`}
+                    >
+                      <Icon className={`w-5 h-5 ${service.iconColor}`} />
+                    </div>
+
+                    <h3 className="text-white font-bold text-lg mb-3 leading-snug">
+                      {service.title}
+                    </h3>
+                    <p className="text-[#8a95a8] text-sm leading-relaxed mb-6 flex-1">
+                      {service.description}
+                    </p>
+
+                    <div className="flex flex-wrap gap-1.5 mb-6">
+                      {service.highlights.map((h) => (
+                        <span
+                          key={h}
+                          className="px-2 py-0.5 rounded-md bg-white/[0.03] border border-white/[0.06] text-xs text-[#5a657a] font-mono"
+                        >
+                          {h}
+                        </span>
+                      ))}
+                    </div>
+
+                    <a
+                      href={service.cta.href}
+                      target={service.cta.external ? "_blank" : undefined}
+                      rel={
+                        service.cta.external ? "noopener noreferrer" : undefined
+                      }
+                      className="inline-flex items-center gap-1.5 text-sm text-[#5a657a] hover:text-white transition-all duration-300"
+                    >
+                      {service.cta.label}
+                      <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                    </a>
                   </div>
-
-                  <h3 className="text-white font-bold text-lg mb-3 leading-snug">
-                    {service.title}
-                  </h3>
-                  <p className="text-[#94a3b8] text-sm leading-relaxed mb-6 flex-1">
-                    {service.description}
-                  </p>
-
-                  {/* Highlight pills */}
-                  <div className="flex flex-wrap gap-1.5 mb-6">
-                    {service.highlights.map((h) => (
-                      <span
-                        key={h}
-                        className="px-2 py-0.5 rounded-md bg-white/5 border border-white/8 text-xs text-[#64748b] font-mono"
-                      >
-                        {h}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* CTA link */}
-                  <a
-                    href={service.cta.href}
-                    target={service.cta.external ? "_blank" : undefined}
-                    rel={service.cta.external ? "noopener noreferrer" : undefined}
-                    className="inline-flex items-center gap-1.5 text-sm text-[#64748b] hover:text-white transition-colors group-hover:gap-2.5"
-                  >
-                    {service.cta.label}
-                    <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
-                  </a>
                 </div>
-              </div>
+              </StaggerItem>
             );
           })}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );

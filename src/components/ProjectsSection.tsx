@@ -1,10 +1,15 @@
-import { Github, ExternalLink, Star } from "lucide-react";
+"use client";
+
+import { useState } from "react";
+import { Github, ExternalLink, Star, ChevronDown } from "lucide-react";
+import { Reveal, StaggerContainer, StaggerItem, motion } from "./Motion";
+import { AnimatePresence } from "framer-motion";
 
 const projects = [
   {
     name: "Wyzie Subs",
     description:
-      "Free, open-source subtitle scraping API. Supports multiple languages, formats, and sources. No auth required — just fetch and go.",
+      "Enterprise-grade subtitle API serving millions of requests. Supports multiple languages, formats, and sources with zero-config integration.",
     tags: ["TypeScript", "Nitro", "Cloudflare Workers", "REST API"],
     github: "https://github.com/wyziedevs/wyzie-subs",
     demo: "https://sub.wyzie.io",
@@ -15,7 +20,7 @@ const projects = [
   {
     name: "Wyzie Lib",
     description:
-      "Official TypeScript/JavaScript client library for the Wyzie Subs API. Fully typed, tree-shakable, and zero-dependency.",
+      "Official TypeScript/JavaScript SDK for seamless Wyzie Subs integration. Fully typed, tree-shakable, and zero-dependency.",
     tags: ["TypeScript", "npm", "Vite", "Library"],
     github: "https://github.com/wyziedevs/wyzie-lib",
     demo: null,
@@ -26,7 +31,7 @@ const projects = [
   {
     name: "Wyzie Worker",
     description:
-      "Edge worker infrastructure for routing, caching, and traffic management. Powers the Wyzie API network globally.",
+      "Intelligent edge worker infrastructure for routing, caching, and traffic orchestration at global scale.",
     tags: ["TypeScript", "Cloudflare Workers", "Edge"],
     github: "https://github.com/wyziedevs/wyzie-worker",
     demo: null,
@@ -37,7 +42,7 @@ const projects = [
   {
     name: "i6.shark",
     description:
-      "High-performance HTTP proxy written in Go with a Python management layer. Built for speed and reliability at scale.",
+      "High-throughput HTTP proxy in Go with a Python management layer. Built for speed and reliability.",
     tags: ["Go", "Python", "Proxy", "Infrastructure"],
     github: "https://github.com/wyziedevs/i6.shark",
     demo: null,
@@ -48,7 +53,7 @@ const projects = [
   {
     name: "Wyzie Store",
     description:
-      "Feature-rich frontend for the Wyzie services. Built with SvelteKit, TailwindCSS, and deployed on Cloudflare Pages.",
+      "Feature-rich frontend for Wyzie services. Built with SvelteKit and TailwindCSS on Cloudflare Pages.",
     tags: ["SvelteKit", "Tailwind", "TypeScript"],
     github: "https://github.com/wyziedevs/wyzie-store",
     demo: null,
@@ -59,7 +64,7 @@ const projects = [
   {
     name: "Wyzie Docs",
     description:
-      "Documentation site for the full Wyzie toolset. Built with Nextra / Guider and deployed on Vercel.",
+      "Documentation site for the full Wyzie toolset. Built with Nextra and deployed on Vercel.",
     tags: ["Next.js", "Nextra", "Documentation"],
     github: "https://github.com/wyziedevs/wyzie-docs",
     demo: "https://docs.wyzie.io",
@@ -70,64 +75,98 @@ const projects = [
 ];
 
 const statusColors: Record<string, string> = {
-  active: "bg-green-500/15 text-green-400 border-green-500/20",
-  beta: "bg-yellow-500/15 text-yellow-400 border-yellow-500/20",
-  archived: "bg-gray-500/15 text-gray-400 border-gray-500/20",
+  active: "bg-emerald-500/10 text-emerald-400 border-emerald-500/15",
+  beta: "bg-yellow-500/10 text-yellow-400 border-yellow-500/15",
+  archived: "bg-gray-500/10 text-gray-400 border-gray-500/15",
 };
 
 export function ProjectsSection() {
   const featured = projects.filter((p) => p.featured);
   const rest = projects.filter((p) => !p.featured);
+  const [showAll, setShowAll] = useState(false);
 
   return (
-    <section id="projects" className="py-24 relative">
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+    <section id="projects" className="py-28 relative overflow-hidden">
+      <div className="section-divider absolute top-0 inset-x-0" />
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute right-0 top-1/2 w-[500px] h-[500px] bg-violet-600/5 rounded-full blur-[120px]" />
+        <div className="absolute right-0 top-1/2 w-[500px] h-[500px] bg-violet-600/3 rounded-full blur-[140px] animate-orb-drift" />
+        <div
+          className="absolute -left-20 top-1/3 w-[400px] h-[400px] bg-[#2563eb]/3 rounded-full blur-[120px] animate-orb-drift"
+          style={{ animationDelay: "4s" }}
+        />
       </div>
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <p className="text-[#2563eb] text-sm font-semibold uppercase tracking-wider mb-3">
+        <Reveal className="text-center mb-20">
+          <p className="text-[#2563eb] text-xs font-semibold uppercase tracking-[0.2em] mb-4">
             Open Source
           </p>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4">
-            What we&apos;ve shipped
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white mb-5">
+            Shipped at Scale
           </h2>
-          <p className="text-[#94a3b8] text-lg max-w-xl mx-auto">
-            All our projects are open-source and freely available on GitHub
-            under the Wyzie organization.
+          <p className="text-[#8a95a8] text-lg max-w-lg mx-auto leading-relaxed">
+            Community-driven projects powering millions of requests daily. All
+            open-source and freely available.
           </p>
-        </div>
+        </Reveal>
 
-        {/* Featured projects — larger cards */}
-        <div className="grid md:grid-cols-2 gap-6 mb-6">
+        <StaggerContainer
+          className="grid md:grid-cols-2 gap-5 mb-5"
+          staggerDelay={0.15}
+        >
           {featured.map((project) => (
-            <ProjectCard key={project.name} project={project} large />
+            <StaggerItem key={project.name}>
+              <ProjectCard project={project} large />
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
 
-        {/* Other projects — smaller cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {rest.map((project) => (
-            <ProjectCard key={project.name} project={project} large={false} />
-          ))}
-        </div>
+        <AnimatePresence>
+          {showAll && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+              className="overflow-hidden"
+            >
+              <StaggerContainer
+                className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4"
+                staggerDelay={0.08}
+              >
+                {rest.map((project) => (
+                  <StaggerItem key={project.name}>
+                    <ProjectCard project={project} large={false} />
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-        {/* GitHub CTA */}
-        <div className="mt-10 text-center">
+        {!showAll && (
+          <Reveal className="flex justify-center mt-3">
+            <button
+              onClick={() => setShowAll(true)}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm text-[#8a95a8] hover:text-white hover:bg-white/[0.04] transition-all duration-300 cursor-pointer"
+            >
+              Show more projects
+              <ChevronDown className="w-4 h-4" />
+            </button>
+          </Reveal>
+        )}
+
+        <Reveal className="mt-12 text-center">
           <a
             href="https://github.com/wyziedevs"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-white/10 hover:border-white/20 bg-white/3 hover:bg-white/6 text-sm text-[#94a3b8] hover:text-white transition-all"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-white/[0.08] hover:border-white/[0.15] bg-white/[0.02] hover:bg-white/[0.05] text-sm text-[#8a95a8] hover:text-white transition-all duration-300"
           >
-            <Github className="w-4 h-4" />
-            View all projects on GitHub
+            View all on GitHub
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -141,50 +180,56 @@ function ProjectCard({
   large: boolean;
 }) {
   return (
-    <div className={`group relative flex flex-col rounded-xl bg-[#0d0d16] border border-white/8 p-5 overflow-hidden glow-card ${large ? "p-6" : ""}`}>
-      {/* Featured star */}
+    <div
+      className={`group relative flex flex-col rounded-2xl bg-[#0a0a14] border border-white/[0.06] overflow-hidden glow-card h-full ${large ? "p-6" : "p-5"}`}
+    >
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#2563eb]/20 to-transparent" />
+
       {project.featured && (
         <div className="absolute top-4 right-4">
-          <Star className="w-3.5 h-3.5 text-yellow-500/60 fill-yellow-500/60" />
+          <Star className="w-3.5 h-3.5 text-amber-400/50 fill-amber-400/50" />
         </div>
       )}
 
-      {/* Top area */}
       <div className="flex items-start gap-3 mb-3">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <h3 className={`text-white font-bold leading-snug ${large ? "text-base" : "text-sm"}`}>
+          <div className="flex items-center gap-2 mb-1.5">
+            <h3
+              className={`text-white font-bold leading-snug ${large ? "text-base" : "text-sm"}`}
+            >
               {project.name}
             </h3>
-            <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium border ${statusColors[project.status]}`}>
+            <span
+              className={`px-1.5 py-0.5 rounded text-[10px] font-medium border ${statusColors[project.status]}`}
+            >
               {project.status}
             </span>
           </div>
-          <p className={`text-[#94a3b8] leading-relaxed ${large ? "text-sm" : "text-xs"}`}>
+          <p
+            className={`text-[#8a95a8] leading-relaxed ${large ? "text-sm" : "text-xs"}`}
+          >
             {project.description}
           </p>
         </div>
       </div>
 
-      {/* Tags */}
       <div className="flex flex-wrap gap-1.5 mt-auto mb-4">
         {project.tags.map((tag) => (
           <span
             key={tag}
-            className="px-2 py-0.5 rounded bg-white/5 border border-white/6 text-[11px] text-[#64748b] font-mono"
+            className="px-2 py-0.5 rounded bg-white/[0.03] border border-white/[0.05] text-[11px] text-[#5a657a] font-mono"
           >
             {tag}
           </span>
         ))}
       </div>
 
-      {/* Links */}
-      <div className="flex items-center gap-3 border-t border-white/6 pt-3">
+      <div className="flex items-center gap-3 border-t border-white/[0.05] pt-3">
         <a
           href={project.github}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1.5 text-xs text-[#64748b] hover:text-white transition-colors"
+          className="flex items-center gap-1.5 text-xs text-[#5a657a] hover:text-white transition-colors duration-300"
         >
           <Github className="w-3.5 h-3.5" />
           Source
@@ -194,7 +239,7 @@ function ProjectCard({
             href={project.demo}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-xs text-[#64748b] hover:text-white transition-colors"
+            className="flex items-center gap-1.5 text-xs text-[#5a657a] hover:text-white transition-colors duration-300"
           >
             <ExternalLink className="w-3.5 h-3.5" />
             Live
@@ -205,7 +250,7 @@ function ProjectCard({
             href={project.docs}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-xs text-[#64748b] hover:text-white transition-colors"
+            className="flex items-center gap-1.5 text-xs text-[#5a657a] hover:text-white transition-colors duration-300"
           >
             <ExternalLink className="w-3.5 h-3.5" />
             Docs

@@ -8,8 +8,8 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { label: "Services", href: "#services" },
-  { label: "Projects", href: "#projects" },
+  { label: "Services", href: "/#services" },
+  { label: "Projects", href: "/#projects" },
   { label: "Documentation", href: "https://docs.wyzie.io", external: true },
   { label: "GitHub", href: "https://github.com/wyziedevs", external: true },
 ];
@@ -27,66 +27,66 @@ export function Navigation() {
   return (
     <header
       className={cn(
-        "fixed top-0 inset-x-0 z-50 border-b transition-all duration-300",
+        "fixed top-0 inset-x-0 z-50 border-b transition-all duration-500",
         scrolled
-          ? "bg-[#050508]/80 backdrop-blur-xl border-white/5 shadow-lg shadow-black/20"
-          : "bg-transparent border-transparent"
+          ? "bg-[#050508]/70 backdrop-blur-2xl border-white/[0.04] shadow-lg shadow-black/30"
+          : "bg-transparent border-transparent",
       )}
     >
       <nav className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
           <Link href="/" className="flex items-center select-none">
             <Image
               src="/logo-header.png"
               alt="Wyzie"
-              width={140}
-              height={44}
-              className="h-11 w-auto"
+              width={85}
+              height={30}
               priority
             />
           </Link>
 
-          {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-0.5">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 target={link.external ? "_blank" : undefined}
                 rel={link.external ? "noopener noreferrer" : undefined}
-                className="px-3 py-1.5 text-sm text-[#94a3b8] hover:text-white rounded-md hover:bg-white/5 transition-all duration-150"
+                className="px-3.5 py-1.5 text-sm text-[#8a95a8] hover:text-white rounded-lg hover:bg-white/[0.05] transition-all duration-300"
               >
                 {link.label}
               </a>
             ))}
           </div>
 
-          {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
             <a
-              href="#contact"
-              className="px-4 py-2 text-sm font-medium bg-[#2563eb] hover:bg-[#3b82f6] text-white rounded-lg transition-all duration-150 shadow-md shadow-blue-600/20"
+              href="/contact"
+              className="px-4 py-2 text-sm font-medium bg-[#2563eb] hover:bg-[#3b82f6] text-white rounded-xl transition-all duration-300 shadow-md shadow-blue-600/15 hover:shadow-blue-600/25"
             >
               Work With Us
             </a>
           </div>
 
-          {/* Mobile hamburger */}
           <Dialog.Root open={open} onOpenChange={setOpen}>
             <Dialog.Trigger asChild>
-              <button className="md:hidden p-2 rounded-lg text-[#94a3b8] hover:text-white hover:bg-white/5 transition-all">
+              <button className="md:hidden p-2 rounded-lg text-[#8a95a8] hover:text-white hover:bg-white/[0.05] transition-all duration-300">
                 <Menu className="w-5 h-5" />
               </button>
             </Dialog.Trigger>
             <Dialog.Portal>
               <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
-              <Dialog.Content className="fixed top-0 right-0 h-full w-72 bg-[#0d0d16] border-l border-white/8 z-50 flex flex-col p-6 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right duration-200">
+              <Dialog.Content className="fixed top-0 right-0 h-full w-72 bg-[#0a0a14] border-l border-white/[0.06] z-50 flex flex-col p-6 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right duration-300">
                 <Dialog.Title className="sr-only">Navigation Menu</Dialog.Title>
-                <div className="flex items-center justify-between mb-8">
-                  <Image src="/logo-header.png" alt="Wyzie" width={110} height={36} className="h-9 w-auto" />
+                <div className="flex items-center justify-between mb-6">
+                  <Image
+                    src="/logo-header.png"
+                    alt="Wyzie"
+                    width={85}
+                    height={30}
+                  />
                   <Dialog.Close asChild>
-                    <button className="p-1.5 rounded-md text-[#94a3b8] hover:text-white hover:bg-white/5 transition-all">
+                    <button className="p-1.5 rounded-md text-[#8a95a8] hover:text-white hover:bg-white/[0.05] transition-all duration-300">
                       <X className="w-4 h-4" />
                     </button>
                   </Dialog.Close>
@@ -98,7 +98,7 @@ export function Navigation() {
                         href={link.href}
                         target={link.external ? "_blank" : undefined}
                         rel={link.external ? "noopener noreferrer" : undefined}
-                        className="px-3 py-2.5 text-sm text-[#94a3b8] hover:text-white hover:bg-white/5 rounded-lg transition-all"
+                        className="px-3 py-2.5 text-sm text-[#8a95a8] hover:text-white hover:bg-white/[0.05] rounded-lg transition-all duration-300"
                       >
                         {link.label}
                       </a>
@@ -107,8 +107,8 @@ export function Navigation() {
                 </div>
                 <div className="mt-auto">
                   <a
-                    href="#contact"
-                    className="block w-full text-center px-4 py-2.5 text-sm font-medium bg-[#2563eb] hover:bg-[#3b82f6] text-white rounded-lg transition-all"
+                    href="/contact"
+                    className="block w-full text-center px-4 py-2.5 text-sm font-medium bg-[#2563eb] hover:bg-[#3b82f6] text-white rounded-xl transition-all duration-300"
                     onClick={() => setOpen(false)}
                   >
                     Work With Us

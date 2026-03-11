@@ -1,10 +1,14 @@
 import Image from "next/image";
 import { Github, MessageSquare } from "lucide-react";
+import { Reveal } from "./Motion";
 
 const footerLinks = {
   Products: [
     { label: "Wyzie Subs API", href: "https://sub.wyzie.io" },
-    { label: "Wyzie Lib (npm)", href: "https://www.npmjs.com/package/wyzie-lib" },
+    {
+      label: "Wyzie Lib (npm)",
+      href: "https://www.npmjs.com/package/wyzie-lib",
+    },
     { label: "i6.shark Proxy", href: "https://github.com/wyziedevs/i6.shark" },
   ],
   Documentation: [
@@ -16,7 +20,7 @@ const footerLinks = {
   Company: [
     { label: "GitHub Organization", href: "https://github.com/wyziedevs" },
     { label: "Discord Community", href: "https://discord.gg/2mxraHBVtB" },
-    { label: "Work With Us", href: "#contact" },
+    { label: "Work With Us", href: "/contact" },
   ],
 };
 
@@ -24,74 +28,61 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative pt-16 pb-10 border-t border-white/6">
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+    <footer className="relative pt-20 pb-10 border-t border-white/[0.04]">
+      <div className="section-divider absolute top-0 inset-x-0" />
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 mb-12">
-          {/* Brand column */}
-          <div className="col-span-2 md:col-span-1 mb-2 md:mb-0">
-            <div className="flex items-center gap-2.5 mb-4">
-              <Image src="/logo-header.png" alt="Wyzie" width={100} height={32} className="h-8 w-auto" />
+        <Reveal>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 mb-14">
+            <div className="col-span-2 md:col-span-1 mb-2 md:mb-0">
+              <div className="flex items-center gap-2.5 mb-4">
+                <Image
+                  src="/logo-header.png"
+                  alt="Wyzie"
+                  width={100}
+                  height={32}
+                  className="h-8 w-auto"
+                />
+              </div>
+              <p className="text-[#5a657a] text-xs leading-relaxed mb-5">
+                Technology solutions company building APIs, open source tools,
+                and consulting services for the modern web.
+              </p>
             </div>
-            <p className="text-[#64748b] text-xs leading-relaxed mb-5">
-              Technology solutions company building APIs, open source tools,
-              and consulting services for the modern web.
-            </p>
-            <div className="flex items-center gap-3">
-              <a
-                href="https://github.com/wyziedevs"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/8 flex items-center justify-center text-[#94a3b8] hover:text-white transition-all"
-              >
-                <Github className="w-3.5 h-3.5" />
-              </a>
-              <a
-                href="https://discord.gg/2mxraHBVtB"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/8 flex items-center justify-center text-[#94a3b8] hover:text-white transition-all"
-              >
-                <MessageSquare className="w-3.5 h-3.5" />
-              </a>
-            </div>
+
+            {Object.entries(footerLinks).map(([category, links]) => (
+              <div key={category}>
+                <h4 className="text-white/80 text-xs font-semibold uppercase tracking-[0.15em] mb-4">
+                  {category}
+                </h4>
+                <ul className="space-y-2.5">
+                  {links.map((link) => (
+                    <li key={link.label}>
+                      <a
+                        href={link.href}
+                        target={
+                          link.href.startsWith("http") ? "_blank" : undefined
+                        }
+                        rel={
+                          link.href.startsWith("http")
+                            ? "noopener noreferrer"
+                            : undefined
+                        }
+                        className="text-xs text-[#5a657a] hover:text-[#8a95a8] transition-colors duration-300"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
+        </Reveal>
 
-          {/* Link columns */}
-          {Object.entries(footerLinks).map(([category, links]) => (
-            <div key={category}>
-              <h4 className="text-white text-xs font-semibold uppercase tracking-wider mb-4">
-                {category}
-              </h4>
-              <ul className="space-y-2.5">
-                {links.map((link) => (
-                  <li key={link.label}>
-                    <a
-                      href={link.href}
-                      target={link.href.startsWith("http") ? "_blank" : undefined}
-                      rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                      className="text-xs text-[#64748b] hover:text-[#94a3b8] transition-colors"
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        {/* Bottom bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-8 border-t border-white/6">
-          <p className="text-[11px] text-[#475569]">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-8 border-t border-white/[0.04]">
+          <p className="text-[11px] text-[#3a4050]">
             &copy; {currentYear} Wyzie. All rights reserved.
-          </p>
-          <p className="text-[11px] text-[#475569]">
-            Built with{" "}
-            <span className="text-[#60a5fa]">Next.js</span>,{" "}
-            <span className="text-[#60a5fa]">Radix UI</span> &amp;{" "}
-            <span className="text-[#60a5fa]">Tailwind CSS</span>
           </p>
         </div>
       </div>
