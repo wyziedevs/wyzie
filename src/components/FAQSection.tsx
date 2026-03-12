@@ -9,12 +9,12 @@ const faqs = [
   {
     question: "What tech stack do you work with?",
     answer:
-      "We specialize in TypeScript, Go, and Cloudflare Workers for edge-first API development. On the frontend, we work with Next.js, Svelte, and React. We choose the right tool for the job, never force a stack.",
+      "We specialize in TypeScript, Go, and Cloudflare Workers for edge-first development. On the frontend, we work with Next.js, Svelte, and React. We choose the right tool for the job, never force a stack.",
   },
   {
     question: "How long does a typical project take?",
     answer:
-      "Most API projects ship within 2-4 weeks. Complex integrations or consulting engagements run 4-8 weeks. We'll give you a realistic timeline during our discovery call; no padding, no sandbagging.",
+      "Most software projects ship within 2–6 weeks. Larger platforms or consulting engagements run 6–12 weeks. We'll give you a realistic timeline during our discovery call, no padding, no sandbagging.",
   },
   {
     question: "Do you offer ongoing support after launch?",
@@ -29,7 +29,7 @@ const faqs = [
   {
     question: "What does your pricing look like?",
     answer:
-      "Pricing depends on scope and complexity. API projects typically start at $5,000. Consulting engagements are billed hourly or as a fixed-price package. Reach out for a custom quote; we're transparent about costs from day one.",
+      "Pricing depends on scope and complexity. Projects typically start at $5,000. Consulting engagements are billed hourly or as a fixed-price package. Reach out for a custom quote, we're transparent about costs from day one.",
   },
   {
     question: "How do I get started?",
@@ -46,21 +46,16 @@ export function FAQSection() {
   };
 
   return (
-    <section className="py-28 relative overflow-hidden">
+    <section className="py-28 relative">
       <div className="section-divider absolute top-0 inset-x-0" />
-
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 right-1/4 w-[400px] h-[400px] bg-[#2563eb]/4 rounded-full blur-[140px] animate-glow-pulse" />
-        <div className="absolute bottom-1/4 left-1/6 w-[320px] h-[320px] bg-violet-600/3 rounded-full blur-[120px] animate-orb-drift" />
-      </div>
 
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <Reveal className="text-center mb-16">
           <p className="text-[#2563eb] text-xs font-semibold uppercase tracking-[0.2em] mb-4">
             FAQ
           </p>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-5">
-            <span className="gradient-text">Common Questions</span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white mb-5">
+            Common Questions
           </h2>
           <p className="text-[#8a95a8] text-lg max-w-md mx-auto leading-relaxed">
             Everything you need to know before working with us.
@@ -73,7 +68,7 @@ export function FAQSection() {
             return (
               <StaggerItem key={i}>
                 <div
-                  className={`rounded-2xl bg-[#0a0a14] border overflow-hidden transition-all duration-500 ${
+                  className={`glow-card rounded-2xl bg-[#0a0a14] border overflow-hidden transition-all duration-500 ${
                     isOpen
                       ? "border-[#2563eb]/15 shadow-[0_0_24px_rgba(37,99,235,0.06)]"
                       : "border-white/[0.06] hover:border-white/[0.1]"

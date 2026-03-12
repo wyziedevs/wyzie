@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { CursorLight } from "@/components/CursorLight";
+import { GlowCardTracker } from "@/components/GlowCardTracker";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -22,19 +24,26 @@ export const metadata: Metadata = {
     template: "%s | Wyzie",
   },
   description:
-    "Wyzie builds production-grade APIs, open source tools, and offers consulting & custom development services. Serving 10M+ daily requests on Cloudflare's edge network with 99.9% uptime.",
+    "Wyzie is a bespoke software company building production-grade web applications, open source tools, and offering technology consulting & custom development services.",
   keywords: [
     "Wyzie",
-    "API development",
+    "Technology Solutions",
+    "bespoke software",
+    "custom software development",
+    "web development",
     "open source",
     "Cloudflare Workers",
     "edge computing",
-    "REST API",
     "TypeScript",
+    "Go",
     "consulting",
+    "software consulting",
     "custom development",
-    "subtitle API",
     "technology solutions",
+    "edge network",
+    "developer tools",
+    "infrastructure",
+    "full-stack development",
   ],
   metadataBase: new URL("https://wyzie.io"),
   alternates: {
@@ -43,7 +52,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Wyzie - Technology Solutions",
     description:
-      "Production-grade APIs on Cloudflare's edge network, open source tools used by millions, and consulting services. 10M+ daily requests, 99.9% uptime.",
+      "Wyzie builds production-grade technology solutions, open source tools, and offers consulting & custom development services.",
     url: "https://wyzie.io",
     siteName: "Wyzie",
     type: "website",
@@ -61,7 +70,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Wyzie - Technology Solutions",
     description:
-      "Production-grade APIs, open source tools, and consulting services. 10M+ daily requests, 99.9% uptime.",
+      "Bespoke software solutions, open source tools, and technology consulting. 50+ projects delivered, 99.9% uptime.",
     images: ["/header.png"],
   },
   robots: {
@@ -70,8 +79,42 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://wyzie.io/#organization",
+      name: "Wyzie",
+      url: "https://wyzie.io",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://wyzie.io/favicon.png",
+      },
+      sameAs: [
+        "https://github.com/wyziedevs",
+        "https://discord.gg/2mxraHBVtB",
+      ],
+      description:
+        "Technology solutions company building bespoke software, open source tools, and providing technology consulting services.",
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://wyzie.io/#website",
+      url: "https://wyzie.io",
+      name: "Wyzie",
+      publisher: { "@id": "https://wyzie.io/#organization" },
+      description:
+        "Bespoke software solutions, open source tools, and technology consulting on Cloudflare's edge network.",
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -81,9 +124,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <CursorLight />
+        <GlowCardTracker />
         {children}
         <div className="grain-overlay" aria-hidden="true" />
       </body>

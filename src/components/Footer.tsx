@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Github, MessageSquare } from "lucide-react";
 import { Reveal } from "./Motion";
 
 const footerLinks = {
@@ -14,10 +13,10 @@ const footerLinks = {
   Documentation: [
     { label: "Getting Started", href: "https://docs.wyzie.io" },
     { label: "Subs API Reference", href: "https://docs.wyzie.io/subs/intro" },
-    { label: "Usage Guide", href: "https://docs.wyzie.io/subs/usage" },
     { label: "Donate", href: "https://donate.cozi.lol" },
   ],
   Company: [
+    { label: "About", href: "/about" },
     { label: "GitHub Organization", href: "https://github.com/wyziedevs" },
     { label: "Discord Community", href: "https://discord.gg/2mxraHBVtB" },
     { label: "Work With Us", href: "/contact" },
@@ -45,8 +44,8 @@ export function Footer() {
                 />
               </div>
               <p className="text-[#5a657a] text-xs leading-relaxed mb-5">
-                Technology solutions company building APIs, open source tools,
-                and consulting services for the modern web.
+                Bespoke software company building web applications, open source
+                tools, and consulting services for the modern web.
               </p>
             </div>
 
@@ -84,6 +83,20 @@ export function Footer() {
           <p className="text-[11px] text-[#3a4050]">
             &copy; {currentYear} Wyzie. All rights reserved.
           </p>
+          <div className="flex items-center gap-4">
+            <a
+              href="/privacy"
+              className="text-[11px] text-[#3a4050] hover:text-[#5a657a] transition-colors duration-300"
+            >
+              Privacy Policy
+            </a>
+            <a
+              href="/terms"
+              className="text-[11px] text-[#3a4050] hover:text-[#5a657a] transition-colors duration-300"
+            >
+              Terms of Service
+            </a>
+          </div>
         </div>
       </div>
     </footer>

@@ -18,6 +18,17 @@ const projects = [
     featured: true,
   },
   {
+    name: "sudo-flix",
+    description:
+      "A fully open-source movie and TV streaming web app. Fast, modern, and community maintained.",
+    tags: ["TypeScript", "React", "Open Source"],
+    github: "https://github.com/sudo-flix/sudo-flix",
+    demo: null,
+    docs: "https://docs.undi.rest",
+    status: "deprecated",
+    featured: true,
+  },
+  {
     name: "Wyzie Lib",
     description:
       "Official TypeScript/JavaScript SDK for seamless Wyzie Subs integration. Fully typed, tree-shakable, and zero-dependency.",
@@ -25,17 +36,6 @@ const projects = [
     github: "https://github.com/wyziedevs/wyzie-lib",
     demo: null,
     docs: "https://docs.wyzie.io",
-    status: "active",
-    featured: true,
-  },
-  {
-    name: "Wyzie Worker",
-    description:
-      "Intelligent edge worker infrastructure for routing, caching, and traffic orchestration at global scale.",
-    tags: ["TypeScript", "Cloudflare Workers", "Edge"],
-    github: "https://github.com/wyziedevs/wyzie-worker",
-    demo: null,
-    docs: null,
     status: "active",
     featured: false,
   },
@@ -51,23 +51,23 @@ const projects = [
     featured: false,
   },
   {
-    name: "Wyzie Store",
+    name: "coderaft",
     description:
-      "Feature-rich frontend for Wyzie services. Built with SvelteKit and TailwindCSS on Cloudflare Pages.",
-    tags: ["SvelteKit", "Tailwind", "TypeScript"],
-    github: "https://github.com/wyziedevs/wyzie-store",
+      "A modern collaborative code editor built for real-time pair programming and team workflows.",
+    tags: ["TypeScript", "Collaboration", "Editor"],
+    github: "https://github.com/itzcozi/coderaft",
     demo: null,
     docs: null,
     status: "active",
     featured: false,
   },
   {
-    name: "Wyzie Docs",
+    name: "tinybones",
     description:
-      "Documentation site for the full Wyzie toolset. Built with Nextra and deployed on Vercel.",
-    tags: ["Next.js", "Nextra", "Documentation"],
-    github: "https://github.com/wyziedevs/wyzie-docs",
-    demo: "https://docs.wyzie.io",
+      "A lightweight, minimal boilerplate for spinning up new projects fast without the bloat.",
+    tags: ["TypeScript", "Boilerplate", "Tooling"],
+    github: "https://github.com/itzcozi/tinybones",
+    demo: null,
     docs: null,
     status: "active",
     featured: false,
@@ -78,6 +78,7 @@ const statusColors: Record<string, string> = {
   active: "bg-emerald-500/10 text-emerald-400 border-emerald-500/15",
   beta: "bg-yellow-500/10 text-yellow-400 border-yellow-500/15",
   archived: "bg-gray-500/10 text-gray-400 border-gray-500/15",
+  deprecated: "bg-red-500/10 text-red-400 border-red-500/15",
 };
 
 export function ProjectsSection() {
@@ -86,16 +87,8 @@ export function ProjectsSection() {
   const [showAll, setShowAll] = useState(false);
 
   return (
-    <section id="projects" className="py-28 relative overflow-hidden">
+    <section id="projects" className="py-28 relative">
       <div className="section-divider absolute top-0 inset-x-0" />
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute right-0 top-1/2 w-[500px] h-[500px] bg-violet-600/3 rounded-full blur-[140px] animate-orb-drift" />
-        <div
-          className="absolute -left-20 top-1/3 w-[400px] h-[400px] bg-[#2563eb]/3 rounded-full blur-[120px] animate-orb-drift"
-          style={{ animationDelay: "4s" }}
-        />
-      </div>
-
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal className="text-center mb-20">
           <p className="text-[#2563eb] text-xs font-semibold uppercase tracking-[0.2em] mb-4">
@@ -124,11 +117,11 @@ export function ProjectsSection() {
         <AnimatePresence>
           {showAll && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-              className="overflow-hidden"
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+              className="mb-5"
             >
               <StaggerContainer
                 className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4"

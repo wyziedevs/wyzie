@@ -27,13 +27,9 @@ export function CTASection() {
     <section id="contact" className="py-28 relative overflow-hidden">
       <div className="section-divider absolute top-0 inset-x-0" />
 
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[#2563eb]/5 rounded-full blur-[120px]" />
-      </div>
-
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal>
-          <div className="relative rounded-3xl bg-gradient-to-br from-[#0a0a14] via-[#0c0c1a] to-[#0a0a14] border border-white/[0.06] p-8 sm:p-14 lg:p-20 overflow-hidden">
+          <div className="glow-card relative rounded-3xl bg-gradient-to-br from-[#0a0a14] via-[#0c0c1a] to-[#0a0a14] border border-white/[0.06] hover:border-[#2563eb]/30 p-8 sm:p-14 lg:p-20 overflow-hidden transition-colors duration-500">
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#2563eb]/30 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-br from-[#2563eb]/[0.03] via-transparent to-transparent pointer-events-none" />
 
@@ -46,9 +42,9 @@ export function CTASection() {
                   <AnimatePresence mode="wait">
                     <motion.span
                       key={phrases[index].verb}
-                      initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
-                      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                      exit={{ opacity: 0, y: -12, filter: "blur(4px)" }}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -12 }}
                       transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
                       className="inline-block"
                     >
@@ -59,9 +55,9 @@ export function CTASection() {
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={phrases[index].noun}
-                    initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
-                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                    exit={{ opacity: 0, y: -12, filter: "blur(4px)" }}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -12 }}
                     transition={{
                       duration: 0.4,
                       delay: 0.05,
@@ -75,8 +71,8 @@ export function CTASection() {
               </h2>
 
               <p className="text-[#8a95a8] text-lg leading-relaxed mb-10 max-w-lg mx-auto">
-                Whether you need an API, a performance audit, or a dedicated
-                development partner, we deliver solutions that work.
+                Whether you need a custom web app, a complete platform, or a
+                dedicated technology partner, we deliver solutions that work.
               </p>
 
               <div className="flex flex-wrap items-center justify-center gap-4">
