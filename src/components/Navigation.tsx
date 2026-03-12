@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 const navLinks = [
   { label: "Services", href: "/#services" },
   { label: "Projects", href: "/#projects" },
-  { label: "Documentation", href: "https://docs.wyzie.io", external: true },
+  { label: "About", href: "/about" },
   { label: "GitHub", href: "https://github.com/wyziedevs", external: true },
 ];
 
@@ -29,7 +29,7 @@ export function Navigation() {
       className={cn(
         "fixed top-0 inset-x-0 z-50 border-b transition-all duration-500",
         scrolled
-          ? "bg-[#050508]/70 backdrop-blur-2xl border-white/[0.04] shadow-lg shadow-black/30"
+          ? "bg-[#050508]/85 backdrop-blur-md border-white/[0.04] shadow-lg shadow-black/30"
           : "bg-transparent border-transparent",
       )}
     >
@@ -52,7 +52,7 @@ export function Navigation() {
                 href={link.href}
                 target={link.external ? "_blank" : undefined}
                 rel={link.external ? "noopener noreferrer" : undefined}
-                className="px-3.5 py-1.5 text-sm text-[#8a95a8] hover:text-white rounded-lg hover:bg-white/[0.05] transition-all duration-300"
+                className="px-3.5 py-1.5 text-sm text-[#c4d3ec] hover:text-white rounded-lg hover:bg-white/[0.05] transition-all duration-300"
               >
                 {link.label}
               </a>
@@ -70,7 +70,7 @@ export function Navigation() {
 
           <Dialog.Root open={open} onOpenChange={setOpen}>
             <Dialog.Trigger asChild>
-              <button className="md:hidden p-2 rounded-lg text-[#8a95a8] hover:text-white hover:bg-white/[0.05] transition-all duration-300">
+              <button className="md:hidden p-2 rounded-lg text-[#c4d3ec] hover:text-white hover:bg-white/[0.05] transition-all duration-300">
                 <Menu className="w-5 h-5" />
               </button>
             </Dialog.Trigger>
@@ -86,7 +86,7 @@ export function Navigation() {
                     height={30}
                   />
                   <Dialog.Close asChild>
-                    <button className="p-1.5 rounded-md text-[#8a95a8] hover:text-white hover:bg-white/[0.05] transition-all duration-300">
+                    <button className="p-1.5 rounded-md text-[#c4d3ec] hover:text-white hover:bg-white/[0.05] transition-all duration-300">
                       <X className="w-4 h-4" />
                     </button>
                   </Dialog.Close>
@@ -98,7 +98,7 @@ export function Navigation() {
                         href={link.href}
                         target={link.external ? "_blank" : undefined}
                         rel={link.external ? "noopener noreferrer" : undefined}
-                        className="px-3 py-2.5 text-sm text-[#8a95a8] hover:text-white hover:bg-white/[0.05] rounded-lg transition-all duration-300"
+                        className="px-3 py-2.5 text-sm text-[#c4d3ec] hover:text-white hover:bg-white/[0.05] rounded-lg transition-all duration-300"
                       >
                         {link.label}
                       </a>

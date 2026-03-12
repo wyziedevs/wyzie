@@ -4,6 +4,8 @@ import { useEffect } from "react";
 
 export function GlowCardTracker() {
   useEffect(() => {
+    if ("ontouchstart" in window || navigator.maxTouchPoints > 0) return;
+
     function handleMouseMove(e: MouseEvent) {
       const cards = document.querySelectorAll<HTMLElement>(".glow-card");
       for (const card of cards) {

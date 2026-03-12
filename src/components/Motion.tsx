@@ -4,8 +4,8 @@ import { motion, type Variants } from "framer-motion";
 import { type ReactNode } from "react";
 
 const revealVariants: Variants = {
-  hidden: { opacity: 0, y: 32, filter: "blur(4px)" },
-  visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
 };
 
 export function Reveal({
@@ -23,7 +23,7 @@ export function Reveal({
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.7, delay, ease: [0.25, 0.1, 0.25, 1] }}
+      transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
       className={className}
     >
       {children}
@@ -45,7 +45,7 @@ export function StaggerContainer({
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ staggerChildren: staggerDelay }}
+      transition={{ staggerChildren: staggerDelay, delayChildren: 0.05 }}
       className={className}
     >
       {children}
@@ -63,7 +63,7 @@ export function StaggerItem({
   return (
     <motion.div
       variants={revealVariants}
-      transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       className={className}
     >
       {children}

@@ -1,14 +1,14 @@
-import { Server, GitBranch, Briefcase, ArrowRight } from "lucide-react";
+import { Code2, GitBranch, Briefcase, Server, ArrowRight } from "lucide-react";
 import { Reveal, StaggerContainer, StaggerItem } from "./Motion";
 
 const services = [
   {
-    icon: Server,
-    title: "API Development & Hosting",
+    icon: Code2,
+    title: "Bespoke Software Development",
     description:
-      "Mission-critical REST APIs on Cloudflare Workers; globally distributed, ultra-low-latency, purpose-built for seamless integration.",
-    highlights: ["REST APIs", "Cloudflare Workers", "Edge Computing"],
-    cta: { label: "View our APIs", href: "#projects" },
+      "From concept to production, we build tailored web applications, backend systems, and edge infrastructure that fit your exact requirements and scale with your business.",
+    highlights: ["Web Apps", "Full-Stack", "Edge Computing"],
+    cta: { label: "View our work", href: "#projects" },
     accentColor: "#2563eb",
     iconBg: "bg-[#2563eb]/10",
     iconColor: "text-[#60a5fa]",
@@ -29,11 +29,22 @@ const services = [
     iconColor: "text-violet-400",
   },
   {
-    icon: Briefcase,
-    title: "Consulting & Custom Dev",
+    icon: Server,
+    title: "Business Infrastructure",
     description:
-      "From strategic roadmapping to hands-on implementation, API design, performance optimization, architecture reviews.",
-    highlights: ["Consulting", "Custom APIs", "Architecture"],
+      "Scalable edge infrastructure, custom SDKs, and API foundations built to power your business. From Cloudflare Workers to fully typed client libraries, we set you up for global scale.",
+    highlights: ["Edge Computing", "SDKs", "APIs", "Cloudflare"],
+    cta: { label: "Get in touch", href: "#contact" },
+    accentColor: "#f59e0b",
+    iconBg: "bg-amber-500/10",
+    iconColor: "text-amber-400",
+  },
+  {
+    icon: Briefcase,
+    title: "Technology Consulting",
+    description:
+      "Strategic roadmapping, architecture reviews, and hands-on implementation. We help teams move faster, make better technical decisions, and build for the long term.",
+    highlights: ["Consulting", "Architecture", "Code Review"],
     cta: { label: "Get in touch", href: "#contact" },
     accentColor: "#10b981",
     iconBg: "bg-emerald-500/10",
@@ -44,16 +55,6 @@ const services = [
 export function ServicesSection() {
   return (
     <section id="services" className="py-28 relative overflow-hidden">
-      <div className="section-divider absolute top-0 inset-x-0" />
-
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/3 -left-32 w-[500px] h-[500px] bg-[#2563eb]/4 rounded-full blur-[140px] animate-orb-drift" />
-        <div
-          className="absolute bottom-1/4 -right-32 w-[400px] h-[400px] bg-violet-600/3 rounded-full blur-[120px] animate-orb-drift"
-          style={{ animationDelay: "3s" }}
-        />
-      </div>
-
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal className="text-center mb-20">
           <p className="text-[#2563eb] text-xs font-semibold uppercase tracking-[0.2em] mb-4">
@@ -63,13 +64,13 @@ export function ServicesSection() {
             Engineered for Impact
           </h2>
           <p className="text-[#8a95a8] text-lg max-w-lg mx-auto leading-relaxed">
-            High-performance APIs, open source tools, and bespoke software that
+            Bespoke software, open source tools, and expert consulting that
             drives measurable results.
           </p>
         </Reveal>
 
         <StaggerContainer
-          className="grid md:grid-cols-3 gap-5"
+          className="grid md:grid-cols-2 gap-5"
           staggerDelay={0.15}
         >
           {services.map((service) => {
@@ -94,7 +95,7 @@ export function ServicesSection() {
                     <h3 className="text-white font-bold text-lg mb-3 leading-snug">
                       {service.title}
                     </h3>
-                    <p className="text-[#8a95a8] text-sm leading-relaxed mb-6 flex-1">
+                    <p className="text-[#8a95a8] text-sm leading-relaxed mb-4 flex-1">
                       {service.description}
                     </p>
 

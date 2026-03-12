@@ -20,36 +20,39 @@ export const metadata: Metadata = {
     apple: "/favicon.png",
   },
   title: {
-    default: "Wyzie - Production-Grade APIs & Open Source Tools",
+    default: "Wyzie - Technology Solutions",
     template: "%s | Wyzie",
   },
   description:
-    "Wyzie builds production-grade APIs, open source tools, and offers consulting & custom development services. Serving 10M+ daily requests on Cloudflare's edge network with 99.9% uptime.",
+    "Wyzie is a bespoke software company building production-grade web applications, open source tools, and offering technology consulting & custom development services.",
   keywords: [
     "Wyzie",
-    "API development",
+    "Technology Solutions",
+    "bespoke software",
+    "custom software development",
+    "web development",
     "open source",
     "Cloudflare Workers",
     "edge computing",
-    "REST API",
     "TypeScript",
     "Go",
     "consulting",
+    "software consulting",
     "custom development",
-    "subtitle API",
     "technology solutions",
     "edge network",
     "developer tools",
     "infrastructure",
+    "full-stack development",
   ],
   metadataBase: new URL("https://wyzie.io"),
   alternates: {
     canonical: "https://wyzie.io",
   },
   openGraph: {
-    title: "Wyzie - Production-Grade APIs & Open Source Tools",
+    title: "Wyzie - Technology Solutions",
     description:
-      "Production-grade APIs on Cloudflare's edge network, open source tools used by millions, and consulting services. 10M+ daily requests, 99.9% uptime.",
+      "Wyzie builds production-grade technology solutions, open source tools, and offers consulting & custom development services.",
     url: "https://wyzie.io",
     siteName: "Wyzie",
     type: "website",
@@ -59,15 +62,15 @@ export const metadata: Metadata = {
         url: "/header.png",
         width: 1200,
         height: 630,
-        alt: "Wyzie - Production-Grade APIs & Open Source Tools",
+        alt: "Wyzie - Technology Solutions",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wyzie - Production-Grade APIs & Open Source Tools",
+    title: "Wyzie - Technology Solutions",
     description:
-      "Production-grade APIs, open source tools, and consulting services. 10M+ daily requests, 99.9% uptime.",
+      "Bespoke software solutions, open source tools, and technology consulting. 50+ projects delivered, 99.9% uptime.",
     images: ["/header.png"],
   },
   robots: {
@@ -100,7 +103,7 @@ const jsonLd = {
         "https://discord.gg/2mxraHBVtB",
       ],
       description:
-        "Technology solutions company building production-grade APIs, open source tools, and consulting services.",
+        "Technology solutions company building bespoke software, open source tools, and providing technology consulting services.",
     },
     {
       "@type": "WebSite",
@@ -109,7 +112,7 @@ const jsonLd = {
       name: "Wyzie",
       publisher: { "@id": "https://wyzie.io/#organization" },
       description:
-        "Production-grade APIs, open source tools, and consulting services on Cloudflare's edge network.",
+        "Bespoke software solutions, open source tools, and technology consulting on Cloudflare's edge network.",
     },
   ],
 };

@@ -5,25 +5,25 @@ import { Reveal, StaggerContainer, StaggerItem } from "./Motion";
 
 const stats = [
   {
-    value: "10M+",
-    numericValue: 10,
-    suffix: "M+",
-    label: "Daily Requests",
-    sublabel: "and growing",
+    value: "50+",
+    numericValue: 50,
+    suffix: "+",
+    label: "Projects Shipped",
+    sublabel: "across industries",
   },
   {
     value: "99.9%",
     numericValue: 99.9,
     suffix: "%",
-    label: "Uptime",
-    sublabel: "enterprise SLA",
+    label: "Uptime SLA",
+    sublabel: "enterprise grade",
   },
   {
-    value: "6+",
-    numericValue: 6,
-    suffix: "+",
-    label: "Open Source Projects",
-    sublabel: "community-driven",
+    value: "10M+",
+    numericValue: 10,
+    suffix: "M+",
+    label: "Daily Users",
+    sublabel: "and growing",
   },
   {
     value: "300+",
@@ -83,23 +83,23 @@ function AnimatedNumber({
 
 export function StatsSection() {
   return (
-    <section className="py-20 relative overflow-hidden">
-      <div className="section-divider absolute top-0 inset-x-0" />
+    <section className="pb-25 pt-8 relative overflow-hidden">
       <div className="section-divider absolute bottom-0 inset-x-0" />
-
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#2563eb]/4 rounded-full blur-[120px] animate-glow-pulse" />
-      </div>
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <StaggerContainer
-            className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.04] rounded-2xl overflow-hidden border border-white/[0.06]"
+            className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.04] rounded-2xl border border-white/[0.06]"
             staggerDelay={0.12}
           >
-            {stats.map((stat) => (
+            {stats.map((stat, index) => (
               <StaggerItem key={stat.label}>
-                <div className="flex flex-col items-center text-center py-8 px-4 sm:py-12 sm:px-6 bg-[#050508] hover:bg-[#0a0a14] transition-colors duration-500">
+                <div className={`flex flex-col items-center text-center py-8 px-4 sm:py-12 sm:px-6 bg-[#050508] hover:bg-[#0a0a14] transition-colors duration-500 h-full
+                  ${index === 0 ? "rounded-tl-2xl lg:rounded-tl-2xl lg:rounded-bl-2xl" : ""}
+                  ${index === 1 ? "rounded-tr-2xl lg:rounded-none" : ""}
+                  ${index === 2 ? "rounded-bl-2xl lg:rounded-none" : ""}
+                  ${index === 3 ? "rounded-br-2xl lg:rounded-tr-2xl lg:rounded-br-2xl" : ""}
+                `}>
                   <span className="text-3xl sm:text-4xl font-extrabold text-[#2563eb] mb-1.5 tracking-tight tabular-nums">
                     <AnimatedNumber
                       value={stat.numericValue}

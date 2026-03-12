@@ -23,7 +23,7 @@ class Particle {
     this.direction = (Math.random() * Math.PI) / 2 + Math.PI / 4;
     this.speed = 0.02 + Math.random() * 0.08;
     const second = 65;
-    this.lifetime = second * 3 + Math.random() * (second * 30);
+    this.lifetime = second * 8 + Math.random() * (second * 40);
     this.ran = 0;
   }
 
@@ -55,7 +55,7 @@ class Particle {
       this.x,
       this.y,
       this.radius,
-      this.radius * 1.5,
+      this.radius,
       this.direction,
       0,
       Math.PI * 2,
@@ -73,10 +73,13 @@ function ParticlesCanvas() {
     if (!canvasRef.current) return;
     const canvas = canvasRef.current;
 
+    const isMobile = window.innerWidth < 768;
+    const particleCount = isMobile ? 50 : 180;
+    const tickRate = isMobile ? 30 : 60;
+
     canvas.width = canvas.scrollWidth;
     canvas.height = canvas.scrollHeight;
 
-    const particleCount = 200;
     const particles: Particle[] = [];
     for (let i = 0; i < particleCount; i++) {
       particles.push(new Particle(canvas));
@@ -84,6 +87,8 @@ function ParticlesCanvas() {
 
     let shouldTick = true;
     let handle: ReturnType<typeof requestAnimationFrame> | null = null;
+    let lastWidth = canvas.scrollWidth;
+    let lastHeight = canvas.scrollHeight;
 
     function loop() {
       const ctx = canvas.getContext("2d");
@@ -94,16 +99,24 @@ function ParticlesCanvas() {
         shouldTick = false;
       }
 
-      canvas.width = canvas.scrollWidth;
-      canvas.height = canvas.scrollHeight;
-      for (const p of particles) p.render(canvas);
+      const w = canvas.scrollWidth;
+      const h = canvas.scrollHeight;
+      if (w !== lastWidth || h !== lastHeight) {
+        canvas.width = w;
+        canvas.height = h;
+        lastWidth = w;
+        lastHeight = h;
+      } else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
 
+      for (const p of particles) p.render(canvas);
       handle = requestAnimationFrame(loop);
     }
 
     const interval = setInterval(() => {
       shouldTick = true;
-    }, 1e3 / 120);
+    }, 1e3 / tickRate);
 
     loop();
 
@@ -117,9 +130,9 @@ function ParticlesCanvas() {
     <canvas
       ref={canvasRef}
       style={{
-        width: "40%",
-        height: "300px",
-        transform: "translateY(-250px)",
+        width: "32%",
+        height: "400px",
+        transform: "translateY(-480px)",
       }}
     />
   );
@@ -127,8 +140,8 @@ function ParticlesCanvas() {
 
 export function Lightbar() {
   return (
-    <div className="absolute inset-0 w-full h-[680px] overflow-hidden pointer-events-none -mt-64">
-      <div className="max-w-screen w-full h-[680px] relative pt-64">
+    <div className="absolute inset-0 w-full h-[1100px] overflow-hidden pointer-events-none -mt-64">
+      <div className="max-w-screen w-full h-[1100px] relative pt-64">
         <div className="lightbar">
           <ParticlesCanvas />
           <div className="lightbar-visual" />

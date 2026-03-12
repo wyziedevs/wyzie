@@ -2,22 +2,35 @@
 
 import { useEffect, useRef } from "react";
 
+function isTouchDevice() {
+  return typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0);
+}
+
 export function CursorLight() {
   const lightRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!lightRef.current) return;
+    if (!lightRef.current || isTouchDevice()) return;
     const el = lightRef.current;
 
-    let mouseX = 0;
-    let mouseY = 0;
-    let currentX = 0;
-    let currentY = 0;
+    let mouseX = -1000;
+    let mouseY = -1000;
+    let currentX = -1000;
+    let currentY = -1000;
+    let hasMouseMoved = false;
     let rafId: number;
 
     function onMouseMove(e: MouseEvent) {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
+      if (!hasMouseMoved) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        currentX = e.clientX;
+        currentY = e.clientY;
+        hasMouseMoved = true;
+      } else {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      }
     }
 
     function animate() {
@@ -53,8 +66,8 @@ export function CursorLight() {
       <div
         style={{
           position: "absolute",
-          width: "600px",
-          height: "600px",
+          width: "400px",
+          height: "400px",
           borderRadius: "50%",
           background:
             "radial-gradient(circle, rgba(37, 99, 235, 0.06) 0%, rgba(37, 99, 235, 0.02) 40%, transparent 70%)",
