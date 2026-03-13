@@ -94,7 +94,7 @@ export function StatsSection() {
           >
             {stats.map((stat, index) => (
               <StaggerItem key={stat.label}>
-                <div className={`flex flex-col items-center text-center py-8 px-4 sm:py-12 sm:px-6 bg-[#050508] hover:bg-[#0a0a14] transition-colors duration-500 h-full
+                <div className={`flex flex-col items-center text-center py-8 px-4 sm:py-12 sm:px-6 bg-[#050508] hover:bg-[#0a0a14] hover:scale-[1.03] transition-all duration-500 h-full
                   ${index === 0 ? "rounded-tl-2xl lg:rounded-tl-2xl lg:rounded-bl-2xl" : ""}
                   ${index === 1 ? "rounded-tr-2xl lg:rounded-none" : ""}
                   ${index === 2 ? "rounded-bl-2xl lg:rounded-none" : ""}

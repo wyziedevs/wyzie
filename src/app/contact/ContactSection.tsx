@@ -89,7 +89,7 @@ export function ContactSection() {
                       name="subject"
                       required
                       placeholder="What's this about?"
-                      className="w-full px-4 py-2.5 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder:text-[#475569] focus:outline-none focus:border-[#2563eb]/50 focus:ring-1 focus:ring-[#2563eb]/30 transition-all"
+                      className="w-full px-4 py-2.5 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder:text-[#475569] focus:outline-none focus:border-[#2563eb]/50 focus:ring-1 focus:ring-[#2563eb]/30 transition-all duration-300"
                     />
                   </div>
 
@@ -106,15 +106,15 @@ export function ContactSection() {
                       required
                       rows={5}
                       placeholder="Tell us about your project, timeline, and any requirements..."
-                      className="w-full px-4 py-2.5 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder:text-[#475569] focus:outline-none focus:border-[#2563eb]/50 focus:ring-1 focus:ring-[#2563eb]/30 transition-all resize-none"
+                      className="w-full px-4 py-2.5 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder:text-[#475569] focus:outline-none focus:border-[#2563eb]/50 focus:ring-1 focus:ring-[#2563eb]/30 transition-all duration-300 resize-none"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-[#2563eb] hover:bg-[#3b82f6] text-white font-medium rounded-xl transition-all shadow-lg shadow-blue-600/25 text-sm w-full sm:w-auto justify-center"
+                    className="group inline-flex items-center gap-2 px-6 py-3 bg-[#2563eb] hover:bg-[#3b82f6] text-white font-medium rounded-xl transition-all duration-300 shadow-lg shadow-blue-600/25 hover:shadow-blue-600/35 hover:shadow-xl text-sm w-full sm:w-auto justify-center"
                   >
-                    <Send className="w-4 h-4" />
+                    <Send className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
                     Send Message
                   </button>
                 </form>
@@ -136,7 +136,7 @@ export function ContactSection() {
                 </p>
                 <a
                   href="mailto:hello@wyzie.io"
-                  className="text-sm text-[#2563eb] hover:text-[#3b82f6] font-medium transition-colors"
+                  className="text-sm text-[#2563eb] hover:text-[#3b82f6] font-medium transition-colors duration-300"
                 >
                   hello@wyzie.io
                 </a>
@@ -158,10 +158,10 @@ export function ContactSection() {
                   href="https://discord.gg/2mxraHBVtB"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-sm text-violet-400 hover:text-violet-300 font-medium transition-colors"
+                  className="group/discord inline-flex items-center gap-1.5 text-sm text-violet-400 hover:text-violet-300 font-medium transition-colors duration-300"
                 >
                   Join Discord
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover/discord:translate-x-0.5" />
                 </a>
               </div>
             </Reveal>
