@@ -30,8 +30,9 @@ export function CTASection() {
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <div className="glow-card relative rounded-3xl bg-gradient-to-br from-[#0a0a14] via-[#0c0c1a] to-[#0a0a14] border border-white/[0.06] hover:border-[#2563eb]/30 p-8 sm:p-14 lg:p-20 overflow-hidden transition-colors duration-500">
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#2563eb]/30 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-br from-[#2563eb]/[0.03] via-transparent to-transparent pointer-events-none" />
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#2563eb]/40 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#2563eb]/15 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[#2563eb]/[0.04] via-transparent to-[#8b5cf6]/[0.02] pointer-events-none" />
 
             <div className="absolute inset-0 hero-grid opacity-30 pointer-events-none rounded-3xl" />
 

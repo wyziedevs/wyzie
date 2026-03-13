@@ -46,7 +46,7 @@ export function FAQSection() {
   };
 
   return (
-    <section className="py-28 relative">
+    <section className="py-28 relative section-glow">
       <div className="section-divider absolute top-0 inset-x-0" />
 
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">

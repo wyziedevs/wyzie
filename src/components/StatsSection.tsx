@@ -89,18 +89,13 @@ export function StatsSection() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <StaggerContainer
-            className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.04] rounded-2xl border border-white/[0.06]"
+            className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.04] rounded-2xl border border-white/[0.06] overflow-hidden"
             staggerDelay={0.12}
           >
-            {stats.map((stat, index) => (
+            {stats.map((stat) => (
               <StaggerItem key={stat.label}>
-                <div className={`flex flex-col items-center text-center py-8 px-4 sm:py-12 sm:px-6 bg-[#050508] hover:bg-[#0a0a14] hover:scale-[1.03] transition-all duration-500 h-full
-                  ${index === 0 ? "rounded-tl-2xl lg:rounded-tl-2xl lg:rounded-bl-2xl" : ""}
-                  ${index === 1 ? "rounded-tr-2xl lg:rounded-none" : ""}
-                  ${index === 2 ? "rounded-bl-2xl lg:rounded-none" : ""}
-                  ${index === 3 ? "rounded-br-2xl lg:rounded-tr-2xl lg:rounded-br-2xl" : ""}
-                `}>
-                  <span className="text-3xl sm:text-4xl font-extrabold text-[#2563eb] mb-1.5 tracking-tight tabular-nums">
+                <div className="flex flex-col items-center text-center py-8 px-4 sm:py-12 sm:px-6 bg-[#050508] hover:bg-[#0a0a14]/80 transition-all duration-500 h-full">
+                  <span className="text-3xl sm:text-4xl font-extrabold text-[#2563eb] mb-1.5 tracking-tight tabular-nums drop-shadow-[0_0_12px_rgba(37,99,235,0.2)]">
                     <AnimatedNumber
                       value={stat.numericValue}
                       suffix={stat.suffix}

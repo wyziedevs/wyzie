@@ -54,7 +54,7 @@ const services = [
 
 export function ServicesSection() {
   return (
-    <section id="services" className="py-28 relative overflow-hidden">
+    <section id="services" className="py-28 relative overflow-hidden section-glow">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal className="text-center mb-20">
           <p className="text-[#2563eb] text-xs font-semibold uppercase tracking-[0.2em] mb-4">
@@ -116,7 +116,8 @@ export function ServicesSection() {
                       rel={
                         service.cta.external ? "noopener noreferrer" : undefined
                       }
-                      className="inline-flex items-center gap-1.5 text-sm text-[#5a657a] hover:text-white transition-all duration-300"
+                      className="inline-flex items-center gap-1.5 text-sm font-medium hover:text-white transition-all duration-300"
+                      style={{ color: `${service.accentColor}99` }}
                     >
                       {service.cta.label}
                       <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />

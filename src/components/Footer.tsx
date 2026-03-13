@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Reveal } from "./Motion";
+import { Github, MessageCircle } from "lucide-react";
 
 const footerLinks = {
   Products: [
@@ -47,6 +48,26 @@ export function Footer() {
                 Bespoke software company building web applications, open source
                 tools, and consulting services for the modern web.
               </p>
+              <div className="flex items-center gap-2">
+                <a
+                  href="https://github.com/wyziedevs"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-[#5a657a] hover:text-white hover:bg-white/[0.08] hover:border-white/[0.12] transition-all duration-300"
+                  aria-label="GitHub"
+                >
+                  <Github className="w-3.5 h-3.5" />
+                </a>
+                <a
+                  href="https://discord.gg/2mxraHBVtB"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-[#5a657a] hover:text-white hover:bg-white/[0.08] hover:border-white/[0.12] transition-all duration-300"
+                  aria-label="Discord"
+                >
+                  <MessageCircle className="w-3.5 h-3.5" />
+                </a>
+              </div>
             </div>
 
             {Object.entries(footerLinks).map(([category, links]) => (
@@ -79,20 +100,20 @@ export function Footer() {
           </div>
         </Reveal>
 
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-8 border-t border-white/[0.04]">
-          <p className="text-[11px] text-[#3a4050]">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-8 border-t border-white/[0.06]">
+          <p className="text-[11px] text-[#4a5568]">
             &copy; {currentYear} Wyzie. All rights reserved.
           </p>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-5">
             <a
               href="/privacy"
-              className="text-[11px] text-[#3a4050] hover:text-[#5a657a] transition-colors duration-300"
+              className="text-[11px] text-[#4a5568] hover:text-[#8a95a8] transition-colors duration-300"
             >
               Privacy Policy
             </a>
             <a
               href="/terms"
-              className="text-[11px] text-[#3a4050] hover:text-[#5a657a] transition-colors duration-300"
+              className="text-[11px] text-[#4a5568] hover:text-[#8a95a8] transition-colors duration-300"
             >
               Terms of Service
             </a>
