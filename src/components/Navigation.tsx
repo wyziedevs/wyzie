@@ -52,7 +52,7 @@ export function Navigation() {
                 href={link.href}
                 target={link.external ? "_blank" : undefined}
                 rel={link.external ? "noopener noreferrer" : undefined}
-                className="px-3.5 py-1.5 text-sm text-[#c4d3ec] hover:text-white rounded-lg hover:bg-white/[0.05] transition-all duration-300"
+                className="relative px-3.5 py-1.5 text-sm text-[#c4d3ec] hover:text-white rounded-lg hover:bg-white/[0.05] transition-all duration-300 after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-px after:bg-[#2563eb]/50 hover:after:w-4/5 after:transition-all after:duration-300"
               >
                 {link.label}
               </a>

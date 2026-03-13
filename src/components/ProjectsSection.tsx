@@ -87,7 +87,7 @@ export function ProjectsSection() {
   const [showAll, setShowAll] = useState(false);
 
   return (
-    <section id="projects" className="py-28 relative">
+    <section id="projects" className="py-28 relative section-glow">
       <div className="section-divider absolute top-0 inset-x-0" />
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal className="text-center mb-20">
@@ -141,7 +141,7 @@ export function ProjectsSection() {
           <Reveal className="flex justify-center mt-3">
             <button
               onClick={() => setShowAll(true)}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm text-[#8a95a8] hover:text-white hover:bg-white/[0.04] transition-all duration-300 cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-sm text-[#8a95a8] hover:text-white bg-white/[0.02] hover:bg-white/[0.06] border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300 cursor-pointer"
             >
               Show more projects
               <ChevronDown className="w-4 h-4" />

@@ -41,7 +41,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1, ease }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#2563eb]/25 bg-[#2563eb]/8 text-[#60a5fa] text-xs font-medium mb-7 backdrop-blur-sm"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#2563eb]/20 bg-[#2563eb]/[0.06] text-[#60a5fa] text-xs font-medium mb-7 backdrop-blur-sm shadow-[0_0_20px_rgba(37,99,235,0.08)]"
             >
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2563eb] opacity-75" />
