@@ -146,7 +146,7 @@ export default function AboutPage() {
                 ].map(({ value, label }) => (
                   <div
                     key={label}
-                    className="rounded-2xl bg-[#0a0a14] border border-white/[0.06] p-6 text-center"
+                    className="rounded-2xl bg-[#0a0a14] border border-white/[0.06] p-6 text-center hover:border-white/[0.1] hover:bg-[#0c0c18] transition-all duration-300"
                   >
                     <p className="text-3xl font-extrabold text-[#2563eb] mb-1 tracking-tight">
                       {value}
@@ -200,7 +200,7 @@ export default function AboutPage() {
                       }}
                     />
                     <div
-                      className={`inline-flex items-center justify-center w-11 h-11 rounded-xl ${v.iconBg} mb-5 shrink-0`}
+                      className={`inline-flex items-center justify-center w-11 h-11 rounded-xl ${v.iconBg} mb-5 shrink-0 transition-transform duration-500 group-hover:scale-110`}
                     >
                       <Icon className={`w-5 h-5 ${v.iconColor}`} />
                     </div>
@@ -242,16 +242,16 @@ export default function AboutPage() {
             <div className="flex flex-wrap items-center justify-center gap-4">
               <a
                 href="/contact"
-                className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold bg-[#2563eb] hover:bg-[#3b82f6] text-white rounded-xl transition-all duration-300 shadow-lg shadow-blue-600/20 hover:shadow-blue-600/30"
+                className="group inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold bg-[#2563eb] hover:bg-[#3b82f6] text-white rounded-xl transition-all duration-300 shadow-lg shadow-blue-600/20 hover:shadow-blue-600/30 hover:shadow-xl"
               >
                 Work With Us
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
               </a>
               <a
                 href="https://github.com/wyziedevs"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold bg-white/[0.06] hover:bg-white/[0.09] text-white rounded-xl border border-white/[0.08] transition-all duration-300"
+                className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold bg-white/[0.06] hover:bg-white/[0.09] text-white rounded-xl border border-white/[0.08] hover:border-white/[0.15] transition-all duration-300"
               >
                 <Github className="w-4 h-4" />
                 GitHub

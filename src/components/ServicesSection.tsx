@@ -103,7 +103,7 @@ export function ServicesSection() {
                       {service.highlights.map((h) => (
                         <span
                           key={h}
-                          className="px-2 py-0.5 rounded-md bg-white/[0.03] border border-white/[0.06] text-xs text-[#5a657a] font-mono"
+                          className="px-2 py-0.5 rounded-md bg-white/[0.03] border border-white/[0.06] text-xs text-[#5a657a] font-mono hover:bg-white/[0.06] hover:border-white/[0.1] transition-all duration-300"
                         >
                           {h}
                         </span>
