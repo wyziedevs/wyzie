@@ -7,10 +7,10 @@ import { AnimatePresence } from "framer-motion";
 
 const phrases = [
   { verb: "Build", noun: "Something Great." },
-  { verb: "Ship", noun: "What Matters." },
+  { verb: "Ship", noun: "With Confidence." },
   { verb: "Scale", noun: "Without Limits." },
-  { verb: "Launch", noun: "Your Next Idea." },
-  { verb: "Craft", noun: "Bold Solutions." },
+  { verb: "Solve", noun: "Complex Challenges." },
+  { verb: "Deliver", noun: "Real Impact." },
 ];
 
 export function CTASection() {
@@ -71,8 +71,9 @@ export function CTASection() {
               </h2>
 
               <p className="text-[#8a95a8] text-lg leading-relaxed mb-10 max-w-lg mx-auto">
-                Whether you need a custom web app, a complete platform, or a
-                dedicated technology partner, we deliver solutions that work.
+                Whether you need a custom web application, a complete platform,
+                or an experienced technology partner — let&apos;s discuss how we
+                can accelerate your next project.
               </p>
 
               <div className="flex flex-wrap items-center justify-center gap-4">
@@ -80,8 +81,14 @@ export function CTASection() {
                   href="/contact"
                   className="group inline-flex items-center gap-2.5 px-7 py-3.5 bg-[#2563eb] hover:bg-[#3b82f6] text-white font-medium rounded-xl transition-all duration-300 shadow-lg shadow-blue-600/20 hover:shadow-blue-600/30 hover:shadow-xl text-sm"
                 >
-                  Start a Conversation
+                  Schedule a Call
                   <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+                </a>
+                <a
+                  href="mailto:hello@wyzie.io"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-white/[0.04] hover:bg-white/[0.08] text-white text-sm font-medium rounded-xl border border-white/[0.08] hover:border-white/[0.15] transition-all duration-300"
+                >
+                  hello@wyzie.io
                 </a>
               </div>
             </div>

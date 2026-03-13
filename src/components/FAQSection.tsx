@@ -14,27 +14,27 @@ const faqs = [
   {
     question: "How long does a typical project take?",
     answer:
-      "Most software projects ship within 2–6 weeks. Larger platforms or consulting engagements run 6–12 weeks. We'll give you a realistic timeline during our discovery call, no padding, no sandbagging.",
+      "Most software projects ship within 2–6 weeks. Larger platforms or consulting engagements run 6–12 weeks. We'll give you a realistic timeline during our discovery call — no padding, no sandbagging.",
   },
   {
     question: "Do you offer ongoing support after launch?",
     answer:
-      "Yes. Every project includes 30 days of post-launch support. For long-term partnerships, we offer monthly retainer plans that cover monitoring, updates, and priority bug fixes.",
+      "Yes. Every project includes 30 days of post-launch support. For long-term partnerships, we offer monthly retainer plans that cover monitoring, updates, and priority bug fixes with guaranteed response times.",
   },
   {
     question: "Can I use your open source projects commercially?",
     answer:
-      "Absolutely. Our open source projects are MIT licensed, meaning you can use, modify, and distribute them freely; including in commercial products. No strings attached.",
+      "Absolutely. Our open source projects are MIT licensed, meaning you can use, modify, and distribute them freely — including in commercial products. No strings attached.",
   },
   {
     question: "What does your pricing look like?",
     answer:
-      "Pricing depends on scope and complexity. Projects typically start at $5,000. Consulting engagements are billed hourly or as a fixed-price package. Reach out for a custom quote, we're transparent about costs from day one.",
+      "Pricing depends on scope and complexity. Projects typically start at $5,000. Consulting engagements are billed hourly or as a fixed-price package. Reach out for a custom quote — we're transparent about costs from day one.",
   },
   {
     question: "How do I get started?",
     answer:
-      "Simply email us at hello@wyzie.io. We'll set up a quick discovery consultation to understand your needs and go from there. No commitment required.",
+      "Email us at hello@wyzie.io or use our contact form to schedule a discovery call. We'll discuss your requirements, timeline, and budget — then provide a detailed proposal. No commitment required.",
   },
 ];
 

@@ -20,11 +20,11 @@ export const metadata: Metadata = {
     apple: "/favicon.png",
   },
   title: {
-    default: "Wyzie - Technology Solutions",
+    default: "Wyzie - Enterprise Software & Technology Solutions",
     template: "%s | Wyzie",
   },
   description:
-    "Wyzie is a bespoke software company building production-grade web applications, open source tools, and offering technology consulting & custom development services.",
+    "Wyzie is a software company building production-grade web applications, open source tools, and providing enterprise technology consulting & custom development services.",
   keywords: [
     "Wyzie",
     "Technology Solutions",
@@ -50,9 +50,9 @@ export const metadata: Metadata = {
     canonical: "https://wyzie.io",
   },
   openGraph: {
-    title: "Wyzie - Technology Solutions",
+    title: "Wyzie - Enterprise Software & Technology Solutions",
     description:
-      "Wyzie builds production-grade technology solutions, open source tools, and offers consulting & custom development services.",
+      "Wyzie builds production-grade technology solutions, open source tools, and offers enterprise consulting & custom development services.",
     url: "https://wyzie.io",
     siteName: "Wyzie",
     type: "website",
@@ -62,15 +62,15 @@ export const metadata: Metadata = {
         url: "/header.png",
         width: 1200,
         height: 630,
-        alt: "Wyzie - Technology Solutions",
+        alt: "Wyzie - Enterprise Software & Technology Solutions",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wyzie - Technology Solutions",
+    title: "Wyzie - Enterprise Software & Technology Solutions",
     description:
-      "Bespoke software solutions, open source tools, and technology consulting. 50+ projects delivered, 99.9% uptime.",
+      "Production-grade software solutions, open source tools, and enterprise consulting. 50+ projects delivered, 99.9% uptime SLA.",
     images: ["/header.png"],
   },
   robots: {
@@ -103,7 +103,7 @@ const jsonLd = {
         "https://discord.gg/2mxraHBVtB",
       ],
       description:
-        "Technology solutions company building bespoke software, open source tools, and providing technology consulting services.",
+        "Enterprise software company building production-grade applications, open source tools, and providing technology consulting services.",
     },
     {
       "@type": "WebSite",
@@ -112,7 +112,7 @@ const jsonLd = {
       name: "Wyzie",
       publisher: { "@id": "https://wyzie.io/#organization" },
       description:
-        "Bespoke software solutions, open source tools, and technology consulting on Cloudflare's edge network.",
+        "Production-grade software solutions, open source tools, and enterprise technology consulting on Cloudflare's edge network.",
     },
   ],
 };

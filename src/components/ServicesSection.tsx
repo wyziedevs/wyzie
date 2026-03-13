@@ -6,8 +6,8 @@ const services = [
     icon: Code2,
     title: "Bespoke Software Development",
     description:
-      "From concept to production, we build tailored web applications, backend systems, and edge infrastructure that fit your exact requirements and scale with your business.",
-    highlights: ["Web Apps", "Full-Stack", "Edge Computing"],
+      "From concept to production, we build tailored web applications, backend systems, and edge infrastructure engineered for your exact requirements — with the scalability to grow alongside your business.",
+    highlights: ["Web Apps", "Full-Stack", "Edge Computing", "CI/CD"],
     cta: { label: "View our work", href: "#projects" },
     accentColor: "#2563eb",
     iconBg: "bg-[#2563eb]/10",
@@ -17,7 +17,7 @@ const services = [
     icon: GitBranch,
     title: "Open Source Development",
     description:
-      "Battle-tested, community-driven projects powering ecosystems worldwide; from TypeScript libraries to Go infrastructure.",
+      "Battle-tested, community-driven projects powering ecosystems worldwide. From TypeScript libraries to Go infrastructure — all production-hardened and MIT licensed.",
     highlights: ["GitHub Org", "TypeScript", "Go", "MIT Licensed"],
     cta: {
       label: "View GitHub",
@@ -32,9 +32,9 @@ const services = [
     icon: Server,
     title: "Business Infrastructure",
     description:
-      "Scalable edge infrastructure, custom SDKs, and API foundations built to power your business. From Cloudflare Workers to fully typed client libraries, we set you up for global scale.",
+      "Scalable edge infrastructure, custom SDKs, and API foundations engineered for global scale. From Cloudflare Workers to fully typed client libraries, we build the backbone your business runs on.",
     highlights: ["Edge Computing", "SDKs", "APIs", "Cloudflare"],
-    cta: { label: "Get in touch", href: "#contact" },
+    cta: { label: "Get in touch", href: "/contact" },
     accentColor: "#f59e0b",
     iconBg: "bg-amber-500/10",
     iconColor: "text-amber-400",
@@ -43,9 +43,9 @@ const services = [
     icon: Briefcase,
     title: "Technology Consulting",
     description:
-      "Strategic roadmapping, architecture reviews, and hands-on implementation. We help teams move faster, make better technical decisions, and build for the long term.",
-    highlights: ["Consulting", "Architecture", "Code Review"],
-    cta: { label: "Get in touch", href: "#contact" },
+      "Strategic roadmapping, architecture reviews, and hands-on implementation from senior engineers. We help teams ship faster, make better technical decisions, and build systems that last.",
+    highlights: ["Strategy", "Architecture", "Code Review", "Roadmapping"],
+    cta: { label: "Get in touch", href: "/contact" },
     accentColor: "#10b981",
     iconBg: "bg-emerald-500/10",
     iconColor: "text-emerald-400",
@@ -61,11 +61,11 @@ export function ServicesSection() {
             What We Do
           </p>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white mb-5">
-            Engineered for Impact
+            Engineering That Delivers
           </h2>
           <p className="text-[#8a95a8] text-lg max-w-lg mx-auto leading-relaxed">
-            Bespoke software, open source tools, and expert consulting that
-            drives measurable results.
+            End-to-end software development, open source expertise, and
+            strategic consulting that drives measurable business outcomes.
           </p>
         </Reveal>
 

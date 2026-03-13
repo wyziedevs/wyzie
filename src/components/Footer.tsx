@@ -19,7 +19,7 @@ const footerLinks = {
     { label: "About", href: "/about" },
     { label: "GitHub Organization", href: "https://github.com/wyziedevs" },
     { label: "Discord Community", href: "https://discord.gg/2mxraHBVtB" },
-    { label: "Work With Us", href: "/contact" },
+    { label: "Contact Us", href: "/contact" },
   ],
 };
 
@@ -44,9 +44,18 @@ export function Footer() {
                 />
               </div>
               <p className="text-[#5a657a] text-xs leading-relaxed mb-5">
-                Bespoke software company building web applications, open source
-                tools, and consulting services for the modern web.
+                Production-grade software company building web applications,
+                open source tools, and providing enterprise consulting
+                services.
               </p>
+              <div className="flex flex-wrap gap-3">
+                <span className="text-[10px] text-[#3a4050] font-mono px-2 py-0.5 rounded bg-white/[0.02] border border-white/[0.04]">
+                  99.9% Uptime
+                </span>
+                <span className="text-[10px] text-[#3a4050] font-mono px-2 py-0.5 rounded bg-white/[0.02] border border-white/[0.04]">
+                  300+ Edge PoPs
+                </span>
+              </div>
             </div>
 
             {Object.entries(footerLinks).map(([category, links]) => (

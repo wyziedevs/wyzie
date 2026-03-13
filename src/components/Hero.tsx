@@ -1,23 +1,22 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ArrowRight, Github } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const heroWords = [
-  "Next-Gen",
-  "Bespoke",
+  "Enterprise",
   "Scalable",
-  "Modern",
-  "Powerful",
+  "Production",
+  "Bespoke",
+  "Resilient",
 ];
 
-
 const badges = [
-  "Enterprise",
-  "Edge Computing",
-  "Business Solutions",
-  "Open Source",
+  "99.9% Uptime SLA",
+  "Global Edge Network",
+  "Enterprise Support",
+  "SOC 2 Practices",
 ];
 
 const ease = [0.25, 0.1, 0.25, 1] as const;
@@ -47,7 +46,7 @@ export function Hero() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2563eb] opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#3b82f6]" />
               </span>
-              Trusted by Millions Worldwide
+              Trusted by Engineering Teams Worldwide
             </motion.div>
 
             <motion.h1
@@ -69,9 +68,9 @@ export function Hero() {
                 </motion.span>
               </AnimatePresence>
               <br />
-              Solutions for
+              Software Built
               <br />
-              <span className="text-white">The Modern Web</span>
+              <span className="text-white">for Scale</span>
             </motion.h1>
 
             <motion.p
@@ -80,9 +79,10 @@ export function Hero() {
               transition={{ duration: 0.7, delay: 0.35, ease }}
               className="text-[#8a95a8] text-lg leading-relaxed mb-8 max-w-lg"
             >
-              We craft software solutions, from full-stack web
-              applications to edge infrastructure. We design, build, and deliver
-              technology that drives your business forward.
+              We architect and deliver production-grade software
+              solutions — from full-stack web applications to globally
+              distributed edge infrastructure — engineered for reliability,
+              performance, and long-term growth.
             </motion.p>
 
             <motion.div
@@ -97,7 +97,7 @@ export function Hero() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.4, delay: 0.55 + i * 0.06, ease }}
-                  className="px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/[0.06] text-xs text-[#8a95a8] font-mono hover:bg-white/[0.08] hover:border-white/[0.12] transition-all duration-300 cursor-default"
+                  className="px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/[0.06] text-xs text-[#8a95a8] font-mono hover:bg-white/[0.08] hover:border-white/[0.12] transition-all duration-300 cursor-default badge-shimmer"
                 >
                   {b}
                 </motion.span>
@@ -111,17 +111,17 @@ export function Hero() {
               className="flex flex-wrap gap-3"
             >
               <a
-                href="#services"
+                href="/contact"
                 className="group inline-flex items-center gap-2 px-6 py-3 bg-[#2563eb] hover:bg-[#3b82f6] text-white text-sm font-medium rounded-xl transition-all duration-300 shadow-lg shadow-blue-600/20 hover:shadow-blue-600/30 hover:shadow-xl"
               >
-                Explore Services
+                Schedule a Call
                 <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
               </a>
               <a
-                href="/about"
+                href="#services"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-white/[0.04] hover:bg-white/[0.08] text-white text-sm font-medium rounded-xl border border-white/[0.08] hover:border-white/[0.15] transition-all duration-300"
               >
-                Learn More
+                Explore Services
               </a>
             </motion.div>
           </div>

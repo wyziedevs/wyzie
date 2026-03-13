@@ -101,8 +101,8 @@ export default function AboutPage() {
               <p className="text-[#8a95a8] text-lg leading-relaxed max-w-2xl">
                 Wyzie is a software company focused on building
                 production-grade web applications, open source tools, and
-                edge infrastructure. We work with enterprises, startups, and
-                individuals to ship software that scales.
+                edge infrastructure. We partner with enterprises, startups, and
+                engineering teams to deliver software that performs at scale.
               </p>
             </Reveal>
           </div>
@@ -125,8 +125,8 @@ export default function AboutPage() {
                 <p className="text-[#8a95a8] leading-relaxed mb-5">
                   We started Wyzie with a simple belief: too much software is
                   slow, fragile, and forgotten. We exist to prove the
-                  alternative; that custom, carefully engineered systems can
-                  be both performant and maintainable, at any scale with the right knowledge.
+                  alternative — that custom, carefully engineered systems can
+                  be both performant and maintainable, at any scale, with the right expertise.
                 </p>
                 <p className="text-[#8a95a8] leading-relaxed">
                   From a TypeScript subtitles library used by millions to Go
@@ -235,8 +235,9 @@ export default function AboutPage() {
               Let&apos;s build something great.
             </h2>
             <p className="text-[#8a95a8] text-lg max-w-xl mx-auto leading-relaxed mb-10">
-              Whether you want to collaborate, contribute to open source, or
-              just say hello; we&apos;d love to hear from you.
+              Whether you want to collaborate on a project, contribute to open
+              source, or explore a partnership — we&apos;d love to hear from
+              you.
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-4">
