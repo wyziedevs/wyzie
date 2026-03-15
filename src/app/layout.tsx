@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     template: "%s | Wyzie",
   },
   description:
-    "Wyzie is a bespoke software company building production-grade web applications, open source tools, and offering technology consulting & custom development services.",
+    "Wyzie is a bespoke software company building production-grade web applications, open source tools, and offering technology consulting and custom development services.",
   keywords: [
     "Wyzie",
     "Technology Solutions",
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Wyzie - Technology Solutions",
     description:
-      "Wyzie builds production-grade technology solutions, open source tools, and offers consulting & custom development services.",
+      "Wyzie builds production-grade technology solutions, open source tools, and offers consulting and custom development services.",
     url: "https://wyzie.io",
     siteName: "Wyzie",
     type: "website",
@@ -98,10 +98,7 @@ const jsonLd = {
         "@type": "ImageObject",
         url: "https://wyzie.io/favicon.png",
       },
-      sameAs: [
-        "https://github.com/wyziedevs",
-        "https://discord.gg/2mxraHBVtB",
-      ],
+      sameAs: ["https://github.com/wyziedevs", "https://discord.gg/2mxraHBVtB"],
       description:
         "Technology solutions company building bespoke software, open source tools, and providing technology consulting services.",
     },
@@ -129,6 +126,11 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `console.log('%c\u26a1 Built by Wyzie','font-size:14px;font-weight:bold;color:#2563eb');console.log('%cWe build things properly. See for yourself \u2192','color:#8a95a8');console.log('%chttps://github.com/wyziedevs','color:#60a5fa;text-decoration:underline');`,
+          }}
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -136,7 +138,6 @@ export default function RootLayout({
         <CursorLight />
         <GlowCardTracker />
         {children}
-        <div className="grain-overlay" aria-hidden="true" />
       </body>
     </html>
   );

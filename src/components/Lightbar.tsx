@@ -90,15 +90,7 @@ function ParticlesCanvas() {
     let lastWidth = canvas.scrollWidth;
     let lastHeight = canvas.scrollHeight;
 
-    function loop() {
-      const ctx = canvas.getContext("2d");
-      if (!ctx) return;
-
-      if (shouldTick) {
-        for (const p of particles) p.update(canvas);
-        shouldTick = false;
-      }
-
+    function onResize() {
       const w = canvas.scrollWidth;
       const h = canvas.scrollHeight;
       if (w !== lastWidth || h !== lastHeight) {
@@ -106,11 +98,21 @@ function ParticlesCanvas() {
         canvas.height = h;
         lastWidth = w;
         lastHeight = h;
-      } else {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
       }
+    }
 
-      for (const p of particles) p.render(canvas);
+    window.addEventListener("resize", onResize, { passive: true });
+
+    function loop() {
+      if (shouldTick) {
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+
+        for (const p of particles) p.update(canvas);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (const p of particles) p.render(canvas);
+        shouldTick = false;
+      }
       handle = requestAnimationFrame(loop);
     }
 
@@ -123,6 +125,7 @@ function ParticlesCanvas() {
     return () => {
       if (handle) cancelAnimationFrame(handle);
       clearInterval(interval);
+      window.removeEventListener("resize", onResize);
     };
   }, []);
 

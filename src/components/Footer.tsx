@@ -14,12 +14,12 @@ const footerLinks = {
   Documentation: [
     { label: "Getting Started", href: "https://docs.wyzie.io" },
     { label: "Subs API Reference", href: "https://docs.wyzie.io/subs/intro" },
-    { label: "Donate", href: "https://donate.cozi.lol" },
   ],
   Company: [
     { label: "About", href: "/about" },
     { label: "GitHub Organization", href: "https://github.com/wyziedevs" },
     { label: "Discord Community", href: "https://discord.gg/2mxraHBVtB" },
+    { label: "Donate", href: "https://donate.cozi.lol" },
     { label: "Work With Us", href: "/contact" },
   ],
 };
@@ -44,35 +44,35 @@ export function Footer() {
                   className="h-8 w-auto"
                 />
               </div>
-              <p className="text-[#5a657a] text-xs leading-relaxed mb-5">
+              <p className="text-text-subtle text-sm sm:text-xs leading-relaxed mb-5">
                 Bespoke software company building web applications, open source
-                tools, and consulting services for the modern web.
+                tools, and offering consulting services for the modern web.
               </p>
               <div className="flex items-center gap-2">
                 <a
                   href="https://github.com/wyziedevs"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-[#5a657a] hover:text-white hover:bg-white/[0.08] hover:border-white/[0.12] transition-all duration-300"
+                  className="w-11 h-11 rounded-lg bg-white/[0.04] border border-border-subtle flex items-center justify-center text-text-subtle hover:text-white hover:bg-white/[0.08] hover:border-white/[0.12] transition-all duration-300"
                   aria-label="GitHub"
                 >
-                  <Github className="w-3.5 h-3.5" />
+                  <Github className="w-4 h-4" />
                 </a>
                 <a
                   href="https://discord.gg/2mxraHBVtB"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-[#5a657a] hover:text-white hover:bg-white/[0.08] hover:border-white/[0.12] transition-all duration-300"
+                  className="w-11 h-11 rounded-lg bg-white/[0.04] border border-border-subtle flex items-center justify-center text-text-subtle hover:text-white hover:bg-white/[0.08] hover:border-white/[0.12] transition-all duration-300"
                   aria-label="Discord"
                 >
-                  <MessageCircle className="w-3.5 h-3.5" />
+                  <MessageCircle className="w-4 h-4" />
                 </a>
               </div>
             </div>
 
             {Object.entries(footerLinks).map(([category, links]) => (
               <div key={category}>
-                <h4 className="text-white/80 text-xs font-semibold uppercase tracking-[0.15em] mb-4">
+                <h4 className="text-white/80 text-xs font-semibold uppercase tracking-[0.2em] mb-4">
                   {category}
                 </h4>
                 <ul className="space-y-2.5">
@@ -88,7 +88,7 @@ export function Footer() {
                             ? "noopener noreferrer"
                             : undefined
                         }
-                        className="text-xs text-[#5a657a] hover:text-[#8a95a8] transition-colors duration-300"
+                        className="text-sm sm:text-xs text-text-subtle hover:text-text-muted transition-colors duration-300"
                       >
                         {link.label}
                       </a>
@@ -101,19 +101,19 @@ export function Footer() {
         </Reveal>
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-8 border-t border-white/[0.06]">
-          <p className="text-[11px] text-[#4a5568]">
+          <p className="text-xs text-text-footer">
             &copy; {currentYear} Wyzie. All rights reserved.
           </p>
           <div className="flex items-center gap-5">
             <a
               href="/privacy"
-              className="text-[11px] text-[#4a5568] hover:text-[#8a95a8] transition-colors duration-300"
+              className="text-xs text-text-footer hover:text-text-muted transition-colors duration-300"
             >
               Privacy Policy
             </a>
             <a
               href="/terms"
-              className="text-[11px] text-[#4a5568] hover:text-[#8a95a8] transition-colors duration-300"
+              className="text-xs text-text-footer hover:text-text-muted transition-colors duration-300"
             >
               Terms of Service
             </a>

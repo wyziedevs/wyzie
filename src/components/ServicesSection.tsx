@@ -6,12 +6,12 @@ const services = [
     icon: Code2,
     title: "Bespoke Software Development",
     description:
-      "From concept to production, we build tailored web applications, backend systems, and edge infrastructure that fit your exact requirements and scale with your business.",
+      "Custom web apps, backend systems, and edge infrastructure built to your exact requirements and ready to scale.",
     highlights: ["Web Apps", "Full-Stack", "Edge Computing"],
     cta: { label: "View our work", href: "#projects" },
     accentColor: "#2563eb",
-    iconBg: "bg-[#2563eb]/10",
-    iconColor: "text-[#60a5fa]",
+    iconBg: "bg-blue-brand/10",
+    iconColor: "text-blue-pale",
   },
   {
     icon: GitBranch,
@@ -32,7 +32,7 @@ const services = [
     icon: Server,
     title: "Business Infrastructure",
     description:
-      "Scalable edge infrastructure, custom SDKs, and API foundations built to power your business. From Cloudflare Workers to fully typed client libraries, we set you up for global scale.",
+      "Scalable edge infrastructure, custom SDKs, and API foundations on Cloudflare Workers—built for global scale.",
     highlights: ["Edge Computing", "SDKs", "APIs", "Cloudflare"],
     cta: { label: "Get in touch", href: "#contact" },
     accentColor: "#f59e0b",
@@ -43,7 +43,7 @@ const services = [
     icon: Briefcase,
     title: "Technology Consulting",
     description:
-      "Strategic roadmapping, architecture reviews, and hands-on implementation. We help teams move faster, make better technical decisions, and build for the long term.",
+      "Architecture reviews, strategic roadmapping, and hands-on implementation to help teams ship faster and build for the long term.",
     highlights: ["Consulting", "Architecture", "Code Review"],
     cta: { label: "Get in touch", href: "#contact" },
     accentColor: "#10b981",
@@ -54,16 +54,19 @@ const services = [
 
 export function ServicesSection() {
   return (
-    <section id="services" className="py-28 relative overflow-hidden section-glow">
+    <section
+      id="services"
+      className="py-16 sm:py-28 relative overflow-hidden section-glow"
+    >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <Reveal className="text-center mb-20">
-          <p className="text-[#2563eb] text-xs font-semibold uppercase tracking-[0.2em] mb-4">
+        <Reveal className="text-center mb-12 sm:mb-20">
+          <p className="text-blue-brand text-xs font-semibold uppercase tracking-[0.2em] mb-4">
             What We Do
           </p>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white mb-5">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-5">
             Engineered for Impact
           </h2>
-          <p className="text-[#8a95a8] text-lg max-w-lg mx-auto leading-relaxed">
+          <p className="text-text-muted text-lg max-w-lg mx-auto leading-relaxed">
             Bespoke software, open source tools, and expert consulting that
             drives measurable results.
           </p>
@@ -77,17 +80,10 @@ export function ServicesSection() {
             const Icon = service.icon;
             return (
               <StaggerItem key={service.title}>
-                <div className="group relative flex flex-col rounded-2xl bg-[#0a0a14] border border-white/[0.06] p-7 overflow-hidden glow-card h-full">
-                  <div
-                    className="absolute top-0 left-0 right-0 h-px opacity-40"
-                    style={{
-                      background: `linear-gradient(90deg, transparent, ${service.accentColor}40, transparent)`,
-                    }}
-                  />
-
+                <div className="group relative flex flex-col rounded-2xl bg-bg-surface border border-border-subtle p-7 overflow-hidden glow-card h-full">
                   <div className="relative flex flex-col flex-1">
                     <div
-                      className={`w-11 h-11 rounded-xl ${service.iconBg} flex items-center justify-center mb-6 transition-transform duration-500 group-hover:scale-110`}
+                      className={`w-11 h-11 rounded-xl ${service.iconBg} flex items-center justify-center mb-6 transition-transform duration-500 group-hover:scale-105`}
                     >
                       <Icon className={`w-5 h-5 ${service.iconColor}`} />
                     </div>
@@ -95,7 +91,7 @@ export function ServicesSection() {
                     <h3 className="text-white font-bold text-lg mb-3 leading-snug">
                       {service.title}
                     </h3>
-                    <p className="text-[#8a95a8] text-sm leading-relaxed mb-4 flex-1">
+                    <p className="text-text-muted text-sm leading-relaxed mb-4 flex-1">
                       {service.description}
                     </p>
 
@@ -103,7 +99,7 @@ export function ServicesSection() {
                       {service.highlights.map((h) => (
                         <span
                           key={h}
-                          className="px-2 py-0.5 rounded-md bg-white/[0.03] border border-white/[0.06] text-xs text-[#5a657a] font-mono hover:bg-white/[0.06] hover:border-white/[0.1] transition-all duration-300"
+                          className="px-2.5 py-1 rounded-md bg-white/[0.03] border border-border-subtle text-xs text-text-subtle font-mono hover:bg-white/[0.06] hover:border-border-muted transition-all duration-300"
                         >
                           {h}
                         </span>

@@ -1,24 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ArrowRight, Github } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const heroWords = [
-  "Next-Gen",
-  "Bespoke",
-  "Scalable",
-  "Modern",
-  "Powerful",
-];
-
-
-const badges = [
-  "Enterprise",
-  "Edge Computing",
-  "Business Solutions",
-  "Open Source",
-];
+const heroWords = ["Next-Gen", "Bespoke", "Scalable", "Modern", "Powerful"];
 
 const ease = [0.25, 0.1, 0.25, 1] as const;
 
@@ -41,11 +27,11 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1, ease }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#2563eb]/20 bg-[#2563eb]/[0.06] text-[#60a5fa] text-xs font-medium mb-7 backdrop-blur-sm shadow-[0_0_20px_rgba(37,99,235,0.08)]"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-brand/20 bg-blue-brand/[0.06] text-blue-pale text-xs font-medium mb-7 backdrop-blur-sm shadow-[0_0_20px_rgba(37,99,235,0.08)]"
             >
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2563eb] opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#3b82f6]" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-light/60" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-light" />
               </span>
               Trusted by Millions Worldwide
             </motion.div>
@@ -78,31 +64,12 @@ export function Hero() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.35, ease }}
-              className="text-[#8a95a8] text-lg leading-relaxed mb-8 max-w-lg"
+              className="text-text-muted text-lg leading-relaxed mb-8 max-w-lg"
             >
-              We craft software solutions, from full-stack web
-              applications to edge infrastructure. We design, build, and deliver
-              technology that drives your business forward.
+              From full-stack web applications to edge infrastructure, we
+              design, build, and deliver technology that drives your business
+              forward.
             </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.5, ease }}
-              className="flex flex-wrap gap-2 mb-10"
-            >
-              {badges.map((b, i) => (
-                <motion.span
-                  key={b}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4, delay: 0.55 + i * 0.06, ease }}
-                  className="px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/[0.06] text-xs text-[#8a95a8] font-mono hover:bg-white/[0.08] hover:border-white/[0.12] transition-all duration-300 cursor-default"
-                >
-                  {b}
-                </motion.span>
-              ))}
-            </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -112,35 +79,20 @@ export function Hero() {
             >
               <a
                 href="#services"
-                className="group inline-flex items-center gap-2 px-6 py-3 bg-[#2563eb] hover:bg-[#3b82f6] text-white text-sm font-medium rounded-xl transition-all duration-300 shadow-lg shadow-blue-600/20 hover:shadow-blue-600/30 hover:shadow-xl"
+                className="group inline-flex items-center gap-2 px-6 py-3 bg-blue-brand hover:bg-blue-light text-white text-sm font-medium rounded-xl transition-all duration-300 shadow-md shadow-blue-600/15 hover:shadow-blue-600/20 active:translate-y-px active:shadow-sm"
               >
                 Explore Services
                 <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
               </a>
               <a
                 href="/about"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-white/[0.04] hover:bg-white/[0.08] text-white text-sm font-medium rounded-xl border border-white/[0.08] hover:border-white/[0.15] transition-all duration-300"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white/[0.04] hover:bg-white/[0.08] text-white text-sm font-medium rounded-xl border border-white/[0.08] hover:border-white/[0.15] transition-all duration-300 active:translate-y-px"
               >
-                Learn More
+                About Us
               </a>
             </motion.div>
           </div>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.5 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2"
-        >
-          <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="w-5 h-8 rounded-full border border-white/[0.12] flex items-start justify-center p-1.5"
-          >
-            <div className="w-0.5 h-1.5 bg-white/20 rounded-full" />
-          </motion.div>
-        </motion.div>
       </div>
     </section>
   );

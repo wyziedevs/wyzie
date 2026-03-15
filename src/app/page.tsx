@@ -10,7 +10,7 @@ import { Lightbar } from "@/components/Lightbar";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#050508]">
+    <main className="min-h-screen bg-bg-base">
       <Navigation />
       <div className="relative">
         <Lightbar />

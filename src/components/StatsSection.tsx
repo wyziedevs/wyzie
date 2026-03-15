@@ -4,34 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import { Reveal, StaggerContainer, StaggerItem } from "./Motion";
 
 const stats = [
-  {
-    value: "50+",
-    numericValue: 50,
-    suffix: "+",
-    label: "Projects Shipped",
-    sublabel: "across industries",
-  },
-  {
-    value: "99.9%",
-    numericValue: 99.9,
-    suffix: "%",
-    label: "Uptime SLA",
-    sublabel: "enterprise grade",
-  },
-  {
-    value: "10M+",
-    numericValue: 10,
-    suffix: "M+",
-    label: "Daily Users",
-    sublabel: "and growing",
-  },
-  {
-    value: "300+",
-    numericValue: 300,
-    suffix: "+",
-    label: "Edge Locations",
-    sublabel: "worldwide",
-  },
+  { numericValue: 50, suffix: "+", label: "Projects Shipped" },
+  { numericValue: 99.9, suffix: "%", label: "Uptime Guarantee" },
+  { numericValue: 10, suffix: "M+", label: "Daily Users" },
+  { numericValue: 300, suffix: "+", label: "Global Regions" },
 ];
 
 function AnimatedNumber({
@@ -89,23 +65,20 @@ export function StatsSection() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <StaggerContainer
-            className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.04] rounded-2xl border border-white/[0.06] overflow-hidden"
+            className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.04] rounded-2xl border border-border-subtle overflow-hidden"
             staggerDelay={0.12}
           >
             {stats.map((stat) => (
               <StaggerItem key={stat.label}>
-                <div className="flex flex-col items-center text-center py-8 px-4 sm:py-12 sm:px-6 bg-[#050508] hover:bg-[#0a0a14]/80 transition-all duration-500 h-full">
-                  <span className="text-3xl sm:text-4xl font-extrabold text-[#2563eb] mb-1.5 tracking-tight tabular-nums drop-shadow-[0_0_12px_rgba(37,99,235,0.2)]">
+                <div className="flex flex-col items-center text-center py-8 px-4 sm:py-12 sm:px-6 bg-bg-base hover:bg-bg-surface/80 transition-all duration-500 h-full">
+                  <span className="text-2xl sm:text-3xl font-bold text-blue-brand mb-1.5 tracking-tight tabular-nums">
                     <AnimatedNumber
                       value={stat.numericValue}
                       suffix={stat.suffix}
                     />
                   </span>
-                  <span className="text-sm font-semibold text-white/90 mb-1">
+                  <span className="text-sm font-semibold text-white/90">
                     {stat.label}
-                  </span>
-                  <span className="text-xs text-[#5a657a]">
-                    {stat.sublabel}
                   </span>
                 </div>
               </StaggerItem>

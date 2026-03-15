@@ -18,6 +18,8 @@
   --color-text-base: #f0f2f5;
   --color-text-muted: #8a95a8;
   --color-text-subtle: #5a657a;
+  --color-text-nav: #c4d3ec;
+  --color-text-footer: #6b7280;
 }
 
 * {
@@ -47,7 +49,7 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #08080f;
+  background: var(--color-bg-base);
 }
 ::-webkit-scrollbar-thumb {
   background: rgba(37, 99, 235, 0.4);
@@ -63,15 +65,6 @@ body {
   border-radius: 4px;
 }
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
 @keyframes gradientShift {
   0%,
   100% {
@@ -80,66 +73,6 @@ body {
   50% {
     background-position: 100% 50%;
   }
-}
-@keyframes beam {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(200%);
-  }
-}
-@keyframes glow-pulse {
-  0%,
-  100% {
-    opacity: 0.3;
-  }
-  50% {
-    opacity: 0.6;
-  }
-}
-@keyframes orb-drift {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  33% {
-    transform: translate(30px, -20px) scale(1.05);
-  }
-  66% {
-    transform: translate(-20px, 15px) scale(0.95);
-  }
-}
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-@keyframes subtle-rotate {
-  0%,
-  100% {
-    transform: rotate(0deg);
-  }
-  50% {
-    transform: rotate(1deg);
-  }
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-.animate-beam {
-  animation: beam 3s linear infinite;
-}
-
-.animate-glow-pulse {
-  animation: glow-pulse 4s ease-in-out infinite;
-}
-.animate-orb-drift {
-  animation: orb-drift 10s ease-in-out infinite;
 }
 
 .gradient-text {
@@ -197,10 +130,9 @@ body {
 }
 .glow-card:hover {
   box-shadow:
-    0 0 0 1px rgba(37, 99, 235, 0.2),
-    0 8px 32px rgba(37, 99, 235, 0.12),
-    0 0 48px rgba(37, 99, 235, 0.06);
-  transform: translate3d(0, -2px, 0);
+    0 0 0 1px rgba(37, 99, 235, 0.15),
+    0 4px 20px rgba(37, 99, 235, 0.08);
+  transform: translate3d(0, -1px, 0);
 }
 
 .section-divider {
@@ -243,14 +175,16 @@ body {
   --bottom: #2563eb;
   --first: conic-gradient(from 90deg at 80% 75%, var(--top), var(--bottom));
   --second: conic-gradient(from 270deg at 20% 75%, var(--bottom), var(--top));
-  mask-image: 
+  mask-image:
     linear-gradient(to bottom, black 45%, transparent 85%),
     radial-gradient(100% 50% at center center, black, transparent);
   mask-composite: intersect;
   background-image: var(--first), var(--second);
   background-position-x: 1%, 99%;
   background-position-y: 0%, 0%;
-  background-size: 50% 100%, 50% 100%;
+  background-size:
+    50% 100%,
+    50% 100%;
   opacity: 1;
   transform: rotate(180deg) translateZ(0px) translateY(700px);
   transform-origin: center center;
@@ -279,7 +213,7 @@ body {
 @media (max-width: 640px) {
   .lightbar,
   .lightbar-visual {
-    width: 500vw;
+    width: 250vw;
   }
   .lightbar {
     left: 50vw;
@@ -292,20 +226,12 @@ section:not(:first-of-type) {
   contain-intrinsic-size: auto 600px;
 }
 
-.grain-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  pointer-events: none;
-  opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 256px 256px;
-}
-
 .hero-grid {
-  background-image:
-    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.035) 1px, transparent 0);
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(255, 255, 255, 0.035) 1px,
+    transparent 0
+  );
   background-size: 40px 40px;
   background-position: center;
 }
@@ -321,7 +247,11 @@ section:not(:first-of-type) {
   transform: translateX(-50%);
   width: 600px;
   height: 300px;
-  background: radial-gradient(ellipse, rgba(37, 99, 235, 0.04) 0%, transparent 70%);
+  background: radial-gradient(
+    ellipse,
+    rgba(37, 99, 235, 0.025) 0%,
+    transparent 70%
+  );
   pointer-events: none;
 }
 
@@ -334,14 +264,7 @@ section:not(:first-of-type) {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .animate-float,
-  .animate-beam,
-  .animate-glow-pulse,
-  .animate-orb-drift {
-    animation: none !important;
-  }
   .gradient-text {
     animation: none !important;
   }
 }
-

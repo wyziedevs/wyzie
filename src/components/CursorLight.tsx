@@ -3,7 +3,10 @@
 import { useEffect, useRef } from "react";
 
 function isTouchDevice() {
-  return typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0);
+  return (
+    typeof window !== "undefined" &&
+    ("ontouchstart" in window || navigator.maxTouchPoints > 0)
+  );
 }
 
 export function CursorLight() {
@@ -18,35 +21,44 @@ export function CursorLight() {
     let currentX = -1000;
     let currentY = -1000;
     let hasMouseMoved = false;
-    let rafId: number;
-
-    function onMouseMove(e: MouseEvent) {
-      if (!hasMouseMoved) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        currentX = e.clientX;
-        currentY = e.clientY;
-        hasMouseMoved = true;
-      } else {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-      }
-    }
+    let rafId: number | null = null;
 
     function animate() {
       currentX += (mouseX - currentX) * 0.15;
       currentY += (mouseY - currentY) * 0.15;
       el.style.setProperty("--cursor-x", `${currentX}px`);
       el.style.setProperty("--cursor-y", `${currentY}px`);
-      rafId = requestAnimationFrame(animate);
+
+      // Stop the loop when close enough to target
+      if (
+        Math.abs(mouseX - currentX) > 0.5 ||
+        Math.abs(mouseY - currentY) > 0.5
+      ) {
+        rafId = requestAnimationFrame(animate);
+      } else {
+        rafId = null;
+      }
+    }
+
+    function onMouseMove(e: MouseEvent) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (!hasMouseMoved) {
+        currentX = e.clientX;
+        currentY = e.clientY;
+        hasMouseMoved = true;
+      }
+      // Restart loop if it stopped
+      if (rafId === null) {
+        rafId = requestAnimationFrame(animate);
+      }
     }
 
     document.addEventListener("mousemove", onMouseMove, { passive: true });
-    rafId = requestAnimationFrame(animate);
 
     return () => {
       document.removeEventListener("mousemove", onMouseMove);
-      cancelAnimationFrame(rafId);
+      if (rafId !== null) cancelAnimationFrame(rafId);
     };
   }, []);
 
