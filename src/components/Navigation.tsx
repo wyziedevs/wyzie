@@ -27,8 +27,6 @@ export function Navigation() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-
-
   return (
     <header
       className={cn(
@@ -109,7 +107,9 @@ export function Navigation() {
                       <motion.a
                         href={link.href}
                         initial={shouldReduce ? false : { opacity: 0, x: 16 }}
-                        animate={shouldReduce ? undefined : { opacity: 1, x: 0 }}
+                        animate={
+                          shouldReduce ? undefined : { opacity: 1, x: 0 }
+                        }
                         transition={{
                           duration: 0.35,
                           delay: 0.08 + i * 0.06,

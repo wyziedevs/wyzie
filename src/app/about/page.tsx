@@ -108,8 +108,8 @@ export default function AboutPage() {
               <blockquote className="relative pl-5 border-l-2 border-blue-brand/40">
                 <p className="text-text-muted leading-relaxed italic">
                   Every project we ship is built to last. From open source
-                  libraries used by thousands to production applications
-                  powering real businesses.
+                  libraries used by millions to production applications powering
+                  real businesses.
                 </p>
               </blockquote>
             </div>
