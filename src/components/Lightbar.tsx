@@ -42,10 +42,7 @@ class Particle {
     if (this.ran > this.lifetime) this.reset(canvas);
   }
 
-  render(canvas: HTMLCanvasElement) {
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
+  render(ctx: CanvasRenderingContext2D) {
     ctx.save();
     ctx.beginPath();
     const x = this.ran / this.lifetime;
@@ -73,6 +70,8 @@ function ParticlesCanvas() {
     if (!canvasRef.current) return;
     const canvas = canvasRef.current;
 
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
     const isMobile = window.innerWidth < 768;
     const particleCount = isMobile ? 50 : 180;
     const tickRate = isMobile ? 30 : 60;
@@ -80,13 +79,16 @@ function ParticlesCanvas() {
     canvas.width = canvas.scrollWidth;
     canvas.height = canvas.scrollHeight;
 
+    // Cache the context once — reused every frame instead of per-particle.
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
     const particles: Particle[] = [];
     for (let i = 0; i < particleCount; i++) {
       particles.push(new Particle(canvas));
     }
 
-    let shouldTick = true;
-    let handle: ReturnType<typeof requestAnimationFrame> | null = null;
+    let active = true;
     let lastWidth = canvas.scrollWidth;
     let lastHeight = canvas.scrollHeight;
 
@@ -103,27 +105,21 @@ function ParticlesCanvas() {
 
     window.addEventListener("resize", onResize, { passive: true });
 
-    function loop() {
-      if (shouldTick) {
-        const ctx = canvas.getContext("2d");
-        if (!ctx) return;
-
+    // Use setInterval + rAF instead of a continuous rAF loop so the
+    // animation only wakes the compositor at the desired tick rate
+    // instead of spinning at 60 fps while doing nothing.
+    const interval = setInterval(() => {
+      if (!active) return;
+      requestAnimationFrame(() => {
+        if (!active) return;
         for (const p of particles) p.update(canvas);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (const p of particles) p.render(canvas);
-        shouldTick = false;
-      }
-      handle = requestAnimationFrame(loop);
-    }
-
-    const interval = setInterval(() => {
-      shouldTick = true;
+        for (const p of particles) p.render(ctx);
+      });
     }, 1e3 / tickRate);
 
-    loop();
-
     return () => {
-      if (handle) cancelAnimationFrame(handle);
+      active = false;
       clearInterval(interval);
       window.removeEventListener("resize", onResize);
     };

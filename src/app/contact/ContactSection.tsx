@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useReducedMotion } from "framer-motion";
 import {
   Reveal,
   StaggerContainer,
@@ -14,22 +15,23 @@ const ease = [0.25, 0.1, 0.25, 1] as const;
 export function ContactSection() {
   const [submitted, setSubmitted] = useState(false);
   const [copied, setCopied] = useState(false);
+  const shouldReduce = useReducedMotion();
 
   return (
-    <section className="relative pt-32 pb-24 overflow-hidden">
+    <section className="relative pt-30 pb-24 overflow-hidden">
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+            animate={shouldReduce ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1, ease }}
             className="text-blue-brand text-xs font-semibold uppercase tracking-[0.2em] mb-4"
           >
             Contact
           </motion.p>
           <motion.h1
-            initial={{ opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={shouldReduce ? false : { opacity: 0, y: 28 }}
+            animate={shouldReduce ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease }}
             className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-5"
           >

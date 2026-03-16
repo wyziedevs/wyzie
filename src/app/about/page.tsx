@@ -2,6 +2,7 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Reveal, StaggerContainer, StaggerItem } from "@/components/Motion";
 import { Code2, Globe, Shield, Zap, ArrowRight } from "lucide-react";
+import { RotatingCTA } from "./RotatingCTA";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -23,9 +24,9 @@ const values = [
   },
   {
     icon: Globe,
-    title: "Open by Default",
+    title: "Transparent by Default",
     description:
-      "We believe in building in public. The majority of what we create is open source, tested in production, and free for the community to use and contribute to.",
+      "No hidden processes, no surprise invoices. You have full visibility into progress, decisions, and roadmap at every stage of the engagement.",
     iconBg: "bg-violet-500/10",
     iconColor: "text-violet-400",
     accentColor: "#8b5cf6",
@@ -98,17 +99,19 @@ export default function AboutPage() {
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-6 leading-tight">
                 Raise the bar for what software can be.
               </h2>
-              <p className="text-text-muted leading-relaxed mb-5">
+              <p className="text-text-muted leading-relaxed mb-6">
                 We started Wyzie with a simple belief: too much software is
-                slow, fragile, and forgotten. We exist to prove the alternative;
-                that custom, carefully engineered systems can be both performant
-                and maintainable, at any scale with the right knowledge.
+                slow, fragile, and forgotten. We exist to prove the alternative,
+                that carefully engineered systems can be both performant and
+                maintainable at any scale.
               </p>
-              <p className="text-text-muted leading-relaxed">
-                From a TypeScript subtitles library used by millions to Go proxy
-                infrastructure powering real-world apps, every project we ship
-                is designed to last.
-              </p>
+              <blockquote className="relative pl-5 border-l-2 border-blue-brand/40">
+                <p className="text-text-muted leading-relaxed italic">
+                  Every project we ship is built to last. From open source
+                  libraries used by thousands to production applications
+                  powering real businesses.
+                </p>
+              </blockquote>
             </div>
           </Reveal>
         </div>
@@ -148,9 +151,11 @@ export default function AboutPage() {
                       }}
                     />
                     <div
-                      className={`inline-flex items-center justify-center w-11 h-11 rounded-xl ${v.iconBg} mb-5 shrink-0 transition-transform duration-500 group-hover:scale-105`}
+                      className={`inline-flex items-center justify-center w-11 h-11 rounded-xl ${v.iconBg} mb-5 shrink-0 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3`}
                     >
-                      <Icon className={`w-5 h-5 ${v.iconColor}`} />
+                      <Icon
+                        className={`w-5 h-5 ${v.iconColor} transition-transform duration-500 group-hover:scale-110`}
+                      />
                     </div>
                     <h3 className="text-base font-bold text-white mb-3">
                       {v.title}
@@ -171,14 +176,18 @@ export default function AboutPage() {
         <div className="section-divider absolute top-0 inset-x-0" />
 
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[250px] bg-blue-brand/[0.04] rounded-full blur-[100px] pointer-events-none" />
           <Reveal>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-8">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">
               Let&apos;s build something great.
             </h2>
+            <p className="text-text-subtle text-sm mb-8">
+              We&apos;re waiting for you...
+            </p>
 
             <a
               href="/contact"
-              className="group inline-flex items-center gap-2 px-6 py-3 text-sm font-medium bg-blue-brand hover:bg-blue-light text-white rounded-xl transition-all duration-300 shadow-md shadow-blue-600/15 hover:shadow-blue-600/20 active:translate-y-px active:shadow-sm"
+              className="group inline-flex items-center gap-2 px-6 py-3 text-sm font-medium bg-blue-brand hover:bg-blue-light text-white rounded-xl transition-all duration-300 shadow-md shadow-blue-600/15 hover:shadow-[0_4px_20px_rgba(37,99,235,0.35)] active:translate-y-px active:shadow-sm"
             >
               Work With Us
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />

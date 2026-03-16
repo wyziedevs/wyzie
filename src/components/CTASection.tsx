@@ -1,7 +1,27 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Reveal } from "./Motion";
 
+const words = [
+  "Something Great",
+  "Your Next Product",
+  "For the Future",
+  "What Matters",
+];
+
 export function CTASection() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((i) => (i + 1) % words.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section id="contact" className="py-16 sm:py-28 relative overflow-hidden">
       <div className="section-divider absolute top-0 inset-x-0" />
@@ -12,9 +32,25 @@ export function CTASection() {
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-brand/20 to-transparent" />
 
             <div className="relative max-w-2xl mx-auto text-center">
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-6 leading-[1.2]">
-                Let&apos;s build{" "}
-                <span className="gradient-text">something great.</span>
+              <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-6 leading-[1.2]">
+                Let&apos;s build
+                <span
+                  className="block overflow-hidden"
+                  style={{ height: "1.3em" }}
+                >
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={words[index]}
+                      initial={{ opacity: 0, y: "100%" }}
+                      animate={{ opacity: 1, y: "0%" }}
+                      exit={{ opacity: 0, y: "-100%" }}
+                      transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+                      className="gradient-text block"
+                    >
+                      {words[index]}.
+                    </motion.span>
+                  </AnimatePresence>
+                </span>
               </h2>
 
               <p className="text-text-muted text-lg leading-relaxed mb-10 max-w-lg mx-auto">

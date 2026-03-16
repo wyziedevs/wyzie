@@ -65,7 +65,7 @@ export default function PrivacyPage() {
               <code className="text-xs bg-white/[0.08] px-1 py-0.5 rounded">
                 mailto:
               </code>{" "}
-              link — no data is submitted to our servers. Any correspondence you
+              link. No data is submitted to our servers. Any correspondence you
               send to us by email is retained solely for the purpose of
               responding to your inquiry.
             </p>
@@ -75,8 +75,8 @@ export default function PrivacyPage() {
             </h3>
             <ul className="text-sm text-text-muted leading-relaxed list-disc pl-5 space-y-1">
               <li>
-                <strong className="text-white/70">Browser / device data</strong>{" "}
-                — standard web server logs (IP address, browser type, referring
+                <strong className="text-white/70">Browser / device data</strong>
+                : standard web server logs (IP address, browser type, referring
                 URL, pages visited) may be processed for security monitoring and
                 abuse prevention. This data is handled by Cloudflare as part of
                 our infrastructure and is not stored by Wyzie directly.
@@ -108,7 +108,7 @@ export default function PrivacyPage() {
             </p>
             <ul className="text-sm text-text-muted leading-relaxed list-disc pl-5 space-y-1">
               <li>
-                <strong className="text-white/70">Cloudflare</strong> — provides
+                <strong className="text-white/70">Cloudflare</strong>: provides
                 DNS, CDN, and DDoS protection for this Site. Cloudflare may
                 process request metadata (IP address, headers) as part of this
                 service. Their privacy policy is at{" "}
@@ -174,7 +174,7 @@ export default function PrivacyPage() {
               <code className="text-xs bg-white/[0.08] px-1 py-0.5 rounded">
                 __cf_bm
               </code>
-              ) to manage bot traffic — this is controlled by Cloudflare and is
+              ) to manage bot traffic. This is controlled by Cloudflare and is
               not used by Wyzie for tracking purposes.
             </p>
           </section>
@@ -215,25 +215,25 @@ export default function PrivacyPage() {
             </p>
             <ul className="text-sm text-text-muted leading-relaxed list-disc pl-5 space-y-1">
               <li>
-                <strong className="text-white/70">Access</strong> — request a
+                <strong className="text-white/70">Access</strong>: request a
                 copy of the personal data we hold about you.
               </li>
               <li>
-                <strong className="text-white/70">Correction</strong> — request
+                <strong className="text-white/70">Correction</strong>: request
                 correction of inaccurate or incomplete data.
               </li>
               <li>
-                <strong className="text-white/70">Deletion</strong> — request
+                <strong className="text-white/70">Deletion</strong>: request
                 deletion of your personal data, subject to legal or operational
                 retention obligations.
               </li>
               <li>
-                <strong className="text-white/70">Restriction</strong> — request
+                <strong className="text-white/70">Restriction</strong>: request
                 that we restrict the processing of your data pending a
                 correction or objection.
               </li>
               <li>
-                <strong className="text-white/70">Portability</strong> — receive
+                <strong className="text-white/70">Portability</strong>: receive
                 your personal data in a structured, commonly used,
                 machine-readable format.
               </li>
@@ -262,41 +262,41 @@ export default function PrivacyPage() {
             </p>
             <ul className="text-sm text-text-muted leading-relaxed list-disc pl-5 space-y-1">
               <li>
-                <strong className="text-white/70">Right to Know</strong> — the
+                <strong className="text-white/70">Right to Know</strong>: the
                 categories and specific pieces of personal information we have
                 collected about you, the purposes for collection, and with whom
                 we share it.
               </li>
               <li>
-                <strong className="text-white/70">Right to Delete</strong> —
+                <strong className="text-white/70">Right to Delete</strong>:
                 request deletion of personal information we have collected,
                 subject to certain exceptions (e.g., completing a transaction,
                 security, legal obligations).
               </li>
               <li>
-                <strong className="text-white/70">Right to Correct</strong> —
+                <strong className="text-white/70">Right to Correct</strong>:
                 request correction of inaccurate personal information we
                 maintain about you.
               </li>
               <li>
                 <strong className="text-white/70">
                   Right to Opt-Out of Sale or Sharing
-                </strong>{" "}
-                — we do not sell or share personal information with third
+                </strong>
+                : we do not sell or share personal information with third
                 parties for cross-context behavioral advertising.
               </li>
               <li>
                 <strong className="text-white/70">
                   Right to Limit Use of Sensitive Personal Information
-                </strong>{" "}
-                — we do not use sensitive personal information for any purpose
+                </strong>
+                : we do not use sensitive personal information for any purpose
                 beyond what is described in this policy.
               </li>
               <li>
                 <strong className="text-white/70">
                   Right to Non-Discrimination
-                </strong>{" "}
-                — we will not deny you service, charge you a different price, or
+                </strong>
+                : we will not deny you service, charge you a different price, or
                 provide a different level of service for exercising your CCPA
                 rights.
               </li>

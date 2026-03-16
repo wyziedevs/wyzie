@@ -5,7 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Menu, X } from "lucide-react";
+import { useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { motion } from "@/components/Motion";
 
 const navLinks = [
   { label: "Services", href: "/#services" },
@@ -17,12 +19,15 @@ const navLinks = [
 export function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const shouldReduce = useReducedMotion();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+
 
   return (
     <header
@@ -35,13 +40,14 @@ export function Navigation() {
     >
       <nav className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center select-none">
+          <Link href="/" className="group flex items-center select-none">
             <Image
               src="/logo-header.png"
               alt="Wyzie"
               width={85}
               height={30}
               priority
+              className="transition-[filter] duration-300 group-hover:brightness-125 group-hover:drop-shadow-[0_0_8px_rgba(37,99,235,0.3)]"
             />
           </Link>
 
@@ -62,7 +68,7 @@ export function Navigation() {
           <div className="hidden md:flex items-center gap-3">
             <a
               href="/contact"
-              className="px-4 py-2 text-sm font-medium bg-blue-brand hover:bg-blue-light text-white rounded-xl transition-all duration-300 shadow-md shadow-blue-600/15 hover:shadow-blue-600/25 active:translate-y-px active:shadow-sm"
+              className="px-4 py-2 text-sm font-medium bg-blue-brand hover:bg-blue-light text-white rounded-xl transition-all duration-300 shadow-md shadow-blue-600/15 hover:shadow-[0_4px_20px_rgba(37,99,235,0.35)] active:translate-y-px active:shadow-sm"
             >
               Work With Us
             </a>
@@ -98,27 +104,41 @@ export function Navigation() {
                   </Dialog.Close>
                 </div>
                 <div className="flex flex-col gap-1">
-                  {navLinks.map((link) => (
+                  {navLinks.map((link, i) => (
                     <Dialog.Close key={link.label} asChild>
-                      <a
+                      <motion.a
                         href={link.href}
+                        initial={shouldReduce ? false : { opacity: 0, x: 16 }}
+                        animate={shouldReduce ? undefined : { opacity: 1, x: 0 }}
+                        transition={{
+                          duration: 0.35,
+                          delay: 0.08 + i * 0.06,
+                          ease: [0.22, 1, 0.36, 1],
+                        }}
                         target={link.external ? "_blank" : undefined}
                         rel={link.external ? "noopener noreferrer" : undefined}
-                        className="px-3 py-2.5 text-sm text-text-nav hover:text-white hover:bg-white/[0.05] rounded-lg transition-all duration-300"
+                        className="px-3 py-2.5 text-sm text-text-nav hover:text-white hover:bg-white/[0.05] rounded-lg transition-colors duration-300"
                       >
                         {link.label}
-                      </a>
+                      </motion.a>
                     </Dialog.Close>
                   ))}
                 </div>
                 <div className="mt-auto">
-                  <a
+                  <motion.a
                     href="/contact"
+                    initial={shouldReduce ? false : { opacity: 0, y: 8 }}
+                    animate={shouldReduce ? undefined : { opacity: 1, y: 0 }}
+                    transition={{
+                      duration: 0.4,
+                      delay: 0.3,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
                     className="block w-full text-center px-4 py-2.5 text-sm font-medium bg-blue-brand hover:bg-blue-light text-white rounded-xl transition-all duration-300 active:translate-y-px"
                     onClick={() => setOpen(false)}
                   >
                     Work With Us
-                  </a>
+                  </motion.a>
                 </div>
               </Dialog.Content>
             </Dialog.Portal>

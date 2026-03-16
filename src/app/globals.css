@@ -135,6 +135,26 @@ body {
   transform: translate3d(0, -1px, 0);
 }
 
+.nav-link-underline {
+  position: relative;
+}
+.nav-link-underline::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  left: 14px;
+  right: 14px;
+  height: 1.5px;
+  background: #3b82f6;
+  border-radius: 1px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.nav-link-underline:hover::after {
+  transform: scaleX(1);
+}
+
 .section-divider {
   height: 1px;
   background: linear-gradient(

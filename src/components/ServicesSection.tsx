@@ -1,4 +1,4 @@
-import { Code2, GitBranch, Briefcase, Server, ArrowRight } from "lucide-react";
+import { Code2, Layers, Briefcase, Server, ArrowRight } from "lucide-react";
 import { Reveal, StaggerContainer, StaggerItem } from "./Motion";
 
 const services = [
@@ -14,16 +14,12 @@ const services = [
     iconColor: "text-blue-pale",
   },
   {
-    icon: GitBranch,
-    title: "Open Source Development",
+    icon: Layers,
+    title: "Startup & MVP Development",
     description:
-      "Battle-tested, community-driven projects powering ecosystems worldwide; from TypeScript libraries to Go infrastructure.",
-    highlights: ["GitHub Org", "TypeScript", "Go", "MIT Licensed"],
-    cta: {
-      label: "View GitHub",
-      href: "https://github.com/wyziedevs",
-      external: true,
-    },
+      "Turn your idea into a working product fast. We scope, design, and build production-ready MVPs that let you validate, iterate, and grow.",
+    highlights: ["MVP", "Rapid Build", "Product Validation", "Launch Ready"],
+    cta: { label: "Start a project", href: "/contact" },
     accentColor: "#8b5cf6",
     iconBg: "bg-violet-500/10",
     iconColor: "text-violet-400",
@@ -32,7 +28,7 @@ const services = [
     icon: Server,
     title: "Business Infrastructure",
     description:
-      "Scalable edge infrastructure, custom SDKs, and API foundations on Cloudflare Workers—built for global scale.",
+      "Scalable edge infrastructure, custom SDKs, and API foundations on Cloudflare Workers, built for global scale.",
     highlights: ["Edge Computing", "SDKs", "APIs", "Cloudflare"],
     cta: { label: "Get in touch", href: "#contact" },
     accentColor: "#f59e0b",
@@ -108,10 +104,6 @@ export function ServicesSection() {
 
                     <a
                       href={service.cta.href}
-                      target={service.cta.external ? "_blank" : undefined}
-                      rel={
-                        service.cta.external ? "noopener noreferrer" : undefined
-                      }
                       className="inline-flex items-center gap-1.5 text-sm font-medium hover:text-white transition-all duration-300"
                       style={{ color: `${service.accentColor}99` }}
                     >

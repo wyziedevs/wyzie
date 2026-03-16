@@ -3,7 +3,7 @@ import { Reveal } from "./Motion";
 import { Github, MessageCircle } from "lucide-react";
 
 const footerLinks = {
-  Products: [
+  Projects: [
     { label: "Wyzie Subs API", href: "https://sub.wyzie.io" },
     {
       label: "Wyzie Lib (npm)",
@@ -19,7 +19,6 @@ const footerLinks = {
     { label: "About", href: "/about" },
     { label: "GitHub Organization", href: "https://github.com/wyziedevs" },
     { label: "Discord Community", href: "https://discord.gg/2mxraHBVtB" },
-    { label: "Donate", href: "https://donate.cozi.lol" },
     { label: "Work With Us", href: "/contact" },
   ],
 };

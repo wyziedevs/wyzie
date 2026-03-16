@@ -92,14 +92,15 @@ export function ProjectsSection() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal className="text-center mb-12 sm:mb-20">
           <p className="text-blue-brand text-xs font-semibold uppercase tracking-[0.2em] mb-4">
-            Open Source
+            Engineering Credibility
           </p>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-5">
-            Shipped at Scale
+            Battle-Tested at Scale
           </h2>
           <p className="text-text-muted text-lg max-w-lg mx-auto leading-relaxed">
-            Community-driven projects powering millions of requests daily. All
-            open-source and freely available.
+            Real-world proof of our engineering caliber. These open-source
+            projects serve millions of users daily — built to the same standard
+            we bring to every client engagement.
           </p>
         </Reveal>
 

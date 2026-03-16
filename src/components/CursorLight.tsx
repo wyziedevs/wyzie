@@ -78,16 +78,17 @@ export function CursorLight() {
       <div
         style={{
           position: "absolute",
+          top: 0,
+          left: 0,
           width: "400px",
           height: "400px",
           borderRadius: "50%",
           background:
             "radial-gradient(circle, rgba(37, 99, 235, 0.06) 0%, rgba(37, 99, 235, 0.02) 40%, transparent 70%)",
-          transform: "translate(-50%, -50%)",
-          left: "var(--cursor-x, -1000px)",
-          top: "var(--cursor-y, -1000px)",
+          transform:
+            "translate(calc(var(--cursor-x, -1000px) - 200px), calc(var(--cursor-y, -1000px) - 200px))",
           transition: "opacity 0.4s ease",
-          willChange: "left, top",
+          willChange: "transform",
         }}
       />
     </div>

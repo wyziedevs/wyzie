@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { type ReactNode } from "react";
 
 const revealVariants: Variants = {
@@ -17,11 +17,12 @@ export function Reveal({
   delay?: number;
   className?: string;
 }) {
+  const shouldReduce = useReducedMotion();
   return (
     <motion.div
       variants={revealVariants}
-      initial="hidden"
-      whileInView="visible"
+      initial={shouldReduce ? false : "hidden"}
+      whileInView={shouldReduce ? undefined : "visible"}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
       className={className}
@@ -40,10 +41,11 @@ export function StaggerContainer({
   className?: string;
   staggerDelay?: number;
 }) {
+  const shouldReduce = useReducedMotion();
   return (
     <motion.div
-      initial="hidden"
-      whileInView="visible"
+      initial={shouldReduce ? false : "hidden"}
+      whileInView={shouldReduce ? undefined : "visible"}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ staggerChildren: staggerDelay, delayChildren: 0.05 }}
       className={className}
@@ -60,9 +62,11 @@ export function StaggerItem({
   children: ReactNode;
   className?: string;
 }) {
+  const shouldReduce = useReducedMotion();
   return (
     <motion.div
-      variants={revealVariants}
+      variants={shouldReduce ? undefined : revealVariants}
+      initial={shouldReduce ? false : undefined}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       className={className}
     >
