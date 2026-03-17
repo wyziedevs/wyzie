@@ -42,8 +42,8 @@ const projects = [
   {
     name: "i6.shark",
     description:
-      "High-throughput HTTP proxy in Go with a Python management layer. Built for speed and reliability.",
-    tags: ["Go", "Python", "Proxy", "Infrastructure"],
+      "High-throughput IPv6 proxy server in Go with intelligent IP pool management. Built for speed and reliability.",
+    tags: ["Go", "Proxy", "Infrastructure"],
     github: "https://github.com/wyziedevs/i6.shark",
     demo: null,
     docs: null,
