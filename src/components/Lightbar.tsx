@@ -79,7 +79,7 @@ function ParticlesCanvas() {
     canvas.width = canvas.scrollWidth;
     canvas.height = canvas.scrollHeight;
 
-    // Cache the context once — reused every frame instead of per-particle.
+    // Cache the context once - reused every frame instead of per-particle.
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 

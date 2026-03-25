@@ -99,7 +99,7 @@ export function ProjectsSection() {
           </h2>
           <p className="text-text-muted text-lg max-w-lg mx-auto leading-relaxed">
             Real-world proof of our engineering caliber. These open-source
-            projects serve millions of users daily — built to the same standard
+            projects serve millions of users daily - built to the same standard
             we bring to every client engagement.
           </p>
         </Reveal>
