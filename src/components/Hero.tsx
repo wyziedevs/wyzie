@@ -20,7 +20,7 @@ export function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden hero-grid">
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-20 pb-20 w-full">
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-16 lg:pt-20 pb-20 w-full">
         <div className="grid gap-12 lg:gap-16 items-center max-w-2xl">
           <div>
             <motion.div

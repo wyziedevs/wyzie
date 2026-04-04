@@ -5,9 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Menu, X } from "lucide-react";
-import { useReducedMotion } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { motion } from "@/components/Motion";
 
 const navLinks = [
   { label: "Services", href: "/#services" },
@@ -81,67 +80,101 @@ export function Navigation() {
                 <Menu className="w-5 h-5" />
               </button>
             </Dialog.Trigger>
-            <Dialog.Portal>
-              <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
-              <Dialog.Content className="fixed top-0 right-0 h-full w-[min(18rem,85vw)] bg-bg-surface border-l border-border-subtle z-50 flex flex-col p-6 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right duration-300">
-                <Dialog.Title className="sr-only">Navigation Menu</Dialog.Title>
-                <div className="flex items-center justify-between mb-6">
-                  <Image
-                    src="/logo-header.png"
-                    alt="Wyzie"
-                    width={85}
-                    height={30}
-                  />
-                  <Dialog.Close asChild>
-                    <button
-                      aria-label="Close menu"
-                      className="p-2.5 min-w-11 min-h-11 flex items-center justify-center rounded-md text-text-nav hover:text-white hover:bg-white/[0.05] transition-all duration-300"
+            <AnimatePresence>
+              {open && (
+                <Dialog.Portal forceMount>
+                  <Dialog.Overlay asChild forceMount>
+                    <motion.div
+                      className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+                      initial={shouldReduce ? false : { opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                    />
+                  </Dialog.Overlay>
+                  <Dialog.Content asChild forceMount>
+                    <motion.div
+                      className="fixed top-0 inset-x-0 z-50 flex flex-col p-6 bg-bg-surface border-b border-border-subtle"
+                      initial={shouldReduce ? false : { y: "-100%", opacity: 0.5 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: "-100%", opacity: 0 }}
+                      transition={{
+                        duration: 0.4,
+                        ease: [0.22, 1, 0.36, 1],
+                        exit: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+                      }}
                     >
-                      <X className="w-4 h-4" />
-                    </button>
-                  </Dialog.Close>
-                </div>
-                <div className="flex flex-col gap-1">
-                  {navLinks.map((link, i) => (
-                    <Dialog.Close key={link.label} asChild>
-                      <motion.a
-                        href={link.href}
-                        initial={shouldReduce ? false : { opacity: 0, x: 16 }}
-                        animate={
-                          shouldReduce ? undefined : { opacity: 1, x: 0 }
-                        }
-                        transition={{
-                          duration: 0.35,
-                          delay: 0.08 + i * 0.06,
-                          ease: [0.22, 1, 0.36, 1],
+                      <Dialog.Title className="sr-only">Navigation Menu</Dialog.Title>
+                      <div className="flex items-center justify-between mb-6">
+                        <Image
+                          src="/logo-header.png"
+                          alt="Wyzie"
+                          width={85}
+                          height={30}
+                        />
+                        <Dialog.Close asChild>
+                          <button
+                            aria-label="Close menu"
+                            className="p-2.5 min-w-11 min-h-11 flex items-center justify-center rounded-md text-text-nav hover:text-white hover:bg-white/[0.05] transition-all duration-300"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                        </Dialog.Close>
+                      </div>
+                      <motion.div
+                        className="flex flex-col gap-1"
+                        initial={shouldReduce ? false : "hidden"}
+                        animate="visible"
+                        variants={{
+                          hidden: {},
+                          visible: { transition: { staggerChildren: 0.06, delayChildren: 0.15 } },
                         }}
-                        target={link.external ? "_blank" : undefined}
-                        rel={link.external ? "noopener noreferrer" : undefined}
-                        className="px-3 py-2.5 text-sm text-text-nav hover:text-white hover:bg-white/[0.05] rounded-lg transition-colors duration-300"
                       >
-                        {link.label}
-                      </motion.a>
-                    </Dialog.Close>
-                  ))}
-                </div>
-                <div className="mt-auto">
-                  <motion.a
-                    href="/contact"
-                    initial={shouldReduce ? false : { opacity: 0, y: 8 }}
-                    animate={shouldReduce ? undefined : { opacity: 1, y: 0 }}
-                    transition={{
-                      duration: 0.4,
-                      delay: 0.3,
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
-                    className="block w-full text-center px-4 py-2.5 text-sm font-medium bg-blue-brand hover:bg-blue-light text-white rounded-xl transition-all duration-300 active:translate-y-px"
-                    onClick={() => setOpen(false)}
-                  >
-                    Work With Us
-                  </motion.a>
-                </div>
-              </Dialog.Content>
-            </Dialog.Portal>
+                        {navLinks.map((link) => (
+                          <motion.div
+                            key={link.label}
+                            variants={
+                              shouldReduce
+                                ? undefined
+                                : {
+                                    hidden: { opacity: 0, x: -16 },
+                                    visible: { opacity: 1, x: 0 },
+                                  }
+                            }
+                            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                          >
+                            <Dialog.Close asChild>
+                              <a
+                                href={link.href}
+                                target={link.external ? "_blank" : undefined}
+                                rel={link.external ? "noopener noreferrer" : undefined}
+                                className="block px-3 py-2.5 text-sm text-text-nav hover:text-white hover:bg-white/[0.05] rounded-lg transition-colors duration-300"
+                              >
+                                {link.label}
+                              </a>
+                            </Dialog.Close>
+                          </motion.div>
+                        ))}
+                      </motion.div>
+                      <motion.div
+                        className="mt-auto pt-6"
+                        initial={shouldReduce ? false : { opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                      >
+                        <a
+                          href="/contact"
+                          className="block w-full text-center px-4 py-2.5 text-sm font-medium bg-blue-brand hover:bg-blue-light text-white rounded-xl transition-all duration-300 active:translate-y-px"
+                          onClick={() => setOpen(false)}
+                        >
+                          Work With Us
+                        </a>
+                      </motion.div>
+                    </motion.div>
+                  </Dialog.Content>
+                </Dialog.Portal>
+              )}
+            </AnimatePresence>
           </Dialog.Root>
         </div>
       </nav>
