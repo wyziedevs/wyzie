@@ -95,16 +95,19 @@ export function Navigation() {
                   <Dialog.Content asChild forceMount>
                     <motion.div
                       className="fixed top-0 inset-x-0 z-50 flex flex-col p-6 bg-bg-surface border-b border-border-subtle"
-                      initial={shouldReduce ? false : { y: "-100%", opacity: 0.5 }}
+                      initial={
+                        shouldReduce ? false : { y: "-100%", opacity: 0.5 }
+                      }
                       animate={{ y: 0, opacity: 1 }}
                       exit={{ y: "-100%", opacity: 0 }}
                       transition={{
                         duration: 0.4,
                         ease: [0.22, 1, 0.36, 1],
-                        exit: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
                       }}
                     >
-                      <Dialog.Title className="sr-only">Navigation Menu</Dialog.Title>
+                      <Dialog.Title className="sr-only">
+                        Navigation Menu
+                      </Dialog.Title>
                       <div className="flex items-center justify-between mb-6">
                         <Image
                           src="/logo-header.png"
@@ -127,7 +130,12 @@ export function Navigation() {
                         animate="visible"
                         variants={{
                           hidden: {},
-                          visible: { transition: { staggerChildren: 0.06, delayChildren: 0.15 } },
+                          visible: {
+                            transition: {
+                              staggerChildren: 0.06,
+                              delayChildren: 0.15,
+                            },
+                          },
                         }}
                       >
                         {navLinks.map((link) => (
@@ -141,13 +149,20 @@ export function Navigation() {
                                     visible: { opacity: 1, x: 0 },
                                   }
                             }
-                            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                            transition={{
+                              duration: 0.35,
+                              ease: [0.22, 1, 0.36, 1],
+                            }}
                           >
                             <Dialog.Close asChild>
                               <a
                                 href={link.href}
                                 target={link.external ? "_blank" : undefined}
-                                rel={link.external ? "noopener noreferrer" : undefined}
+                                rel={
+                                  link.external
+                                    ? "noopener noreferrer"
+                                    : undefined
+                                }
                                 className="block px-3 py-2.5 text-sm text-text-nav hover:text-white hover:bg-white/[0.05] rounded-lg transition-colors duration-300"
                               >
                                 {link.label}
@@ -160,7 +175,11 @@ export function Navigation() {
                         className="mt-auto pt-6"
                         initial={shouldReduce ? false : { opacity: 0, y: 8 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                        transition={{
+                          duration: 0.4,
+                          delay: 0.3,
+                          ease: [0.22, 1, 0.36, 1],
+                        }}
                       >
                         <a
                           href="/contact"
