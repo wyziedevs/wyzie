@@ -64,8 +64,8 @@ const projects = [
   {
     name: "tinybones",
     description:
-      "A lightweight, minimal boilerplate for spinning up new projects fast without the bloat.",
-    tags: ["TypeScript", "Boilerplate", "Tooling"],
+      "A minimal blog template built with Astro. Perfect for developers who want a clean, fast, and customizable blog without the bloat.",
+    tags: ["Astro", "Blog", "Template"],
     github: "https://github.com/itzcozi/tinybones",
     demo: null,
     docs: null,
