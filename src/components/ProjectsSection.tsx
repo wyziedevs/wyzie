@@ -53,8 +53,8 @@ const projects = [
   {
     name: "coderaft",
     description:
-      "A modern collaborative code editor built for real-time pair programming and team workflows.",
-    tags: ["TypeScript", "Collaboration", "Editor"],
+      "coderaft creates isolated development environments inside Docker islands. Each project lives in its own disposable container while your code stays organized on the host.",
+    tags: ["TypeScript", "Docker", "Dev Environments"],
     github: "https://github.com/itzcozi/coderaft",
     demo: null,
     docs: null,
