@@ -29,7 +29,7 @@ export function Navigation() {
   return (
     <header
       className={cn(
-        "fixed top-0 inset-x-0 z-50 border-b transition-all duration-500",
+        "fixed top-0 inset-x-0 z-50 border-b transition-[background-color,border-color,box-shadow,backdrop-filter] duration-500",
         scrolled
           ? "bg-bg-base/85 backdrop-blur-md border-white/[0.04] shadow-lg shadow-black/30"
           : "bg-transparent border-transparent",
@@ -85,23 +85,24 @@ export function Navigation() {
                 <Dialog.Portal forceMount>
                   <Dialog.Overlay asChild forceMount>
                     <motion.div
-                      className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+                      className="fixed inset-0 bg-black/65 z-50"
                       initial={shouldReduce ? false : { opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                      transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
                     />
                   </Dialog.Overlay>
                   <Dialog.Content asChild forceMount>
                     <motion.div
                       className="fixed top-0 inset-x-0 z-50 flex flex-col p-6 bg-bg-surface border-b border-border-subtle"
+                      style={{ willChange: "transform, opacity" }}
                       initial={
                         shouldReduce ? false : { y: "-100%", opacity: 0.5 }
                       }
                       animate={{ y: 0, opacity: 1 }}
                       exit={{ y: "-100%", opacity: 0 }}
                       transition={{
-                        duration: 0.4,
+                        duration: 0.35,
                         ease: [0.22, 1, 0.36, 1],
                       }}
                     >
