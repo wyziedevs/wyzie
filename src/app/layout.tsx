@@ -128,7 +128,7 @@ export default function RootLayout({
         />
         <script
           dangerouslySetInnerHTML={{
-            __html: `console.log('%c\u26a1 Built by Wyzie','font-size:14px;font-weight:bold;color:#2563eb');console.log('%cWe build things properly. See for yourself \u2192','color:#8a95a8');console.log('%chttps://github.com/wyziedevs','color:#60a5fa;text-decoration:underline');`,
+            __html: `console.log('%c Built by Wyzie','font-size:14px;font-weight:bold;color:#2563eb');console.log('%cWe build things properly. See for yourself \u2192','color:#8a95a8');console.log('%chttps://github.com/wyziedevs','color:#60a5fa;text-decoration:underline');`,
           }}
         />
       </head>

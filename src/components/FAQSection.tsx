@@ -14,7 +14,7 @@ const faqs = [
   {
     question: "How long does a typical project take?",
     answer:
-      "Most software projects ship within 2–6 weeks. Larger platforms or consulting engagements run 6–12 weeks. We'll give you a realistic timeline during our discovery call. No inflated estimates, no surprises.",
+      "Most software projects ship within 2-6 weeks. Larger platforms or consulting engagements run 6-12 weeks. We'll give you a realistic timeline during our discovery call. No inflated estimates, no surprises.",
   },
   {
     question: "Do you offer ongoing support after launch?",

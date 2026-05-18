@@ -51,7 +51,7 @@ If any of these are unclear from the codebase, STOP and call the AskUserQuestion
 
 **CRITICAL**: "Bolder" doesn't mean chaotic or garish. It means distinctive, memorable, and confident. Think intentional drama, not random chaos.
 
-**WARNING - AI SLOP TRAP**: When making things "bolder," AI defaults to the same tired tricks: cyan/purple gradients, glassmorphism, neon accents on dark backgrounds, gradient text on metrics. These are the OPPOSITE of bold—they're generic. Review ALL the DON'T guidelines in the frontend-design skill before proceeding. Bold means distinctive, not "more effects."
+**WARNING - AI SLOP TRAP**: When making things "bolder," AI defaults to the same tired tricks: cyan/purple gradients, glassmorphism, neon accents on dark backgrounds, gradient text on metrics. These are the OPPOSITE of bold; they're generic. Review ALL the DON'T guidelines in the frontend-design skill before proceeding. Bold means distinctive, not "more effects."
 
 ## Plan Amplification
 
@@ -78,7 +78,7 @@ Systematically increase impact across these dimensions:
 ### Color Intensification
 
 - **Increase saturation**: Shift to more vibrant, energetic colors (but not neon)
-- **Bold palette**: Introduce unexpected color combinations—avoid the purple-blue gradient AI slop
+- **Bold palette**: Introduce unexpected color combinations, avoiding the purple-blue gradient AI slop
 - **Dominant color strategy**: Let one bold color own 60% of the design
 - **Sharp accents**: High-contrast accent colors that pop
 - **Tinted neutrals**: Replace pure grays with tinted grays that harmonize with your palette
@@ -96,7 +96,7 @@ Systematically increase impact across these dimensions:
 
 - **Dramatic shadows**: Large, soft shadows for elevation (but not generic drop shadows on rounded rectangles)
 - **Background treatments**: Mesh patterns, noise textures, geometric patterns, intentional gradients (not purple-to-blue)
-- **Texture & depth**: Grain, halftone, duotone, layered elements—NOT glassmorphism (it's overused AI slop)
+- **Texture & depth**: Grain, halftone, duotone, layered elements, NOT glassmorphism (it's overused AI slop)
 - **Borders & frames**: Thick borders, decorative frames, custom shapes (not rounded rectangles with colored border on one side)
 - **Custom elements**: Illustrative elements, custom icons, decorative details that reinforce brand
 
@@ -105,7 +105,7 @@ Systematically increase impact across these dimensions:
 - **Entrance choreography**: Staggered, dramatic page load animations with 50-100ms delays
 - **Scroll effects**: Parallax, reveal animations, scroll-triggered sequences
 - **Micro-interactions**: Satisfying hover effects, click feedback, state changes
-- **Transitions**: Smooth, noticeable transitions using ease-out-quart/quint/expo (not bounce or elastic—they cheapen the effect)
+- **Transitions**: Smooth, noticeable transitions using ease-out-quart/quint/expo (not bounce or elastic; they cheapen the effect)
 
 ### Composition Boldness
 
