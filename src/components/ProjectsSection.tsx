@@ -22,9 +22,9 @@ const projects = [
     description:
       "A fully open-source movie and TV streaming web app. Fast, modern, and community maintained.",
     tags: ["TypeScript", "React", "Open Source"],
-    github: "https://github.com/sudo-flix/sudo-flix",
+    github: null,
     demo: null,
-    docs: "https://docs.undi.rest",
+    docs: null,
     status: "sunset",
     featured: true,
   },
@@ -212,39 +212,43 @@ function ProjectCard({
         ))}
       </div>
 
-      <div className="flex items-center gap-3 border-t border-white/[0.05] pt-3">
-        <a
-          href={project.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1.5 text-sm sm:text-xs py-1 text-text-subtle hover:text-white transition-colors duration-300"
-        >
-          <Github className="w-3.5 h-3.5" />
-          Source Code
-        </a>
-        {project.demo && (
-          <a
-            href={project.demo}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-sm sm:text-xs py-1 text-text-subtle hover:text-white transition-colors duration-300"
-          >
-            <ExternalLink className="w-3.5 h-3.5" />
-            Live Demo
-          </a>
-        )}
-        {project.docs && (
-          <a
-            href={project.docs}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-sm sm:text-xs py-1 text-text-subtle hover:text-white transition-colors duration-300"
-          >
-            <ExternalLink className="w-3.5 h-3.5" />
-            Docs
-          </a>
-        )}
-      </div>
+      {(project.github || project.demo || project.docs) && (
+        <div className="flex items-center gap-3 border-t border-white/[0.05] pt-3">
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-sm sm:text-xs py-1 text-text-subtle hover:text-white transition-colors duration-300"
+            >
+              <Github className="w-3.5 h-3.5" />
+              Source Code
+            </a>
+          )}
+          {project.demo && (
+            <a
+              href={project.demo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-sm sm:text-xs py-1 text-text-subtle hover:text-white transition-colors duration-300"
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
+              Live Demo
+            </a>
+          )}
+          {project.docs && (
+            <a
+              href={project.docs}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-sm sm:text-xs py-1 text-text-subtle hover:text-white transition-colors duration-300"
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
+              Docs
+            </a>
+          )}
+        </div>
+      )}
     </div>
   );
 }

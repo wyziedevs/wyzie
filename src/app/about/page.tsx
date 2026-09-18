@@ -2,7 +2,6 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Reveal, StaggerContainer, StaggerItem } from "@/components/Motion";
 import { Code2, Globe, Shield, Zap, ArrowRight } from "lucide-react";
-import { RotatingCTA } from "./RotatingCTA";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
