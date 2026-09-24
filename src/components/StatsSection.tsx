@@ -5,7 +5,7 @@ import { Reveal, StaggerContainer, StaggerItem } from "./Motion";
 
 const stats = [
   { numericValue: 50, suffix: "+", label: "Projects Shipped" },
-  { numericValue: 99.9, suffix: "%", label: "Uptime Guarantee" },
+  { numericValue: 99.9, suffix: "%", label: "Uptime Target" },
   { numericValue: 10, suffix: "M+", label: "Daily Users" },
   { numericValue: 300, suffix: "+", label: "Global Regions" },
 ];

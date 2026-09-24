@@ -43,7 +43,7 @@ const values = [
     icon: Shield,
     title: "Reliability",
     description:
-      "We build for resilience. Resilient systems, thoughtful error handling, and 99.9% uptime guarantees mean your users stay happy.",
+      "We build for resilience. Resilient systems, thoughtful error handling, and a 99.9% uptime target mean your users stay happy.",
     iconBg: "bg-emerald-500/10",
     iconColor: "text-emerald-400",
     accentColor: "#10b981",

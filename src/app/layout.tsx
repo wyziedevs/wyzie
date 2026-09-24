@@ -60,14 +60,14 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/header.png",
-        width: 1200,
-        height: 630,
+        width: 350,
+        height: 150,
         alt: "Wyzie - Technology Solutions",
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "Wyzie - Technology Solutions",
     description:
       "Bespoke software solutions, open source tools, and technology consulting. 50+ projects delivered, 99.9% uptime.",

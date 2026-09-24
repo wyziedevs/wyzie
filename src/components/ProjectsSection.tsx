@@ -9,9 +9,9 @@ const projects = [
   {
     name: "Wyzie Subs",
     description:
-      "Enterprise-grade subtitle API serving millions of requests. Supports multiple languages, formats, and sources with zero-config integration.",
-    tags: ["TypeScript", "Nitro", "Cloudflare Workers", "REST API"],
-    github: "https://github.com/wyziedevs/wyzie-subs",
+      "Enterprise-grade subtitle API serving millions of requests. Supports multiple languages, formats, and sources, with a free API key to get started.",
+    tags: ["TypeScript", "Nitro", "VPS", "REST API"],
+    github: null,
     demo: "https://sub.wyzie.io",
     docs: "https://docs.wyzie.io",
     status: "active",
@@ -54,7 +54,7 @@ const projects = [
     name: "coderaft",
     description:
       "coderaft creates isolated development environments inside Docker islands. Each project lives in its own disposable container while your code stays organized on the host.",
-    tags: ["TypeScript", "Docker", "Dev Environments"],
+    tags: ["Go", "Docker", "Dev Environments"],
     github: "https://github.com/itzcozi/coderaft",
     demo: null,
     docs: null,
@@ -98,9 +98,9 @@ export function ProjectsSection() {
             Battle-Tested at Scale
           </h2>
           <p className="text-text-muted text-lg max-w-lg mx-auto leading-relaxed">
-            Real-world proof of our engineering caliber. These open-source
-            projects serve millions of users daily - built to the same standard
-            we bring to every client engagement.
+            Real-world proof of our engineering caliber. These projects, most
+            of them open source, serve millions of users daily - built to the
+            same standard we bring to every client engagement.
           </p>
         </Reveal>
 

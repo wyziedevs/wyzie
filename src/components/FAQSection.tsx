@@ -24,7 +24,7 @@ const faqs = [
   {
     question: "Can I use your open source projects commercially?",
     answer:
-      "Absolutely. Our open source projects are MIT licensed, meaning you can use, modify, and distribute them freely; including in commercial products. No strings attached.",
+      "Yes, within each project's license. Wyzie Lib, Wyzie Proxy, and i6.shark are MIT licensed, so you can use, modify, and distribute them freely, including in commercial products. For our other repositories, check the license in the repository. The Wyzie Subs API itself is closed source: you use it with an API key, as documented at docs.wyzie.io.",
   },
   {
     question: "What does your pricing look like?",
