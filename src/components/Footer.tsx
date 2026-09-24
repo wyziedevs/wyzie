@@ -5,6 +5,8 @@ import { Github, MessageCircle } from "lucide-react";
 const footerLinks = {
   Projects: [
     { label: "Wyzie Subs API", href: "https://sub.wyzie.io" },
+    { label: "Subs Status & Uptime", href: "https://sub.wyzie.io/status" },
+    { label: "Subs News", href: "https://sub.wyzie.io/news" },
     {
       label: "Wyzie Lib (npm)",
       href: "https://www.npmjs.com/package/wyzie-lib",

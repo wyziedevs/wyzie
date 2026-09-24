@@ -9,7 +9,7 @@ const projects = [
   {
     name: "Wyzie Subs",
     description:
-      "Enterprise-grade subtitle API serving millions of requests. Supports multiple languages, formats, and sources, with a free API key to get started.",
+      "Enterprise-grade subtitle API serving millions of requests. Search seven providers in every language, download SRT or WebVTT with timing fixes, translate, or time subtitles to your own video with Wyzie Synced. Free API key to get started, with public status and uptime.",
     tags: ["TypeScript", "Nitro", "VPS", "REST API"],
     github: null,
     demo: "https://sub.wyzie.io",
