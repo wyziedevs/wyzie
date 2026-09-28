@@ -6,16 +6,18 @@ import { ContactSection } from "./ContactSection";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Get in touch with Wyzie. We'd love to hear about your project and explore how we can help.",
+    "Tell Wyzie what you need: software, a website, a phone system, a network or IT support. Email hello@wyzie.io; we reply within a day with next steps and a written quote.",
   alternates: { canonical: "https://wyzie.io/contact" },
 };
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-bg-base">
+    <>
       <Navigation />
-      <ContactSection />
+      <main>
+        <ContactSection />
+      </main>
       <Footer />
-    </main>
+    </>
   );
 }

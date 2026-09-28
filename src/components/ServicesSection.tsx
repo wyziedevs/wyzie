@@ -1,121 +1,127 @@
-import { Code2, Layers, Briefcase, Server, ArrowRight } from "lucide-react";
-import { Reveal, StaggerContainer, StaggerItem } from "./Motion";
+import { Headline, Reveal } from "./ui";
 
+/*
+ * What we do, as ruled rows rather than a grid of icon cards. A row ends with
+ * where to see it done, when there is somewhere public to see it.
+ */
 const services = [
   {
-    icon: Code2,
-    title: "Bespoke Software Development",
-    description:
-      "Custom web apps, backend systems, and edge infrastructure built to your exact requirements and ready to scale.",
-    highlights: ["Web Apps", "Full-Stack", "Edge Computing"],
-    cta: { label: "View our work", href: "#projects" },
-    accentColor: "#2563eb",
-    iconBg: "bg-blue-brand/10",
-    iconColor: "text-blue-pale",
+    title: "Web Apps and Products",
+    body: "Customer-facing apps, dashboards and internal tools, designed and built end to end. You get the code, the deployment and the documentation, and you own all three.",
+    seen: [
+      { label: "Kilter", href: "https://kilter.work" },
+      { label: "PitMaster", href: "https://pitmaster.cc" },
+    ],
   },
   {
-    icon: Layers,
-    title: "Startup & MVP Development",
-    description:
-      "Turn your idea into a working product fast. We scope, design, and build production-ready MVPs that let you validate, iterate, and grow.",
-    highlights: ["MVP", "Rapid Build", "Product Validation", "Launch Ready"],
-    cta: { label: "Start a project", href: "/contact" },
-    accentColor: "#8b5cf6",
-    iconBg: "bg-violet-500/10",
-    iconColor: "text-violet-400",
+    title: "Websites and Online Stores",
+    body: "Fast sites your customers can find, with booking, payments or a full store where you need one. The domain, the hosting and your business email come set up with it.",
+    seen: [],
   },
   {
-    icon: Server,
-    title: "Business Infrastructure",
-    description:
-      "Scalable edge infrastructure, custom SDKs, and API foundations on Cloudflare Workers, built for global scale.",
-    highlights: ["Edge Computing", "SDKs", "APIs", "Cloudflare"],
-    cta: { label: "Get in touch", href: "#contact" },
-    accentColor: "#f59e0b",
-    iconBg: "bg-amber-500/10",
-    iconColor: "text-amber-400",
+    title: "Phones and VoIP",
+    body: "Business phone systems that run over the internet: your numbers moved over, desk phones or an app on every laptop and mobile, call menus, ring groups and voicemail to email. Changed whenever your team does.",
+    seen: [],
   },
   {
-    icon: Briefcase,
-    title: "Technology Consulting",
-    description:
-      "Architecture reviews, strategic roadmapping, and hands-on implementation to help teams ship faster and build for the long term.",
-    highlights: ["Consulting", "Architecture", "Code Review"],
-    cta: { label: "Get in touch", href: "#contact" },
-    accentColor: "#10b981",
-    iconBg: "bg-emerald-500/10",
-    iconColor: "text-emerald-400",
+    title: "Networks, Wi-Fi and Security",
+    body: "Office networks and Wi-Fi that reach every desk, firewalls, VPNs for people working away from it, and backups that are tested, so a lost laptop or a bad click stays a small problem.",
+    seen: [],
+  },
+  {
+    title: "Email, Accounts and Devices",
+    body: "Google Workspace or Microsoft 365 set up properly, laptops and phones ready on someone's first day, and accounts that open and close cleanly as people join and leave.",
+    seen: [],
+  },
+  {
+    title: "Cloud, APIs and Infrastructure",
+    body: "Moves off old servers, APIs, background jobs and the hosting under them, on Cloudflare, a VPS or both. Metered, monitored, and cheap to keep running.",
+    seen: [
+      { label: "Wyzie Subs", href: "https://sub.wyzie.io" },
+      { label: "i6.shark", href: "https://github.com/wyziedevs/i6.shark" },
+    ],
+  },
+  {
+    title: "Integrations and Automation",
+    body: "Plugins for the platforms your customers already use, payments with Stripe or crypto, and the glue that stops your team copying data between the services you already pay for.",
+    seen: [{ label: "the Wyzie Subs store", href: "https://store.wyzie.io" }],
+  },
+  {
+    title: "New Products and MVPs",
+    body: "The smallest version that proves an idea, for a new company or a new line in an established one. Built in weeks rather than months, and built so it does not have to be thrown away once it works.",
+    seen: [
+      {
+        label: "SCeNT, our starter stack",
+        href: "https://github.com/wyziedevs/SCeNT",
+      },
+    ],
+  },
+  {
+    title: "IT Support and Consulting",
+    body: "Someone to call when something breaks, on a monthly plan or as needed. Plus architecture and code reviews, and a second opinion before a big decision.",
+    seen: [],
   },
 ];
 
 export function ServicesSection() {
   return (
-    <section
-      id="services"
-      className="py-16 sm:py-28 relative overflow-hidden section-glow"
-    >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <Reveal className="text-center mb-12 sm:mb-20">
-          <p className="text-blue-brand text-xs font-semibold uppercase tracking-[0.2em] mb-4">
-            What We Do
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-5">
-            Engineered for Impact
-          </h2>
-          <p className="text-text-muted text-lg max-w-lg mx-auto leading-relaxed">
-            Bespoke software, open source tools, and expert consulting that
-            drives measurable results.
+    <section id="services" className="sweep border-t border-line bg-panel">
+      <div className="mx-auto w-full max-w-page px-4 py-section sm:px-6">
+        <Headline
+          text="What We Can Do for You"
+          className="mb-14 max-w-reading"
+        />
+
+        <ul className="ruled border-y border-line">
+          {services.map((service, i) => (
+            <Reveal
+              as="li"
+              key={service.title}
+              delay={i * 60}
+              className="scan grid gap-3 py-8 sm:grid-cols-12 sm:gap-8 sm:py-10"
+            >
+              <h3 className="text-display-md text-balance text-ink sm:col-span-5">
+                {service.title}
+              </h3>
+              <div className="sm:col-span-7 lg:col-span-6 lg:col-start-7">
+                <p className="text-standfirst text-ink-muted">{service.body}</p>
+                {service.seen.length > 0 && (
+                  <p className="mt-4 text-sm text-ink-subtle">
+                    See it in{" "}
+                    {service.seen.map((s, j) => (
+                      <span key={s.href}>
+                        {j > 0 &&
+                          (j === service.seen.length - 1 ? " and " : ", ")}
+                        <a
+                          href={s.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="ctl font-semibold text-blue-ink underline decoration-transparent underline-offset-4 hover:text-ink hover:decoration-ink-subtle"
+                        >
+                          {s.label}
+                        </a>
+                      </span>
+                    ))}
+                  </p>
+                )}
+              </div>
+            </Reveal>
+          ))}
+        </ul>
+
+        <Reveal className="mt-10 max-w-reading">
+          <p className="text-standfirst text-ink-muted">
+            Something else? If your business runs on it, ask. If someone else
+            would do it better, we will say so and point you to them.{" "}
+            <a
+              href="/contact"
+              className="ctl font-semibold text-blue-ink underline decoration-transparent underline-offset-4 hover:text-ink hover:decoration-ink-subtle"
+            >
+              Tell us what you need
+            </a>
+            .
           </p>
         </Reveal>
-
-        <StaggerContainer
-          className="grid md:grid-cols-2 gap-5"
-          staggerDelay={0.15}
-        >
-          {services.map((service) => {
-            const Icon = service.icon;
-            return (
-              <StaggerItem key={service.title}>
-                <div className="group relative flex flex-col rounded-2xl bg-bg-surface border border-border-subtle p-7 overflow-hidden glow-card h-full">
-                  <div className="relative flex flex-col flex-1">
-                    <div
-                      className={`w-11 h-11 rounded-xl ${service.iconBg} flex items-center justify-center mb-6 transition-transform duration-500 group-hover:scale-105`}
-                    >
-                      <Icon className={`w-5 h-5 ${service.iconColor}`} />
-                    </div>
-
-                    <h3 className="text-white font-bold text-lg mb-3 leading-snug">
-                      {service.title}
-                    </h3>
-                    <p className="text-text-muted text-sm leading-relaxed mb-4 flex-1">
-                      {service.description}
-                    </p>
-
-                    <div className="flex flex-wrap gap-1.5 mb-6">
-                      {service.highlights.map((h) => (
-                        <span
-                          key={h}
-                          className="px-2.5 py-1 rounded-md bg-white/[0.03] border border-border-subtle text-xs text-text-subtle font-mono hover:bg-white/[0.06] hover:border-border-muted transition-all duration-300"
-                        >
-                          {h}
-                        </span>
-                      ))}
-                    </div>
-
-                    <a
-                      href={service.cta.href}
-                      className="inline-flex items-center gap-1.5 text-sm font-medium hover:text-white transition-all duration-300"
-                      style={{ color: `${service.accentColor}99` }}
-                    >
-                      {service.cta.label}
-                      <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-                    </a>
-                  </div>
-                </div>
-              </StaggerItem>
-            );
-          })}
-        </StaggerContainer>
       </div>
     </section>
   );

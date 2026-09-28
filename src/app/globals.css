@@ -1,291 +1,2045 @@
 @import "tailwindcss";
 
-@theme inline {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/*
+ * One closed vocabulary. A section composes from these; it never invents a
+ * color, a size or a duration of its own. Neutrals lean a hair toward the blue
+ * so the gray and the accent read as one family.
+ */
+@theme {
+  --font-sans:
+    var(--font-open-sans), "Segoe UI Variable", "Segoe UI", -apple-system,
+    BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono:
+    ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
 
-  --color-bg-base: #050508;
-  --color-bg-surface: #0a0a14;
-  --color-bg-elevated: #10101c;
-  --color-border-subtle: rgba(255, 255, 255, 0.06);
-  --color-border-muted: rgba(255, 255, 255, 0.1);
+  /* Surfaces, darkest first: night blue rather than gray, so the page reads
+     as lit rather than dim. */
+  --color-page: oklch(0.182 0.013 264);
+  --color-panel: oklch(0.212 0.015 264);
+  --color-raised: oklch(0.252 0.017 264);
+  --color-line: oklch(0.305 0.019 264);
+  --color-line-strong: oklch(0.385 0.022 264);
 
-  --color-blue-brand: #2563eb;
-  --color-blue-light: #3b82f6;
-  --color-blue-pale: #60a5fa;
-  --color-blue-faint: rgba(37, 99, 235, 0.12);
+  /* Ink. Every step clears 4.5:1 on `page`, `panel` and `raised`. */
+  --color-ink: oklch(0.97 0.006 262);
+  --color-ink-muted: oklch(0.8 0.016 262);
+  --color-ink-subtle: oklch(0.68 0.02 262);
 
-  --color-text-base: #f0f2f5;
-  --color-text-muted: #8a95a8;
-  --color-text-subtle: #5a657a;
-  --color-text-nav: #c4d3ec;
-  --color-text-footer: #6b7280;
+  /* Wyzie blue. `blue` fills a control, `blue-ink` is blue text on the dark
+     page, `blue-deep` is the logo's own blue, used once as a surface. `glow`
+     is light, never text: rims, beams and blooms. */
+  --color-blue: oklch(0.56 0.215 263);
+  --color-blue-hover: oklch(0.51 0.21 264);
+  --color-blue-ink: oklch(0.8 0.11 257);
+  --color-blue-deep: oklch(0.48 0.21 264);
+  --color-glow: oklch(0.72 0.18 258);
+  --color-on-blue: oklch(0.985 0.004 262);
+  --color-on-blue-muted: oklch(0.9 0.04 262);
+
+  /* Status. Always beside a written label, never alone. */
+  --color-live: oklch(0.8 0.15 155);
+  --color-sunset: oklch(0.72 0.1 45);
+
+  /* Plain white would glare on this page; the tinted ink stands in for it. */
+  --color-white: oklch(0.965 0.004 262);
+
+  --radius-control: 0.375rem;
+  --radius-panel: 0.5rem;
+
+  /* Display type: one family, set large and tight. */
+  --text-display-xl: clamp(2.5rem, 1.55rem + 3.8vw, 4.75rem);
+  --text-display-xl--line-height: 1.04;
+  --text-display-xl--letter-spacing: -0.032em;
+  --text-display-xl--font-weight: 600;
+
+  --text-display-lg: clamp(1.875rem, 1.4rem + 1.9vw, 3rem);
+  --text-display-lg--line-height: 1.1;
+  --text-display-lg--letter-spacing: -0.028em;
+  --text-display-lg--font-weight: 600;
+
+  --text-display-md: clamp(1.375rem, 1.2rem + 0.7vw, 1.875rem);
+  --text-display-md--line-height: 1.18;
+  --text-display-md--letter-spacing: -0.022em;
+  --text-display-md--font-weight: 600;
+
+  --text-lead: clamp(1rem, 0.95rem + 0.2vw, 1.1875rem);
+  --text-lead--line-height: 1.55;
+
+  --text-standfirst: clamp(0.9375rem, 0.9rem + 0.15vw, 1.0625rem);
+  --text-standfirst--line-height: 1.6;
+
+  --text-overline: 0.6875rem;
+  --text-overline--line-height: 1.4;
+  --text-overline--letter-spacing: 0.08em;
+  --text-overline--font-weight: 600;
+
+  --spacing-section: clamp(4rem, 2.5rem + 6vw, 8.5rem);
+  --spacing-section-tight: clamp(2.5rem, 1.75rem + 3vw, 4.5rem);
+
+  --container-reading: 38rem;
+  --container-page: 74rem;
+
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-standard: cubic-bezier(0.25, 1, 0.5, 1);
+  --duration-control: 160ms;
+  --duration-reveal: 1100ms;
+  --duration-unveil: 720ms;
 }
 
-* {
-  box-sizing: border-box;
+/* The old names, kept so the legal pages read in the new palette. */
+@theme {
+  --color-bg-base: var(--color-page);
+  --color-bg-surface: var(--color-panel);
+  --color-text-muted: var(--color-ink-muted);
+  --color-text-subtle: var(--color-ink-subtle);
+  --color-blue-brand: var(--color-blue-ink);
+  --color-blue-light: var(--color-blue-ink);
+  --color-blue-pale: var(--color-ink);
 }
 
 html {
-  scroll-behavior: smooth;
+  color-scheme: dark;
+  /* Behind an overscroll bounce, too. */
+  background: var(--color-page);
+  scroll-padding-top: 5rem;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  interpolate-size: allow-keywords;
+  accent-color: var(--color-blue);
+  caret-color: var(--color-blue-ink);
+  scrollbar-width: thin;
+  scrollbar-color: oklch(0.5 0.14 262) transparent;
+}
+
+/* Browsers without `scrollbar-color` (Safari) get the same thin blue bar. */
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    border: 3px solid transparent;
+    border-radius: 999px;
+    background: oklch(0.5 0.14 262) padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-glow);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Blooms and flares reach past their panels; none of that may ever turn
+   into a sideways scroll on a phone. */
+main {
+  overflow-x: clip;
 }
 
 body {
-  background: var(--color-bg-base);
-  color: var(--color-text-base);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  background: var(--color-page);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
+  text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background: rgba(37, 99, 235, 0.35);
-  color: #fff;
+  background: oklch(0.6 0.2 262 / 0.55);
+  color: oklch(0.99 0.004 262);
 }
 
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-bg-base);
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(37, 99, 235, 0.4);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(37, 99, 235, 0.65);
-}
-
+/*
+ * One focus treatment, on every control: a bright ring that closes in on it.
+ * In the base layer, so a control that draws its own focus (a text field)
+ * overrides it with a plain utility, and the ring follows each control's own
+ * corners instead of forcing one radius on all of them.
+ */
 @layer base {
   :focus-visible {
-    outline: 2px solid rgba(37, 99, 235, 0.5);
-    outline-offset: 2px;
+    outline: 2px solid var(--color-blue-ink);
+    outline-offset: 3px;
+  }
+  :root[data-motion="on"] :focus-visible {
+    animation: focus-in 340ms var(--ease-enter);
+  }
+
+  /* Tailwind leaves buttons with the arrow; everything pressable points. */
+  button:not(:disabled),
+  summary,
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
+  p,
+  li,
+  figcaption {
+    text-wrap: pretty;
+  }
+}
+@keyframes focus-in {
+  from {
+    outline-color: transparent;
+    outline-offset: 9px;
   }
 }
 
-@keyframes gradientShift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+/* The hover answer every control gives, at one tempo. */
+.ctl {
+  transition-property:
+    color, background-color, border-color, opacity, box-shadow, scale,
+    translate, text-decoration-color;
+  transition-duration: var(--duration-control);
+  transition-timing-function: var(--ease-standard);
 }
 
-.gradient-text {
-  background: linear-gradient(
-    135deg,
-    #60a5fa 0%,
-    #2563eb 35%,
-    #a78bfa 70%,
-    #60a5fa 100%
-  );
-  background-size: 300% 300%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: gradientShift 6s ease infinite;
+/* Gives under the finger, and springs back a touch slower than it went. */
+.press {
+  transition-duration: 260ms;
+  transition-timing-function: var(--ease-enter);
+}
+.press:active {
+  scale: 0.965;
+  transition-duration: 90ms;
 }
 
-.glow-card {
-  position: relative;
+/* The primary button is lit from above and gives off a little light of its
+   own, more when reached for. */
+.btn-lit {
   box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.04),
-    0 2px 16px rgba(0, 0, 0, 0.5);
-  transition:
-    box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-    border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    inset 0 1px 0 oklch(1 0 0 / 0.24),
+    inset 0 -1px 0 oklch(0 0 0 / 0.2),
+    0 1px 2px oklch(0 0 0 / 0.35),
+    0 6px 22px -10px var(--btn-glow, oklch(0.62 0.22 262 / 0.7));
 }
-.glow-card::before {
+@media (hover: hover) {
+  .btn-lit:hover {
+    box-shadow:
+      inset 0 1px 0 oklch(1 0 0 / 0.28),
+      inset 0 -1px 0 oklch(0 0 0 / 0.2),
+      0 1px 2px oklch(0 0 0 / 0.35),
+      0 10px 32px -8px var(--btn-glow, oklch(0.62 0.22 262 / 0.95));
+  }
+}
+.btn-lit:active {
+  box-shadow:
+    inset 0 1px 2px oklch(0 0 0 / 0.3),
+    0 0 0 oklch(0.55 0.205 263 / 0);
+}
+
+/*
+ * A text field. It lights when it has the caret: the rim goes blue, a soft
+ * bloom spreads off it, and the label above picks up the color. The native
+ * extras every browser draws differently (autofill tint, inner shadow,
+ * validation bubble, resize grip) are replaced or taken out.
+ */
+.field {
+  appearance: none;
+  width: 100%;
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-control);
+  background: var(--color-page);
+  box-shadow: inset 0 1px 2px oklch(0.1 0.01 264 / 0.35);
+  color: var(--color-ink);
+  caret-color: var(--color-blue-ink);
+  transition:
+    border-color 220ms var(--ease-standard),
+    box-shadow 320ms var(--ease-enter),
+    background-color 220ms var(--ease-standard);
+}
+.field::placeholder {
+  color: var(--color-ink-subtle);
+  opacity: 1;
+  transition: opacity 220ms var(--ease-standard);
+}
+.field:focus::placeholder {
+  opacity: 0.55;
+}
+@media (hover: hover) {
+  .field:hover {
+    border-color: var(--color-ink-subtle);
+  }
+}
+.field:focus,
+.field:focus-visible {
+  outline: none;
+  border-color: var(--color-blue-ink);
+  background-color: oklch(0.2 0.02 264);
+  box-shadow:
+    inset 0 1px 2px oklch(0.1 0.01 264 / 0.35),
+    0 0 0 3px oklch(0.58 0.2 263 / 0.3),
+    0 0 32px -6px oklch(0.62 0.2 262 / 0.55);
+}
+.field[aria-invalid="true"] {
+  border-color: var(--color-sunset);
+}
+.field[aria-invalid="true"]:focus {
+  box-shadow:
+    inset 0 1px 2px oklch(0.1 0.01 264 / 0.35),
+    0 0 0 3px oklch(0.72 0.1 45 / 0.28);
+}
+/* Two rules, not one list: a browser that cannot parse one selector would
+   drop both. The long transition keeps Chrome's own tint from ever landing. */
+.field:-webkit-autofill {
+  -webkit-text-fill-color: var(--color-ink);
+  box-shadow: 0 0 0 100vmax var(--color-raised) inset;
+  transition: background-color 600000s 0s;
+}
+.field:autofill {
+  -webkit-text-fill-color: var(--color-ink);
+  box-shadow: 0 0 0 100vmax var(--color-raised) inset;
+  transition: background-color 600000s 0s;
+}
+.field-wrap:focus-within .field-label {
+  color: var(--color-blue-ink);
+}
+.field-label {
+  transition: color 220ms var(--ease-standard);
+}
+
+/* The message box grows with what is written, where the browser can. */
+textarea.field {
+  min-height: 11rem;
+  resize: vertical;
+}
+@supports (field-sizing: content) {
+  textarea.field {
+    field-sizing: content;
+    max-height: 30rem;
+    resize: none;
+  }
+}
+
+/* No, gently: a short shake, then still. */
+:root[data-motion="on"] .shake {
+  animation: shake 380ms var(--ease-standard);
+}
+@keyframes shake {
+  20% {
+    translate: -5px 0;
+  }
+  40% {
+    translate: 4px 0;
+  }
+  60% {
+    translate: -2.5px 0;
+  }
+  80% {
+    translate: 1px 0;
+  }
+}
+
+/* An underline that draws in from the left and leaves to the right. */
+.draw-line {
+  position: relative;
+}
+.draw-line::after {
+  content: "";
+  position: absolute;
+  left: var(--line-inset, 0);
+  right: var(--line-inset, 0);
+  bottom: var(--line-bottom, -2px);
+  height: 1px;
+  background: var(--color-blue-ink);
+  scale: 0 1;
+  transform-origin: right;
+  transition: scale 380ms var(--ease-enter);
+}
+.draw-line:hover::after,
+.draw-line[aria-current="page"]::after {
+  scale: 1 1;
+  transform-origin: left;
+}
+
+/* A hairline between rows of a list, and none under the last one. */
+.ruled > * + * {
+  border-top: 1px solid var(--color-line);
+}
+
+/* ------------------------------------------------------------------------ */
+/* Light.                                                                    */
+/*                                                                           */
+/* One source (the lamp over the hero), and the pointer as a second, small   */
+/* one: panels catch it on their edge, rows catch it on their face.          */
+/* ------------------------------------------------------------------------ */
+
+.cursor-light {
+  position: fixed;
+  top: -18rem;
+  left: -18rem;
+  z-index: 60;
+  width: 36rem;
+  height: 36rem;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    closest-side,
+    oklch(0.66 0.19 262 / 0.13),
+    oklch(0.6 0.19 263 / 0.04) 45%,
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 600ms var(--ease-standard);
+  will-change: transform;
+}
+.cursor-light[data-on] {
+  opacity: 1;
+}
+
+/*
+ * The pointer's numbers (Tactile.tsx) change every frame the pointer moves.
+ * Registered as not inherited, a change restyles only the element that holds
+ * it, not everything inside it; the few layers further down that read one
+ * take it with an explicit `inherit`.
+ */
+@property --px {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+@property --py {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+@property --fa {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+@property --tx {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+@property --ty {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+@property --mx {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 50%;
+}
+@property --my {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 50%;
+}
+@property --ex {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 50%;
+}
+@property --ey {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+@property --sx {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+@property --sy {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+@property --near {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+@property --flare {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+@property --lit {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+@property --spot-focus {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+/*
+ * A panel catches the pointer's light (numbers from Tactile). The light lives
+ * in the panel's own border, so it follows every curve of it: a hot spot at
+ * the point of the edge nearest the pointer (`--ex`/`--ey`) that spreads
+ * along the rim, and a glow outside the panel that leans out past the lit
+ * side (`--sx`/`--sy`), round a corner as readily as along an edge. All of
+ * it is felt before the pointer arrives (`--near`, `--flare`), and the face
+ * brightens around the pointer. Its top edge always holds a little of the
+ * lamp. `--spot-line` is the rim's resting color.
+ */
+.spot {
+  --lit: max(var(--near, 0), var(--spot-focus, 0));
+  position: relative;
+  border-color: transparent;
+  background:
+    radial-gradient(
+        26rem circle at var(--mx, 50%) var(--my, 50%),
+        oklch(0.62 0.19 263 / calc(var(--near, 0) * 0.1)),
+        transparent 65%
+      )
+      padding-box,
+    linear-gradient(var(--color-panel) 0 0) padding-box,
+    radial-gradient(
+        5rem circle at var(--ex, 50%) var(--ey, 0%),
+        oklch(0.99 0.015 255 / var(--lit)),
+        oklch(0.86 0.09 258 / calc(var(--lit) * 0.7)) 35%,
+        transparent
+      )
+      border-box,
+    radial-gradient(
+        20rem circle at var(--mx, 50%) var(--my, 50%),
+        oklch(0.72 0.17 261 / calc(var(--lit) * 0.85)),
+        transparent 70%
+      )
+      border-box,
+    linear-gradient(var(--spot-line, var(--color-line)) 0 0) border-box;
+  box-shadow:
+    inset 0 1px 0 oklch(0.9 0.05 258 / 0.09),
+    0 24px 48px -32px oklch(0.08 0.02 264 / 0.9),
+    calc(var(--sx, 0) * 4px) calc(var(--sy, 0) * 4px) 12px -3px
+      oklch(0.8 0.13 258 / calc(var(--flare, 0) * 0.85)),
+    calc(var(--sx, 0) * 12px) calc(var(--sy, 0) * 12px) 34px -6px
+      oklch(0.64 0.2 262 / calc(var(--flare, 0) * 0.75));
+}
+.spot:is(:focus-visible, :has(:focus-visible)) {
+  --spot-focus: 1;
+}
+
+/* A row's face warms where the pointer is. */
+.row-light {
+  isolation: isolate;
+}
+.row-light::before {
+  --mx: inherit;
+  content: "";
+  position: absolute;
+  inset: 0 calc(var(--row-bleed, 1rem) * -1);
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    26rem 140% at var(--mx, 50%) 50%,
+    oklch(0.55 0.205 263 / 0.13),
+    transparent 70%
+  );
+  /* Faded at every edge of its box, so the warmth never ends on a line. */
+  -webkit-mask-image:
+    linear-gradient(
+      to right,
+      transparent,
+      #000 3rem,
+      #000 calc(100% - 3rem),
+      transparent
+    ),
+    linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(
+      to right,
+      transparent,
+      #000 3rem,
+      #000 calc(100% - 3rem),
+      transparent
+    ),
+    linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent);
+  mask-composite: intersect;
+  opacity: 0;
+  transition: opacity 400ms var(--ease-standard);
+}
+@media (hover: hover) {
+  .row-light:hover::before {
+    opacity: 1;
+  }
+}
+
+/*
+ * Depth, from the pointer (Tactile sets the numbers; see there). A `.tilt`
+ * panel turns to face it while a band of reflected light slides across its
+ * glass.
+ */
+.tilt {
+  position: relative;
+  border-radius: var(--radius-panel);
+  transform: translate3d(
+      calc(var(--px, 0) * var(--drift, 0px)),
+      calc(var(--py, 0) * var(--drift, 0px) * 0.6),
+      0
+    )
+    perspective(1400px) rotateY(calc(var(--tx, 0) * var(--tilt, 5deg)))
+    rotateX(calc(var(--ty, 0) * var(--tilt, 5deg) * -0.75));
+}
+.tilt::after {
+  --tx: inherit;
+  --fa: inherit;
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 4;
   border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(
-    135deg,
-    rgba(37, 99, 235, 0),
-    rgba(37, 99, 235, 0.1),
-    rgba(167, 139, 250, 0.06),
-    rgba(37, 99, 235, 0)
-  );
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
   pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.glow-card:hover::before {
-  opacity: 1;
-}
-.glow-card:hover {
-  box-shadow:
-    0 0 0 1px rgba(37, 99, 235, 0.15),
-    0 4px 20px rgba(37, 99, 235, 0.08);
-  transform: translate3d(0, -1px, 0);
-}
-
-.nav-link-underline {
-  position: relative;
-}
-.nav-link-underline::after {
-  content: "";
-  position: absolute;
-  bottom: 2px;
-  left: 14px;
-  right: 14px;
-  height: 1.5px;
-  background: #3b82f6;
-  border-radius: 1px;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.nav-link-underline:hover::after {
-  transform: scaleX(1);
-}
-
-.section-divider {
-  height: 1px;
   background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(37, 99, 235, 0.15),
-    rgba(167, 139, 250, 0.08),
-    transparent
-  );
+      105deg,
+      transparent 40%,
+      oklch(0.92 0.04 258 / 0.075) 48%,
+      oklch(0.92 0.04 258 / 0.02) 53%,
+      transparent 60%
+    )
+    calc(50% - var(--tx, 0) * 60%) 0 / 260% 100% no-repeat;
+  opacity: var(--fa, 0);
 }
 
-.hero-heading {
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+/* A screen gives off light: a framed product view throws a little blue on
+   the wall under it, more when reached for. */
+.glow-under {
+  border-radius: var(--radius-panel);
+  box-shadow: 0 36px 90px -52px oklch(0.6 0.21 262 / 0.6);
+  transition: box-shadow 600ms var(--ease-standard);
+}
+@media (hover: hover) {
+  .glow-under:hover {
+    box-shadow: 0 40px 110px -44px oklch(0.64 0.21 262 / 0.85);
+  }
 }
 
-.lightbar,
-.lightbar-visual {
+/* ------------------------------------------------------------------------ */
+/* The lamp.                                                                 */
+/*                                                                           */
+/* Fills the hero behind its content; the hero clips it. Its layers sit at   */
+/* different depths: the beam leans a little toward the pointer, the tube    */
+/* and its glow hold nearly still, and the glare streak slides the other     */
+/* way, like a flare on a lens. The dust never moves with the pointer.       */
+/* ------------------------------------------------------------------------ */
+
+.lightbar {
   position: absolute;
-  width: 150vw;
-  height: 1400px;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
   pointer-events: none;
   user-select: none;
 }
 
-.lightbar {
-  left: -25vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  --d: 3s;
-  --animation: cubic-bezier(0.75, 0, 0.25, 1);
-  animation: lightbar-boot var(--d) var(--animation) forwards;
+.lightbar-lamp {
+  position: absolute;
+  inset: 0;
+}
+.lightbar,
+.lightbar-lamp,
+.lightbar-lamp > *,
+.lamp-cord {
+  --px: inherit;
 }
 
-.lightbar-visual {
-  left: 0;
-  --top: #050508;
-  --bottom: #2563eb;
-  --first: conic-gradient(from 90deg at 80% 75%, var(--top), var(--bottom));
-  --second: conic-gradient(from 270deg at 20% 75%, var(--bottom), var(--top));
-  mask-image:
-    linear-gradient(to bottom, black 45%, transparent 85%),
-    radial-gradient(100% 50% at center center, black, transparent);
-  mask-composite: intersect;
-  background-image: var(--first), var(--second);
-  background-position-x: 1%, 99%;
-  background-position-y: 0%, 0%;
-  background-size:
-    50% 100%,
-    50% 100%;
-  opacity: 1;
-  transform: rotate(180deg) translateZ(0px) translateY(700px);
-  transform-origin: center center;
-  background-repeat: no-repeat;
-  animation: lightbar-visual-boot var(--d) var(--animation) forwards;
+.lightbar-lamp > * {
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+  transition: opacity 420ms var(--ease-standard);
 }
 
-@keyframes lightbar-boot {
+/*
+ * The beam: about as wide as the tube where it leaves it, spreading as it
+ * falls, brightest down the middle and without an edge anywhere. Its apex
+ * sits 30rem above the tube, far enough that the beam starts broad rather
+ * than as a stem (Lightbar.tsx aims the dust by the same apex, and the wall
+ * below is lit by the same shape).
+ */
+.lightbar-cone {
+  top: 0;
+  width: min(150rem, 300vw);
+  height: 60rem;
+  transform-origin: 50% -30rem;
+  rotate: calc(var(--px, 0) * -2deg);
+  background:
+    conic-gradient(
+      from 160deg at 50% -30rem,
+      transparent,
+      oklch(0.88 0.07 258 / 0.08) 10deg,
+      oklch(0.92 0.05 258 / 0.13) 20deg,
+      oklch(0.88 0.07 258 / 0.08) 30deg,
+      transparent 40deg
+    ),
+    conic-gradient(
+      from 144deg at 50% -30rem,
+      transparent,
+      oklch(0.55 0.2 263 / 0.12) 12deg,
+      oklch(0.6 0.19 262 / 0.28) 25deg,
+      oklch(0.62 0.19 262 / 0.36) 36deg,
+      oklch(0.6 0.19 262 / 0.28) 47deg,
+      oklch(0.55 0.2 263 / 0.12) 60deg,
+      transparent 72deg
+    );
+  -webkit-mask-image: linear-gradient(to bottom, #000 4%, transparent 92%);
+  mask-image: linear-gradient(to bottom, #000 4%, transparent 92%);
+}
+
+/* The glow round the tube, deep enough to run into the top of the beam. */
+.lightbar-halo {
+  top: -7.5rem;
+  width: min(46rem, 120vw);
+  height: 18rem;
+  background: radial-gradient(
+    closest-side,
+    oklch(0.62 0.21 263 / 0.78),
+    oklch(0.55 0.205 263 / 0.2) 55%,
+    transparent
+  );
+  filter: blur(10px);
+  transform: translate3d(calc(var(--px, 0) * -6px), 0, 0);
+}
+
+/* The glare: a streak through the tube, only as wide as the glow it sits
+   in, fading out at both ends. */
+.lightbar-glare {
+  top: -0.75rem;
+  width: min(48rem, 110vw);
+  height: 1.5rem;
+  background:
+    linear-gradient(
+        90deg,
+        transparent,
+        oklch(0.86 0.1 258 / 0.85) 50%,
+        transparent
+      )
+      center / 100% 1px no-repeat,
+    radial-gradient(
+      50% 50% at 50% 50%,
+      oklch(0.68 0.19 263 / 0.45),
+      transparent
+    );
+  transform: translate3d(calc(var(--px, 0) * 56px), 0, 0);
+}
+
+/* The hot spot under the middle of the tube. */
+.lightbar-core {
+  top: -1.5rem;
+  width: min(28rem, 72vw);
+  height: 3.25rem;
+  background: radial-gradient(
+    closest-side,
+    oklch(0.97 0.035 258 / 0.92),
+    oklch(0.74 0.17 262 / 0.36) 50%,
+    transparent
+  );
+  filter: blur(4px);
+  transform: translate3d(calc(var(--px, 0) * -6px), 0, 0);
+}
+
+.lightbar-tube {
+  top: 0;
+  width: min(40rem, 86vw);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    oklch(0.76 0.14 260) 14%,
+    oklch(0.98 0.025 258) 50%,
+    oklch(0.76 0.14 260) 86%,
+    transparent
+  );
+  filter: drop-shadow(0 0 2px oklch(0.85 0.1 258))
+    drop-shadow(0 0 9px oklch(0.62 0.2 263));
+  transform: translate3d(calc(var(--px, 0) * -6px), 0, 0);
+}
+
+.lightbar-dust {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 420ms var(--ease-standard);
+}
+
+.lightbar[data-lights="off"] :is(.lightbar-lamp > *, .lightbar-dust) {
+  opacity: 0;
+}
+
+/* The 404's lamp: dim, with a stutter now and then that never catches. */
+.lightbar[data-lights="broken"] .lightbar-lamp {
+  opacity: 0.14;
+}
+:root[data-motion="on"] .lightbar[data-lights="broken"] .lightbar-lamp {
+  animation: tube-fail 5.6s linear infinite;
+}
+
+/* Strikes like a tube: a stutter, a catch, then on for good. */
+@keyframes tube-strike {
+  0% {
+    opacity: 0;
+  }
+  6% {
+    opacity: 0.9;
+  }
+  10% {
+    opacity: 0.1;
+  }
+  17% {
+    opacity: 0.75;
+  }
+  21% {
+    opacity: 0.2;
+  }
+  30%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes tube-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  12% {
+    opacity: 0.45;
+  }
+  24% {
+    opacity: 1;
+  }
+  38% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes tube-fail {
+  0%,
+  100% {
+    opacity: 0.14;
+  }
+  2% {
+    opacity: 0.85;
+  }
+  3.5% {
+    opacity: 0.1;
+  }
+  6% {
+    opacity: 0.6;
+  }
+  7% {
+    opacity: 0.12;
+  }
+  48% {
+    opacity: 0.16;
+  }
+  49% {
+    opacity: 0.7;
+  }
+  50.5% {
+    opacity: 0.12;
+  }
+}
+
+@keyframes cone-open {
   from {
+    opacity: 0;
+    scale: 0.55 0.9;
+  }
+  to {
+    opacity: 1;
+    scale: 1 1;
+  }
+}
+
+:root[data-motion="on"]
+  .lightbar[data-lights="on"]
+  :is(.lightbar-tube, .lightbar-halo, .lightbar-core, .lightbar-glare) {
+  animation: tube-strike 1300ms linear 150ms both;
+}
+
+:root[data-motion="on"] .lightbar[data-lights="on"] .lightbar-cone {
+  animation: cone-open 1800ms var(--ease-enter) 480ms both;
+}
+
+:root[data-motion="on"] .lightbar[data-lights="on"] .lightbar-dust {
+  animation: unveil 2400ms var(--ease-standard) 600ms both;
+}
+
+/* Going out, the tube dies fast and its light a moment after. (An animation,
+   not a transition: the strike's animation holds the lamp lit, and a
+   transition never starts from a value an animation was holding.) */
+:root[data-motion="on"]
+  .lightbar[data-lights="off"]
+  :is(.lightbar-lamp > *, .lightbar-dust) {
+  animation: lamp-out 520ms var(--ease-standard) both;
+}
+:root[data-motion="on"] .lightbar[data-lights="off"] .lightbar-tube {
+  animation-duration: 220ms;
+}
+@keyframes lamp-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+:root[data-motion="on"] .lightbar[data-lights="on"][data-blink] .lightbar-lamp {
+  animation: tube-blink 440ms linear;
+}
+
+/* The pull cord, hanging off the right end of the tube: a string drawn
+   link by link (Lightbar.tsx) and a knob on its end. The button is only the
+   place to take hold; the string and knob swing free of it. */
+.lamp-cord {
+  --cord: clamp(2.25rem, 1.4rem + 2.6vw, 3.75rem);
+  position: absolute;
+  top: 0;
+  left: calc(50% + min(20rem, 43vw) - 2.75rem);
+  z-index: 1;
+  width: 1.75rem;
+  height: calc(var(--cord) + 1.25rem);
+  margin-left: -0.875rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: grab;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  transform: translate3d(calc(var(--px, 0) * -6px), 0, 0);
+}
+.lamp-cord:active {
+  cursor: grabbing;
+}
+.lamp-cord-string {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 1px;
+  overflow: visible;
+  pointer-events: none;
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: filter 700ms var(--ease-standard);
+}
+.lightbar[data-lights="on"] ~ .lamp-cord .lamp-cord-string {
+  filter: drop-shadow(0 0 2px oklch(0.66 0.19 262 / 0.7));
+}
+/* The knob hangs from its top, wherever the string's end has got to. */
+.lamp-cord-knob {
+  --ball: 0.6875rem;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: var(--ball);
+  height: var(--ball);
+  margin: calc(var(--ball) / -2) 0 0 calc(var(--ball) / -2);
+  border-radius: 50%;
+  transform: translateY(calc(var(--cord) + var(--ball) / 2));
+  /* A glass-smooth sphere: a bright spot up and to the left, shading round
+     to a dark edge, and a little light bounced back up under it. */
+  background:
+    radial-gradient(
+      circle at 34% 28%,
+      oklch(0.99 0.008 262) 0 7%,
+      oklch(0.97 0.012 262 / 0.6) 13%,
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 50% 118%,
+      oklch(0.74 0.03 262 / 0.7),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 40% 34%,
+      oklch(0.8 0.018 262),
+      oklch(0.54 0.02 262) 50%,
+      oklch(0.27 0.012 262) 100%
+    );
+  box-shadow: 0 2px 3px oklch(0.1 0.01 262 / 0.5);
+  transition: box-shadow 700ms var(--ease-standard);
+}
+/* Lit from above by the lamp: a blue rim on its top, a little glow round it. */
+.lightbar[data-lights="on"] ~ .lamp-cord .lamp-cord-knob {
+  box-shadow:
+    inset 0 1px 1px oklch(0.86 0.1 258 / 0.55),
+    0 2px 3px oklch(0.1 0.01 262 / 0.5),
+    0 0 12px 1px oklch(0.62 0.2 263 / 0.55);
+}
+@media (hover: hover) {
+  .lamp-cord:hover .lamp-cord-knob {
+    box-shadow:
+      inset 0 1px 1px oklch(0.9 0.08 258 / 0.7),
+      0 2px 3px oklch(0.1 0.01 262 / 0.5),
+      0 0 16px 3px oklch(0.7 0.18 262 / 0.7);
+  }
+}
+:root[data-motion="on"] .lamp-cord {
+  animation: unveil 900ms var(--ease-standard) 1500ms backwards;
+}
+
+/* The lamp stays behind as the page scrolls past it, cord and all. */
+@supports (animation-timeline: scroll()) {
+  @keyframes lamp-recede {
+    to {
+      opacity: 0.35;
+      translate: 0 14rem;
+    }
+  }
+  @keyframes lamp-follow {
+    to {
+      translate: 0 14rem;
+    }
+  }
+  :root[data-motion="on"] .lightbar {
+    animation: lamp-recede linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 90vh;
+  }
+  :root[data-motion="on"] .lamp-cord {
+    animation:
+      unveil 900ms var(--ease-standard) 1500ms backwards,
+      lamp-follow linear both;
+    animation-timeline: auto, scroll(root);
+    animation-range:
+      normal,
+      0 90vh;
+  }
+
+  /* The header lifts off the page once there is page under it. */
+  @keyframes header-lift {
+    to {
+      box-shadow: 0 12px 32px -20px oklch(0.08 0.01 262 / 0.95);
+    }
+  }
+  :root[data-motion="on"] .site-header {
+    animation: header-lift linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 140px;
+  }
+}
+
+/*
+ * The wall behind the hero: a perforated panel seen only where light falls
+ * on it, under the lamp's beam and around the pointer. With the lamp off,
+ * the pointer alone finds it. The contact band has one too, lit by the
+ * pointer only.
+ */
+@property --beam {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+.light-wall {
+  --beam: 0;
+  --px: inherit;
+  --py: inherit;
+  --fa: inherit;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(
+    circle,
+    var(--wall-dot, oklch(0.88 0.07 258 / 0.62)) 0 1px,
+    transparent 1.5px
+  );
+  background-size: 24px 24px;
+  background-position: calc(50% + 12px) 12px;
+  /* Pointer, plus (the beam's own shape, fading with the fall). */
+  -webkit-mask-image:
+    radial-gradient(
+      18rem circle at calc(50% + var(--px, 0) * 50%)
+        calc(50% + var(--py, 0) * 50%),
+      oklch(0 0 0 / calc(var(--fa, 0) * 0.95)),
+      transparent
+    ),
+    conic-gradient(
+      from calc(144deg - var(--px, 0) * 2deg) at 50% -30rem,
+      transparent,
+      #000 26deg 46deg,
+      transparent 72deg
+    ),
+    linear-gradient(
+      to bottom,
+      oklch(0 0 0 / calc(var(--beam) * 0.75)),
+      transparent 82%
+    );
+  -webkit-mask-composite: source-over, source-in;
+  mask-image:
+    radial-gradient(
+      18rem circle at calc(50% + var(--px, 0) * 50%)
+        calc(50% + var(--py, 0) * 50%),
+      oklch(0 0 0 / calc(var(--fa, 0) * 0.95)),
+      transparent
+    ),
+    conic-gradient(
+      from calc(144deg - var(--px, 0) * 2deg) at 50% -30rem,
+      transparent,
+      #000 26deg 46deg,
+      transparent 72deg
+    ),
+    linear-gradient(
+      to bottom,
+      oklch(0 0 0 / calc(var(--beam) * 0.75)),
+      transparent 82%
+    );
+  mask-composite: add, intersect;
+  transition: --beam 520ms var(--ease-standard);
+}
+.lightbar[data-lights="on"] ~ .light-wall {
+  --beam: 1;
+  transition: --beam 1800ms var(--ease-standard) 420ms;
+}
+.lightbar[data-lights="broken"] ~ .light-wall {
+  --beam: 0.1;
+}
+
+/* The contact band: the pointer carries a wash of light across the blue. */
+.band-light {
+  isolation: isolate;
+  --wall-dot: oklch(0.93 0.05 258 / 0.5);
+}
+.band-light::after {
+  --px: inherit;
+  --py: inherit;
+  --fa: inherit;
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    42rem circle at calc(50% + var(--px, 0) * 50%)
+      calc(50% + var(--py, 0) * 50%),
+    oklch(0.7 0.19 260 / 0.55),
+    transparent 70%
+  );
+  opacity: var(--fa, 0);
+}
+
+/* The logo catches the light when reached for. */
+.logo-glint {
+  position: relative;
+  display: inline-flex;
+}
+.logo-glint::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+      105deg,
+      transparent 36%,
+      var(--color-glow) 46%,
+      oklch(0.99 0.02 258) 50%,
+      var(--color-glow) 54%,
+      transparent 64%
+    )
+    100% 0 / 300% 100% no-repeat;
+  -webkit-mask: url("/logo-header.png") center / contain no-repeat;
+  mask: url("/logo-header.png") center / contain no-repeat;
+  opacity: 0;
+  transition:
+    opacity 320ms var(--ease-standard),
+    background-position 0s 320ms;
+}
+@media (hover: hover) {
+  :root[data-motion="on"] a:hover > .logo-glint::after {
+    opacity: 1;
+    background-position: 0% 0;
+    transition:
+      opacity 0s,
+      background-position 850ms var(--ease-standard);
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Scroll.                                                                   */
+/*                                                                           */
+/* Scrolling is felt as well as seen: a beam under the header fills with the */
+/* page, the hero falls away in depth, frames tip up to face the reader as   */
+/* they arrive while a glare crosses their glass, and each ruled row's rule  */
+/* lights as it passes the middle of the screen. Every one of these is tied  */
+/* to the scroll position, so it moves exactly as fast as the reader does,   */
+/* and none of it exists without scroll-driven animation or with motion off. */
+/* ------------------------------------------------------------------------ */
+
+.scroll-beam {
+  display: none;
+  position: absolute;
+  inset-inline: 0;
+  bottom: -5px;
+  height: 9px;
+  overflow-x: clip;
+  pointer-events: none;
+}
+.scroll-beam::before {
+  content: "";
+  position: absolute;
+  inset: 4px 0;
+  transform-origin: left;
+  scale: 0 1;
+  background: linear-gradient(
+    90deg,
+    oklch(0.56 0.215 263 / 0.1),
+    var(--color-blue) 55%,
+    var(--color-glow)
+  );
+}
+.scroll-beam::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4.5rem;
+  height: 9px;
+  translate: -50% 0;
+  background: radial-gradient(
+    closest-side,
+    oklch(0.98 0.02 258),
+    oklch(0.72 0.18 258 / 0.55) 45%,
+    transparent
+  );
+}
+
+.shine {
+  position: relative;
+}
+.shine::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 1;
+  width: 55%;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 20%,
+    oklch(0.96 0.03 258 / 0.16) 47%,
+    oklch(0.96 0.03 258 / 0.05) 55%,
+    transparent 80%
+  );
+  translate: -110% 0;
+}
+
+.scan {
+  position: relative;
+}
+/* A row's rule lights as it crosses the middle of the screen; the last row
+   lights the list's closing rule too, so no line is left dark. */
+.scan::before,
+.scan:last-child::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  pointer-events: none;
+  transform-origin: left;
+  scale: 0 1;
+  opacity: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-blue) 18%,
+    var(--color-glow) 40%,
+    oklch(0.99 0.02 258) 60%,
+    var(--color-glow) 78%,
+    transparent
+  );
+  filter: drop-shadow(0 0 3px var(--color-glow))
+    drop-shadow(0 0 10px oklch(0.6 0.21 262 / 0.8));
+}
+.scan:last-child::after {
+  top: auto;
+  bottom: -1px;
+}
+
+@supports (animation-timeline: view()) {
+  :root[data-motion="on"] .site-header {
+    container-type: inline-size;
+  }
+  :root[data-motion="on"] .scroll-beam {
+    display: block;
+  }
+  :root[data-motion="on"] .scroll-beam::before {
+    animation: beam-fill linear both;
+    animation-timeline: scroll(root);
+  }
+  :root[data-motion="on"] .scroll-beam::after {
+    animation: beam-head linear both;
+    animation-timeline: scroll(root);
+  }
+
+  :root[data-motion="on"] .hero-exit {
+    animation: hero-exit linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 90vh;
+  }
+  :root[data-motion="on"] .lightbar ~ .light-wall {
+    animation: wall-fade linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 80vh;
+  }
+
+  :root[data-motion="on"] .frame-in {
+    animation: frame-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 42%;
+  }
+  :root[data-motion="on"] .shine {
+    view-timeline: --shine;
+  }
+  :root[data-motion="on"] .shine::after {
+    animation: shine linear both;
+    animation-timeline: --shine;
+    animation-range: cover 10% cover 80%;
+  }
+  :root[data-motion="on"] .scan {
+    view-timeline: --scan;
+  }
+  :root[data-motion="on"] .scan::before {
+    animation: scan linear both;
+    animation-timeline: --scan;
+    animation-range: cover 15% cover 85%;
+  }
+  /* The closing rule: timed by the row's bottom edge crossing the screen. */
+  :root[data-motion="on"] .scan:last-child::after {
+    animation: scan linear both;
+    animation-timeline: --scan;
+    animation-range: entry 100% exit 100%;
+  }
+}
+
+@keyframes beam-fill {
+  to {
+    scale: 1 1;
+  }
+}
+@keyframes beam-head {
+  from {
+    opacity: 0;
+    translate: -50% 0;
+  }
+  4% {
+    opacity: 1;
+  }
+  to {
+    translate: calc(100cqi - 50%) 0;
+  }
+}
+@keyframes hero-exit {
+  to {
     opacity: 0.25;
+    translate: 0 -3.5rem;
+  }
+}
+@keyframes wall-fade {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes frame-in {
+  from {
+    opacity: 0.35;
+    transform: perspective(1600px) translate3d(0, 2.5rem, 0) rotateX(14deg)
+      scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes shine {
+  to {
+    translate: 200% 0;
+  }
+}
+@keyframes scan {
+  0% {
+    opacity: 0;
+    scale: 0 1;
+  }
+  45% {
+    opacity: 1;
+    scale: 1 1;
+  }
+  100% {
+    opacity: 0;
+    scale: 1 1;
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* The Live Now panel, in depth.                                             */
+/*                                                                           */
+/* The panel stands on a stage: it floats at an angle, facing the headline, */
+/* and turns toward the pointer. Its layers sit at different depths, so as  */
+/* it turns they slide against each other: a soft light behind the glass,   */
+/* the rows a little in front of it, the header further still. A row lifts  */
+/* toward the pointer. Flat, and without any of that, with motion off.      */
+/* ------------------------------------------------------------------------ */
+
+/* How lit the panel is by the lamp: dim until the tube catches, full once
+   it is on, sinking back when it goes off. (A transition, not an animation,
+   so it can turn back from wherever it is; `@starting-style` gives the
+   first strike something to rise from.) */
+@property --lamp {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+.stage-3d {
+  --lamp: 0;
+  perspective: 1600px;
+  transition: --lamp 520ms var(--ease-standard);
+}
+[data-field]:has(> .lightbar[data-lights="on"]) .stage-3d {
+  --lamp: 1;
+  transition: --lamp 1600ms var(--ease-standard) 450ms;
+}
+@starting-style {
+  [data-field]:has(> .lightbar[data-lights="on"]) .stage-3d {
+    --lamp: 0;
+  }
+}
+/* Lit from above, the panel's own edge catches some of it. */
+.stage-3d .panel-3d {
+  --spot-line: color-mix(
+    in oklch,
+    var(--color-line),
+    oklch(0.74 0.13 260) calc(var(--lamp) * 38%)
+  );
+}
+.float-3d,
+.tilt-3d,
+.panel-3d,
+.panel-3d > .panel-rows {
+  transform-style: preserve-3d;
+}
+.tilt-3d {
+  transform: translate3d(
+      calc(var(--px, 0) * var(--drift, 0px)),
+      calc(var(--py, 0) * var(--drift, 0px) * 0.6),
+      0
+    )
+    rotateY(calc(var(--tx, 0) * var(--tilt, 5deg)))
+    rotateX(calc(var(--ty, 0) * var(--tilt, 5deg) * -0.75));
+}
+/* The glass's reflection lies on the glass, not in front of it, so as the
+   panel turns it never slides out past the edge. */
+.tilt-3d::after {
+  translate: 0 0 2px;
+}
+
+.panel-plate {
+  display: none;
+}
+
+:root[data-motion="on"] .float-3d {
+  animation: float-3d 12s ease-in-out infinite;
+}
+@keyframes float-3d {
+  0%,
+  100% {
+    transform: rotateY(-11deg) rotateX(6deg) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: rotateY(-7deg) rotateX(3.5deg) translate3d(0, -10px, 0);
+  }
+}
+
+/* Shallow on purpose: deep enough to slide against each other as the panel
+   turns, never so deep that a layer's edge shows past the panel's. The rules
+   between them stop short of the edge for the same reason. */
+.panel-head {
+  position: relative;
+}
+.panel-head::after {
+  content: "";
+  position: absolute;
+  inset: auto 1rem -1px;
+  height: 1px;
+  background: var(--color-line);
+}
+:root[data-motion="on"] .panel-3d > .panel-head {
+  translate: 0 0 12px;
+}
+:root[data-motion="on"] .panel-3d > .panel-rows {
+  translate: 0 0 6px;
+}
+.panel-3d > .panel-rows > li {
+  transition: translate 460ms var(--ease-enter);
+}
+@media (hover: hover) {
+  :root[data-motion="on"] .panel-3d > .panel-rows > li:hover {
+    translate: 0 0 8px;
+  }
+}
+
+/* The plate: light behind the glass, so soft it has no edge anywhere. It is
+   seen only round the panel, and slides against it as the panel turns. */
+:root[data-motion="on"] .panel-plate {
+  display: block;
+  position: absolute;
+  inset: 1rem 0.25rem -1.75rem;
+  border-radius: inherit;
+  pointer-events: none;
+  translate: 0 0 -48px;
+  background: linear-gradient(
+    160deg,
+    oklch(0.7 0.2 262 / 0.95),
+    oklch(0.5 0.18 264 / 0.5) 55%,
+    oklch(0.64 0.21 263 / 0.85)
+  );
+  filter: blur(38px);
+  /* Barely there in the dark; with the lamp on, bright and a little wider. */
+  opacity: calc(0.18 + var(--lamp) * 0.82);
+  scale: calc(0.88 + var(--lamp) * 0.18);
+}
+
+/* ------------------------------------------------------------------------ */
+/* Sparks and motes (sparks.ts, Motes.tsx).                                  */
+/* ------------------------------------------------------------------------ */
+
+.sparks {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  overflow: hidden;
+  pointer-events: none;
+}
+.sparks i {
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+  margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2);
+  border-radius: 50%;
+  background: oklch(0.97 0.03 258);
+  box-shadow: 0 0 7px 1px oklch(0.72 0.19 258 / 0.95);
+  animation:
+    spark-fly var(--dur) cubic-bezier(0.12, 0.8, 0.3, 1) forwards,
+    spark-fall var(--dur) cubic-bezier(0.55, 0, 0.9, 0.5) forwards;
+}
+.sparks i[data-tone="live"] {
+  background: oklch(0.96 0.07 155);
+  box-shadow: 0 0 7px 1px oklch(0.8 0.15 155 / 0.9);
+}
+.sparks i[data-tone="white"] {
+  background: oklch(0.99 0.01 258);
+  box-shadow: 0 0 9px 2px oklch(0.86 0.1 258 / 0.85);
+}
+@keyframes spark-fly {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: var(--dx) var(--dy);
+  }
+}
+@keyframes spark-fall {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(var(--fall)) scale(0.35);
+  }
+}
+
+.motes {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* The live dot, once it has heard back, keeps a slow pulse. */
+.beat {
+  position: relative;
+}
+.beat::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: currentColor;
+  animation: ring-once 2600ms var(--ease-enter) infinite both;
+}
+
+/* Signal bars: how fast a site answered, lit one bar at a time. */
+.signal {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 0.625rem;
+}
+.signal i {
+  width: 2px;
+  border-radius: 1px;
+  background: var(--color-line-strong);
+  transition: background-color 300ms var(--ease-standard);
+}
+.signal i:nth-child(1) {
+  height: 40%;
+}
+.signal i:nth-child(2) {
+  height: 70%;
+  transition-delay: 80ms;
+}
+.signal i:nth-child(3) {
+  height: 100%;
+  transition-delay: 160ms;
+}
+.signal[data-level="1"] i:nth-child(1) {
+  background: var(--color-sunset);
+}
+.signal[data-level="2"] i:nth-child(-n + 2),
+.signal[data-level="3"] i {
+  background: var(--color-live);
+}
+:root[data-motion="on"] .signal[data-pending] i {
+  animation: signal-scan 900ms var(--ease-standard) infinite;
+}
+.signal[data-pending] i:nth-child(2) {
+  animation-delay: 120ms;
+}
+.signal[data-pending] i:nth-child(3) {
+  animation-delay: 240ms;
+}
+@keyframes signal-scan {
+  0%,
+  100% {
+    background-color: var(--color-line-strong);
+  }
+  30% {
+    background-color: var(--color-blue-ink);
+  }
+}
+
+.spin {
+  animation: spin 900ms linear infinite;
+}
+@keyframes spin {
+  to {
+    rotate: 1turn;
+  }
+}
+
+/* The big buttons are lit from above; a glint crosses them when reached for.
+   Left before it is across, it fades where it is rather than vanishing, and
+   only then goes back to the start. */
+.btn-lit {
+  position: relative;
+  isolation: isolate;
+}
+.btn-lit::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+      105deg,
+      transparent 42%,
+      var(--glint, oklch(0.99 0.005 262 / 0.26)) 50%,
+      transparent 58%
+    )
+    100% 0 / 300% 100% no-repeat;
+  opacity: 0;
+  transition:
+    opacity 320ms var(--ease-standard),
+    background-position 0s 320ms;
+}
+@media (hover: hover) {
+  :root[data-motion="on"] .btn-lit:hover::after {
+    opacity: 1;
+    background-position: 0% 0;
+    transition:
+      opacity 0s,
+      background-position 950ms var(--ease-standard);
+  }
+}
+
+/* A section's top rule catches the light once as it comes into view. */
+.sweep {
+  position: relative;
+  overflow-x: clip;
+}
+.sweep::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 45%;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--sweep-color, var(--color-blue-ink)),
+    transparent
+  );
+  opacity: 0;
+}
+:root[data-motion="on"] .sweep[data-shown]::before {
+  animation: sweep 1700ms var(--ease-standard) 120ms both;
+}
+@keyframes sweep {
+  from {
+    opacity: 1;
+    translate: -100% 0;
+  }
+  75% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    translate: 230% 0;
+  }
+}
+
+/* The speaker: waves draw out when sound is on, a cross when it is off. */
+.wave,
+.mute {
+  stroke-dasharray: 24;
+  transition:
+    stroke-dashoffset 380ms var(--ease-enter),
+    opacity 200ms var(--ease-standard);
+}
+.wave-2 {
+  transition-delay: 70ms;
+}
+svg:not([data-on]) .wave,
+svg[data-on] .mute {
+  stroke-dashoffset: 24;
+  opacity: 0;
+  transition-delay: 0ms;
+}
+
+/* The phone menu: the burger turns into a cross and back. */
+.menu-icon {
+  display: grid;
+}
+.menu-icon > * {
+  grid-area: 1 / 1;
+  transition:
+    opacity 200ms var(--ease-standard),
+    rotate 380ms var(--ease-enter),
+    scale 380ms var(--ease-enter);
+}
+.menu-icon > :last-child {
+  opacity: 0;
+  rotate: -90deg;
+  scale: 0.6;
+}
+.menu-icon[data-open] > :first-child {
+  opacity: 0;
+  rotate: 90deg;
+  scale: 0.6;
+}
+.menu-icon[data-open] > :last-child {
+  opacity: 1;
+  rotate: 0deg;
+  scale: 1;
+}
+
+/* The menu drops from under the header, over the page rather than pushing
+   it down, and its rows follow it in one after another. Shut, it folds back
+   up and only then stops being visible. */
+.mobile-menu {
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  box-shadow: 0 28px 44px -28px oklch(0.08 0.01 262 / 0.95);
+  transition:
+    opacity 260ms var(--ease-standard),
+    translate 420ms var(--ease-enter),
+    visibility 0s 420ms;
+}
+.mobile-menu:not([data-open]) {
+  visibility: hidden;
+  opacity: 0;
+  translate: 0 -0.75rem;
+}
+.mobile-menu[data-open] {
+  transition:
+    opacity 260ms var(--ease-standard),
+    translate 420ms var(--ease-enter),
+    visibility 0s;
+}
+:root[data-motion="on"] .mobile-menu[data-open] :is(li, ul + div) {
+  animation: rise-small 460ms var(--ease-enter) both;
+  animation-delay: calc(60ms + var(--i, 0) * 45ms);
+}
+
+/* A value that has just changed catches the light, then lets it go. */
+.flash {
+  border-radius: 2px;
+  animation: flash 1100ms var(--ease-standard) both;
+}
+@keyframes flash {
+  from {
+    background-color: oklch(0.55 0.205 263 / 0.45);
+    box-shadow: 0 0 0 2px oklch(0.55 0.205 263 / 0.45);
+  }
+  to {
+    background-color: oklch(0.55 0.205 263 / 0);
+    box-shadow: 0 0 0 2px oklch(0.55 0.205 263 / 0);
+  }
+}
+
+/* A number that has just arrived. */
+.ping-in {
+  animation: unveil 700ms var(--ease-enter) both;
+}
+
+/* A check that draws itself. */
+.check-draw path,
+.check-draw polyline {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: check-draw 420ms var(--ease-enter) 40ms forwards;
+}
+@keyframes check-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* A dot that has just heard back rings once. */
+.ring-once {
+  position: relative;
+}
+.ring-once::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: currentColor;
+  animation: ring-once 1100ms var(--ease-enter) both;
+}
+@keyframes ring-once {
+  from {
+    opacity: 0.6;
+    scale: 1;
+  }
+  to {
+    opacity: 0;
+    scale: 3.2;
+  }
+}
+
+/* An answer opens, rather than appearing. */
+.faq::details-content {
+  block-size: 0;
+  overflow-y: clip;
+  transition:
+    block-size 460ms var(--ease-enter),
+    content-visibility 460ms allow-discrete;
+}
+.faq[open]::details-content {
+  block-size: auto;
+}
+.faq[open] .faq-answer {
+  animation: rise-small 520ms var(--ease-enter) 60ms both;
+}
+@keyframes rise-small {
+  from {
+    opacity: 0;
+    translate: 0 0.5rem;
+  }
+}
+
+/* Page to page: the old page steps back, the new one rises in. */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-old(root) {
+  animation: 180ms var(--ease-standard) both vt-out;
+}
+::view-transition-new(root) {
+  animation: 420ms var(--ease-enter) 60ms both vt-in;
+}
+@keyframes vt-out {
+  to {
+    opacity: 0;
+    scale: 0.992;
+  }
+}
+@keyframes vt-in {
+  from {
+    opacity: 0;
+    translate: 0 0.75rem;
+  }
+}
+.site-header {
+  view-transition-name: site-header;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Entrances.                                                                */
+/*                                                                           */
+/* Class-triggered and time-based, so the reduced-motion cap at the bottom   */
+/* collapses every one of them. Nothing is hidden unless the head script has */
+/* marked the page as animating, so without JavaScript every word is simply  */
+/* there.                                                                    */
+/* ------------------------------------------------------------------------ */
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1.75rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes word-in {
+  from {
+    transform: translate3d(0, 130%, 0);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes unveil {
+  from {
+    opacity: 0;
   }
   to {
     opacity: 1;
   }
 }
 
-@keyframes lightbar-visual-boot {
-  0% {
-    transform: rotate(180deg) translateZ(0px) translateY(700px) scaleX(0.8);
-  }
-  100% {
-    transform: rotate(180deg) translateZ(0px) translateY(700px) scaleX(1);
-  }
+/* Above the fold, `data-instant` plays on first paint without waiting for
+   the observer (and so for hydration); everything else waits to be seen. */
+:root[data-motion="on"] .reveal:not([data-shown]):not([data-instant]) {
+  opacity: 0;
 }
 
-@media (max-width: 640px) {
-  .lightbar,
-  .lightbar-visual {
-    width: 250vw;
-  }
-  .lightbar {
-    left: 50vw;
-    transform: translateX(-50%);
-  }
+:root[data-motion="on"] .reveal:is([data-shown], [data-instant]) {
+  animation: rise-in var(--duration-reveal) var(--ease-enter) both;
+  animation-delay: var(--delay, 0ms);
 }
 
-section:not(:first-of-type) {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 600px;
+/* A headline's words, each rising out of its own mask. */
+.mask {
+  display: inline-flex;
+  overflow: hidden;
+  vertical-align: top;
+  /* Room for the descenders (g, y, p) inside the clip; the words start far
+     enough down to stay hidden under it. */
+  padding-bottom: 0.24em;
+  margin-bottom: -0.24em;
 }
 
-.hero-grid {
-  background-image: radial-gradient(
-    circle at 1px 1px,
-    rgba(255, 255, 255, 0.035) 1px,
-    transparent 0
-  );
-  background-size: 40px 40px;
-  background-position: center;
+.word {
+  display: inline-block;
 }
 
-.section-glow {
-  position: relative;
+:root[data-motion="on"] .headline.reveal:not([data-shown]) {
+  opacity: 1;
 }
-.section-glow::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 600px;
-  height: 300px;
-  background: radial-gradient(
-    ellipse,
-    rgba(37, 99, 235, 0.025) 0%,
-    transparent 70%
-  );
-  pointer-events: none;
+
+:root[data-motion="on"]
+  .headline.reveal:not([data-shown]):not([data-instant])
+  .word {
+  transform: translate3d(0, 130%, 0);
+}
+
+:root[data-motion="on"] .headline.reveal:is([data-shown], [data-instant]) {
+  animation: none;
+}
+
+:root[data-motion="on"]
+  .headline.reveal:is([data-shown], [data-instant])
+  .word {
+  animation: word-in var(--duration-reveal) var(--ease-enter) both;
+  animation-delay: calc(var(--delay, 0ms) + var(--i, 0) * 80ms);
+}
+
+/* Lines of a panel arriving on a surface that is already there. */
+:root[data-motion="on"] .reveal:not([data-shown]):not([data-instant]) .line {
+  opacity: 0;
+}
+
+:root[data-motion="on"] .reveal:is([data-shown], [data-instant]) .line {
+  animation: unveil var(--duration-unveil) var(--ease-enter) both;
+  animation-delay: calc(var(--delay, 0ms) + 300ms + var(--i, 0) * 90ms);
 }
 
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: 1ms !important;
     scroll-behavior: auto !important;
   }
-  .gradient-text {
-    animation: none !important;
+  @view-transition {
+    navigation: none;
+  }
+  .cursor-light {
+    display: none;
+  }
+}
+
+/* Windows high contrast: the system draws the page; the light show steps
+   aside and every control keeps a system-colored ring. */
+@media (forced-colors: active) {
+  .cursor-light,
+  .lightbar,
+  .lamp-cord,
+  .light-wall,
+  .scroll-beam,
+  .tilt::after,
+  .shine::after,
+  .scan::before,
+  .scan::after,
+  .panel-plate,
+  .sparks,
+  .motes {
+    display: none;
+  }
+  .field:focus {
+    outline: 2px solid Highlight;
+  }
+}
+
+/* Asked for more contrast: firmer rules, brighter secondary text. */
+@media (prefers-contrast: more) {
+  :root {
+    --color-line: oklch(0.46 0.02 264);
+    --color-line-strong: oklch(0.6 0.02 264);
+    --color-ink-muted: oklch(0.88 0.012 262);
+    --color-ink-subtle: oklch(0.8 0.015 262);
   }
 }

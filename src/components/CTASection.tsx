@@ -1,73 +1,71 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { Reveal } from "./Motion";
+import { Motes } from "./Motes";
+import { ButtonLink, Reveal } from "./ui";
 
-const words = [
-  "Something Great",
-  "Your Next Product",
-  "For the Future",
-  "What Matters",
-];
-
-export function CTASection() {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((i) => (i + 1) % words.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
+/*
+ * The one place the page commits to the blue: the whole band is it. Written
+ * as plain words on the logo's own blue, with the address itself as the
+ * largest link, because the address is the thing a reader is here to take.
+ * The pointer carries a wash of light across it and finds the same dotted
+ * wall as the hero's (Tactile, globals.css), and motes of light rise through
+ * it on their own.
+ */
+export function CTASection({
+  heading = "Need Something Built or Set Up?",
+}: {
+  heading?: string;
+}) {
   return (
-    <section id="contact" className="py-16 sm:py-28 relative overflow-hidden">
-      <div className="section-divider absolute top-0 inset-x-0" />
+    <section
+      id="contact"
+      data-field
+      className="sweep band-light bg-blue-deep text-on-blue [--sweep-color:var(--color-on-blue)]"
+    >
+      <div aria-hidden="true" className="light-wall" />
+      <Motes />
+      <div className="mx-auto grid w-full max-w-page gap-10 px-4 py-section sm:px-6 lg:grid-cols-12 lg:items-end lg:gap-8">
+        <Reveal className="lg:col-span-7">
+          <h2 className="text-display-xl text-balance text-on-blue">
+            {heading}
+          </h2>
+          <p className="mt-6 max-w-reading text-lead text-on-blue-muted">
+            Software, a website, new phones, a network that works. Tell us what
+            it is and when you need it. You get a reply, a call if it helps, and
+            a written quote.
+          </p>
+        </Reveal>
 
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <Reveal>
-          <div className="glow-card relative rounded-3xl bg-gradient-to-br from-bg-surface via-[#0c0c1a] to-bg-surface border border-border-subtle hover:border-blue-brand/30 p-8 sm:p-14 lg:p-20 overflow-hidden transition-colors duration-500">
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-brand/20 to-transparent" />
-
-            <div className="relative max-w-2xl mx-auto text-center">
-              <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-6 leading-[1.2]">
-                Let&apos;s build
-                <span
-                  className="block overflow-hidden"
-                  style={{ height: "1.3em" }}
-                >
-                  <AnimatePresence mode="wait">
-                    <motion.span
-                      key={words[index]}
-                      initial={{ opacity: 0, y: "100%" }}
-                      animate={{ opacity: 1, y: "0%" }}
-                      exit={{ opacity: 0, y: "-100%" }}
-                      transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-                      className="gradient-text block"
-                    >
-                      {words[index]}.
-                    </motion.span>
-                  </AnimatePresence>
-                </span>
-              </h2>
-
-              <p className="text-text-muted text-lg leading-relaxed mb-10 max-w-lg mx-auto">
-                Whether you need a custom web app, a complete platform, or a
-                dedicated technology partner, we deliver solutions that work.
-              </p>
-
-              <div className="flex flex-wrap items-center justify-center gap-4">
-                <a
-                  href="/contact"
-                  className="group inline-flex items-center gap-2.5 px-7 py-3.5 bg-blue-brand hover:bg-blue-light text-white font-medium rounded-xl transition-all duration-300 shadow-md shadow-blue-600/15 hover:shadow-blue-600/20 active:translate-y-px active:shadow-sm text-sm"
-                >
-                  Start a Conversation
-                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
-                </a>
-              </div>
-            </div>
+        <Reveal delay={140} className="lg:col-span-5">
+          <a
+            href="mailto:hello@wyzie.io"
+            className="ctl group relative block pb-3 text-display-md text-on-blue"
+          >
+            hello@wyzie.io
+            <span
+              aria-hidden="true"
+              className="absolute inset-x-0 bottom-0 h-px bg-on-blue/40"
+            />
+            <span
+              aria-hidden="true"
+              className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-on-blue transition-[scale] duration-700 ease-enter group-hover:scale-x-100"
+            />
+          </a>
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <ButtonLink href="/contact" variant="inverse">
+              Start a Project
+              <ArrowRight
+                aria-hidden="true"
+                className="h-4 w-4 transition-[translate] duration-300 ease-enter group-hover:translate-x-1"
+              />
+            </ButtonLink>
+            <a
+              href="https://discord.gg/2mxraHBVtB"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ctl px-2 py-2 text-[0.9375rem] font-semibold text-on-blue-muted underline decoration-on-blue/40 underline-offset-4 hover:text-on-blue hover:decoration-on-blue"
+            >
+              Or find us on Discord
+            </a>
           </div>
         </Reveal>
       </div>

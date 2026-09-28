@@ -1,148 +1,76 @@
-"use client";
-
-import { useState } from "react";
 import { Plus } from "lucide-react";
-import { Reveal, StaggerContainer, StaggerItem, motion } from "./Motion";
-import { AnimatePresence } from "framer-motion";
+import { Headline, Reveal } from "./ui";
 
 const faqs = [
   {
-    question: "What tech stack do you work with?",
+    question: "What does a project cost?",
     answer:
-      "We specialize in TypeScript, Go, and Cloudflare Workers for edge-first development. On the frontend, we work with Next.js, Svelte, and React. We choose the right tool for the job, never force a stack.",
+      "It depends on scope. Software projects typically start at $5,000. Setup work, like a phone system or an office network, is quoted per job, and support and consulting are hourly or a monthly plan. You get a written quote before any work starts, and it does not move without your say.",
   },
   {
-    question: "How long does a typical project take?",
+    question: "How long does it take?",
     answer:
-      "Most software projects ship within 2-6 weeks. Larger platforms or consulting engagements run 6-12 weeks. We'll give you a realistic timeline during our discovery call. No inflated estimates, no surprises.",
+      "Setting up phones, email or a network usually takes days. Most software projects ship in two to six weeks, and larger platforms run six to twelve. You get a timeline on the first call.",
   },
   {
-    question: "Do you offer ongoing support after launch?",
+    question: "How big does my business need to be?",
     answer:
-      "Yes. Every project includes 30 days of post-launch support. For long-term partnerships, we offer monthly retainer plans that cover monitoring, updates, and priority bug fixes.",
+      "It doesn't. We work with a single office as readily as a company with several sites, and we size the work to what you need now, with room to grow.",
+  },
+  {
+    question: "What do you build with?",
+    answer:
+      "Software: TypeScript and Go, on Cloudflare Workers or a VPS, with Next.js, Svelte or React in front. Phones, email and networks: the providers and hardware you already have where they work, or ones we recommend when they don't. We pick what suits the job and what your team can look after.",
+  },
+  {
+    question: "What happens after launch?",
+    answer:
+      "Every project includes 30 days of support after launch. After that, a monthly plan covers monitoring, updates, help for your staff and priority fixes, if you want one.",
   },
   {
     question: "Can I use your open source projects commercially?",
     answer:
-      "Yes, within each project's license. Wyzie Lib, Wyzie Proxy, and i6.shark are MIT licensed, so you can use, modify, and distribute them freely, including in commercial products. For our other repositories, check the license in the repository. The Wyzie Subs API itself is closed source: you use it with an API key, as documented at docs.wyzie.io.",
+      "Yes, within each project's license. Wyzie Lib, Wyzie Proxy and i6.shark are MIT licensed. For the other repositories, check the license in the repository. The Wyzie Subs API itself is closed source: you use it with an API key, as documented at docs.wyzie.io.",
   },
   {
-    question: "What does your pricing look like?",
+    question: "How do I start?",
     answer:
-      "Pricing depends on scope and complexity. Projects typically start at $5,000. Consulting engagements are billed hourly or as a fixed-price package. Reach out for a custom quote, we're transparent about costs from day one.",
-  },
-  {
-    question: "How do I get started?",
-    answer:
-      "Simply email us at hello@wyzie.io. We'll set up a quick discovery consultation to understand your needs and go from there. No commitment required.",
+      "Email hello@wyzie.io with what you need. We set up a short call to understand it and go from there. No commitment.",
   },
 ];
 
 export function FAQSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  const toggle = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
   return (
-    <section className="py-16 sm:py-28 relative section-glow">
-      <div className="section-divider absolute top-0 inset-x-0" />
+    <section className="sweep border-t border-line">
+      <div className="mx-auto grid w-full max-w-page gap-10 px-4 py-section sm:px-6 lg:grid-cols-12 lg:gap-8">
+        <div className="lg:col-span-4">
+          <Headline text="Before You Write" />
+        </div>
 
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-        <Reveal className="text-center mb-16">
-          <p className="text-blue-brand text-xs font-semibold uppercase tracking-[0.2em] mb-4">
-            FAQ
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-5">
-            Common Questions
-          </h2>
-          <p className="text-text-muted text-lg max-w-md mx-auto leading-relaxed">
-            Everything you need to know about working with us.
-          </p>
-        </Reveal>
-
-        <StaggerContainer className="space-y-3" staggerDelay={0.08}>
-          {faqs.map((faq, i) => {
-            const isOpen = openIndex === i;
-            return (
-              <StaggerItem key={faq.question}>
-                <div
-                  className={`glow-card rounded-2xl bg-bg-surface border overflow-hidden transition-all duration-500 ${
-                    isOpen
-                      ? "border-blue-brand/15 shadow-[0_0_24px_rgba(37,99,235,0.06)]"
-                      : "border-border-subtle hover:border-border-muted"
-                  }`}
-                >
-                  <AnimatePresence>
-                    {isOpen && (
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="h-px bg-gradient-to-r from-transparent via-blue-brand/25 to-transparent"
-                      />
-                    )}
-                  </AnimatePresence>
-
-                  <button
-                    onClick={() => toggle(i)}
-                    className="w-full flex items-center justify-between gap-4 p-5 text-left group cursor-pointer"
-                    aria-expanded={isOpen}
-                    aria-controls={`faq-answer-${i}`}
-                  >
-                    <span
-                      id={`faq-question-${i}`}
-                      className={`font-medium text-sm sm:text-base transition-colors duration-300 ${
-                        isOpen
-                          ? "text-white"
-                          : "text-white/70 group-hover:text-white/90"
-                      }`}
-                    >
+        <Reveal as="div" delay={120} className="lg:col-span-8">
+          <ul className="ruled border-y border-line">
+            {faqs.map((faq) => (
+              <li key={faq.question} className="scan">
+                <details className="faq group">
+                  <summary className="ctl flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-[1.0625rem] font-semibold text-ink hover:text-blue-ink [&::-webkit-details-marker]:hidden">
+                    <span className="transition-[translate] duration-300 ease-enter group-hover:translate-x-1 group-open:translate-x-0">
                       {faq.question}
                     </span>
-                    <motion.span
-                      animate={{ rotate: isOpen ? 45 : 0 }}
-                      transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-                      className={`shrink-0 w-7 h-7 rounded-lg border flex items-center justify-center transition-colors duration-300 ${
-                        isOpen
-                          ? "bg-blue-brand/10 border-blue-brand/15 text-blue-pale"
-                          : "bg-white/[0.03] border-border-subtle text-text-subtle group-hover:bg-white/[0.06]"
-                      }`}
+                    <span
+                      aria-hidden="true"
+                      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-line text-ink-subtle transition-[rotate,background-color,border-color,color] duration-500 ease-enter group-hover:border-line-strong group-hover:text-ink group-open:rotate-[135deg] group-open:border-blue group-open:bg-blue group-open:text-on-blue"
                     >
-                      <Plus className="w-3.5 h-3.5" />
-                    </motion.span>
-                  </button>
-
-                  <AnimatePresence initial={false}>
-                    {isOpen && (
-                      <motion.div
-                        id={`faq-answer-${i}`}
-                        role="region"
-                        aria-labelledby={`faq-question-${i}`}
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{
-                          duration: 0.35,
-                          ease: [0.25, 0.1, 0.25, 1],
-                        }}
-                        className="overflow-hidden"
-                      >
-                        <div className="px-5 pb-5">
-                          <p className="text-text-muted text-sm leading-relaxed">
-                            {faq.answer}
-                          </p>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              </StaggerItem>
-            );
-          })}
-        </StaggerContainer>
+                      <Plus className="h-3.5 w-3.5" />
+                    </span>
+                  </summary>
+                  <p className="faq-answer max-w-reading pb-6 text-standfirst text-ink-muted">
+                    {faq.answer}
+                  </p>
+                </details>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
       </div>
     </section>
   );

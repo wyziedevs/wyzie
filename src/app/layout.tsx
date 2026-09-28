@@ -1,18 +1,17 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { CursorLight } from "@/components/CursorLight";
-import { GlowCardTracker } from "@/components/GlowCardTracker";
+import type { Metadata, Viewport } from "next";
+import { Open_Sans } from "next/font/google";
+import { MotionObserver } from "@/components/MotionObserver";
+import { Tactile } from "@/components/Tactile";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const openSans = Open_Sans({
+  variable: "--font-open-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const description =
+  "Wyzie builds, sets up and runs business technology: custom software, websites, VoIP phone systems, networks, cloud and IT support, from the team that builds and runs Wyzie Subs, Kilter and pitmaster.cc.";
 
 export const metadata: Metadata = {
   icons: {
@@ -20,39 +19,39 @@ export const metadata: Metadata = {
     apple: "/favicon.png",
   },
   title: {
-    default: "Wyzie - Technology Solutions",
+    default: "Wyzie: Business Technology, Built and Kept Running",
     template: "%s | Wyzie",
   },
-  description:
-    "Wyzie is a bespoke software company building production-grade web applications, open source tools, and offering technology consulting and custom development services.",
+  description,
   keywords: [
     "Wyzie",
-    "Technology Solutions",
     "bespoke software",
     "custom software development",
     "web development",
-    "open source",
+    "website design",
+    "VoIP phone systems",
+    "business phone systems",
+    "network setup",
+    "IT support",
+    "managed IT services",
+    "Microsoft 365",
+    "Google Workspace",
+    "API development",
+    "MVP development",
     "Cloudflare Workers",
-    "edge computing",
     "TypeScript",
     "Go",
-    "consulting",
     "software consulting",
-    "custom development",
-    "technology solutions",
-    "edge network",
-    "developer tools",
-    "infrastructure",
-    "full-stack development",
+    "Wyzie Subs",
+    "Kilter",
   ],
   metadataBase: new URL("https://wyzie.io"),
   alternates: {
     canonical: "https://wyzie.io",
   },
   openGraph: {
-    title: "Wyzie - Technology Solutions",
-    description:
-      "Wyzie builds production-grade technology solutions, open source tools, and offers consulting and custom development services.",
+    title: "Wyzie: Business Technology, Built and Kept Running",
+    description,
     url: "https://wyzie.io",
     siteName: "Wyzie",
     type: "website",
@@ -62,15 +61,14 @@ export const metadata: Metadata = {
         url: "/header.png",
         width: 350,
         height: 150,
-        alt: "Wyzie - Technology Solutions",
+        alt: "Wyzie",
       },
     ],
   },
   twitter: {
     card: "summary",
-    title: "Wyzie - Technology Solutions",
-    description:
-      "Bespoke software solutions, open source tools, and technology consulting. 50+ projects delivered, 99.9% uptime.",
+    title: "Wyzie: Business Technology, Built and Kept Running",
+    description,
     images: ["/header.png"],
   },
   robots: {
@@ -86,6 +84,11 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#0f1218",
+  colorScheme: "dark",
+};
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
@@ -93,14 +96,15 @@ const jsonLd = {
       "@type": "Organization",
       "@id": "https://wyzie.io/#organization",
       name: "Wyzie",
+      legalName: "Wyzie LLC",
       url: "https://wyzie.io",
+      email: "hello@wyzie.io",
       logo: {
         "@type": "ImageObject",
         url: "https://wyzie.io/favicon.png",
       },
       sameAs: ["https://github.com/wyziedevs", "https://discord.gg/2mxraHBVtB"],
-      description:
-        "Technology solutions company building bespoke software, open source tools, and providing technology consulting services.",
+      description,
     },
     {
       "@type": "WebSite",
@@ -108,11 +112,19 @@ const jsonLd = {
       url: "https://wyzie.io",
       name: "Wyzie",
       publisher: { "@id": "https://wyzie.io/#organization" },
-      description:
-        "Bespoke software solutions, open source tools, and technology consulting on Cloudflare's edge network.",
+      description,
     },
   ],
 };
+
+/*
+ * Marks the page as animating before the first paint, so an entrance never
+ * shows its final state and then jumps back to replay it. A reader who asked
+ * for less motion is never marked, and neither is one without JavaScript:
+ * for both, every word is simply on the page. If the observer never starts,
+ * the deadline shows everything anyway.
+ */
+const motionScript = `(function(){try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var d=document.documentElement;d.dataset.motion='on';setTimeout(function(){if(!d.dataset.observed){document.querySelectorAll('.reveal').forEach(function(e){e.dataset.shown=''})}},3000)}catch(e){}})();`;
 
 export default function RootLayout({
   children,
@@ -120,23 +132,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={openSans.variable}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
       <head>
+        <script dangerouslySetInnerHTML={{ __html: motionScript }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `console.log('%c Built by Wyzie','font-size:14px;font-weight:bold;color:#2563eb');console.log('%cWe build things properly. See for yourself \u2192','color:#8a95a8');console.log('%chttps://github.com/wyziedevs','color:#60a5fa;text-decoration:underline');`,
-          }}
-        />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <CursorLight />
-        <GlowCardTracker />
+      <body>
+        <MotionObserver />
+        <Tactile />
         {children}
       </body>
     </html>

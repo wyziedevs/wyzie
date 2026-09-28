@@ -1,223 +1,260 @@
 "use client";
 
 import { useState } from "react";
-import { useReducedMotion } from "framer-motion";
-import {
-  Reveal,
-  StaggerContainer,
-  StaggerItem,
-  motion,
-} from "@/components/Motion";
-import { Mail, MessageSquare, ArrowRight, Send } from "lucide-react";
+import { ArrowUpRight, Check, Copy } from "lucide-react";
+import { Headline, Reveal } from "@/components/ui";
+import { play } from "@/lib/sound";
+import { sparksFrom } from "@/lib/sparks";
 
-const ease = [0.25, 0.1, 0.25, 1] as const;
+/* 16px on phones, so iOS never zooms the page to a focused field. */
+const field = "field px-3.5 py-2.5 text-base sm:text-[0.9375rem]";
+
+const MESSAGE_MAX = 5000;
+
+type Missing = { subject?: boolean; message?: boolean };
 
 export function ContactSection() {
-  const [submitted, setSubmitted] = useState(false);
+  const [opened, setOpened] = useState(false);
+  // Back from the sent note, the form fades in rather than snapping back.
+  const [back, setBack] = useState(false);
   const [copied, setCopied] = useState(false);
-  const shouldReduce = useReducedMotion();
+  const [missing, setMissing] = useState<Missing>({});
+  const [length, setLength] = useState(0);
 
   return (
-    <section className="relative pt-30 pb-24 overflow-hidden">
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <motion.p
-            initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-            animate={shouldReduce ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1, ease }}
-            className="text-blue-brand text-xs font-semibold uppercase tracking-[0.2em] mb-4"
-          >
-            Contact
-          </motion.p>
-          <motion.h1
-            initial={shouldReduce ? false : { opacity: 0, y: 28 }}
-            animate={shouldReduce ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease }}
-            className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-5"
-          >
-            Say Hello,
-            <span className="gradient-text"> We&apos;d Love to Chat.</span>
-          </motion.h1>
-        </div>
+    <section className="mx-auto w-full max-w-page px-4 pt-section-tight pb-section sm:px-6">
+      <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
+        <div className="lg:col-span-5">
+          <Headline
+            instant
+            as="h1"
+            size="xl"
+            text="Tell Us What You Need"
+            delay={80}
+          />
+          <Reveal instant delay={480}>
+            <p className="mt-7 max-w-reading text-lead text-ink-muted">
+              What it is, who it is for, and when you need it. We reply within a
+              day, set up a short call if it helps, and send a written quote.
+            </p>
+          </Reveal>
 
-        <StaggerContainer
-          className="grid lg:grid-cols-5 gap-8 lg:gap-12"
-          staggerDelay={0.15}
-        >
-          <StaggerItem className="lg:col-span-3">
-            <div className="rounded-2xl bg-bg-surface border border-border-subtle p-6 sm:p-8 overflow-hidden relative glow-card">
-              {submitted ? (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                  className="flex flex-col items-center justify-center py-16 text-center"
-                >
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{
-                      duration: 0.35,
-                      delay: 0.1,
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
-                    className="w-14 h-14 rounded-full bg-blue-brand/10 border border-blue-brand/20 flex items-center justify-center mb-5"
+          <Reveal instant delay={600}>
+            <ul className="ruled mt-10 border-y border-line">
+              <li className="flex items-center justify-between gap-4 py-4">
+                <div>
+                  <p className="text-sm text-ink-subtle">Email</p>
+                  <a
+                    href="mailto:hello@wyzie.io"
+                    className="ctl text-[1.0625rem] font-semibold text-ink hover:text-blue-ink"
                   >
-                    <motion.svg
-                      viewBox="0 0 24 24"
-                      className="w-7 h-7"
-                      fill="none"
-                      stroke="var(--color-blue-pale)"
-                      strokeWidth={2.5}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <motion.path
-                        d="M20 6L9 17l-5-5"
-                        initial={{ pathLength: 0 }}
-                        animate={{ pathLength: 1 }}
-                        transition={{
-                          duration: 0.4,
-                          delay: 0.3,
-                          ease: [0.22, 1, 0.36, 1],
-                        }}
-                      />
-                    </motion.svg>
-                  </motion.div>
-                  <h3 className="text-xl font-bold text-white mb-2">
-                    Ready to Send
-                  </h3>
-                  <p className="text-text-muted text-sm max-w-sm">
-                    Your mail app opened with your message. Just hit send!
-                  </p>
-                </motion.div>
-              ) : (
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    const form = e.currentTarget;
-                    const formData = new FormData(form);
-                    const subject = formData.get("subject") as string;
-                    const message = formData.get("message") as string;
-
-                    const mailtoSubject = encodeURIComponent(
-                      subject || "Contact from wyzie.io",
-                    );
-                    const mailtoBody = encodeURIComponent(message);
-                    window.location.href = `mailto:hello@wyzie.io?subject=${mailtoSubject}&body=${mailtoBody}`;
-                    setSubmitted(true);
-                  }}
-                  className="space-y-5"
-                >
-                  <div>
-                    <label
-                      htmlFor="subject"
-                      className="block text-xs font-medium text-text-muted mb-1.5"
-                    >
-                      Subject
-                    </label>
-                    <input
-                      type="text"
-                      id="subject"
-                      name="subject"
-                      required
-                      maxLength={200}
-                      placeholder="What's this about?"
-                      className="w-full px-4 py-2.5 rounded-lg bg-white/5 border border-border-muted text-base sm:text-sm text-white placeholder:text-text-subtle focus:outline-none focus:border-blue-brand/50 focus:ring-1 focus:ring-blue-brand/30 transition-all duration-300"
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="message"
-                      className="block text-xs font-medium text-text-muted mb-1.5"
-                    >
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      required
-                      rows={5}
-                      maxLength={5000}
-                      placeholder="Tell us about your project, timeline, and any requirements..."
-                      className="w-full px-4 py-2.5 rounded-lg bg-white/5 border border-border-muted text-base sm:text-sm text-white placeholder:text-text-subtle focus:outline-none focus:border-blue-brand/50 focus:ring-1 focus:ring-blue-brand/30 transition-all duration-300 resize-none"
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="group inline-flex items-center gap-2 px-6 py-3 bg-blue-brand hover:bg-blue-light text-white font-medium rounded-xl transition-all duration-300 shadow-lg shadow-blue-600/25 hover:shadow-blue-600/35 hover:shadow-xl active:translate-y-px active:shadow-sm text-sm w-full sm:w-auto justify-center"
-                  >
-                    <Send className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
-                    Send Message
-                  </button>
-                </form>
-              )}
-            </div>
-          </StaggerItem>
-
-          <StaggerItem className="lg:col-span-2 space-y-5">
-            <Reveal>
-              <div className="rounded-xl bg-bg-surface border border-border-subtle p-5 glow-card">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-9 h-9 rounded-lg bg-blue-brand/10 border border-blue-brand/20 flex items-center justify-center">
-                    <Mail className="w-4 h-4 text-blue-pale" />
-                  </div>
-                  <h3 className="text-sm font-bold text-white">Email</h3>
+                    hello@wyzie.io
+                  </a>
                 </div>
-                <p className="text-xs text-text-muted mb-3">
-                  For business inquiries, partnerships, or custom development.
-                </p>
                 <button
                   type="button"
-                  title="Click to copy email address"
-                  onClick={async () => {
+                  onClick={async (e) => {
+                    const button = e.currentTarget;
                     try {
                       await navigator.clipboard.writeText("hello@wyzie.io");
                       setCopied(true);
+                      play("success");
+                      sparksFrom(button, { count: 8, reach: 30, tone: "live" });
                       setTimeout(() => setCopied(false), 2000);
                     } catch {
                       window.location.href = "mailto:hello@wyzie.io";
                     }
                   }}
-                  className="text-sm text-blue-brand hover:text-blue-light font-medium transition-all duration-300 cursor-pointer"
+                  className="ctl press inline-flex h-9 items-center gap-2 rounded-control border border-line-strong px-3 text-sm font-semibold text-ink-muted hover:bg-raised hover:text-ink"
                 >
                   {copied ? (
-                    <span className="text-emerald-400">
-                      Copied to clipboard!
-                    </span>
+                    <Check
+                      aria-hidden="true"
+                      className="check-draw h-4 w-4 text-live"
+                    />
                   ) : (
-                    "hello@wyzie.io"
+                    <Copy aria-hidden="true" className="h-4 w-4" />
                   )}
+                  <span aria-live="polite">{copied ? "Copied" : "Copy"}</span>
                 </button>
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.1}>
-              <div className="rounded-xl bg-bg-surface border border-border-subtle p-5 glow-card">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-9 h-9 rounded-lg bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
-                    <MessageSquare className="w-4 h-4 text-violet-400" />
-                  </div>
-                  <h3 className="text-sm font-bold text-white">Discord</h3>
-                </div>
-                <p className="text-xs text-text-muted mb-3">
-                  Join our community for support, updates, and quick questions.
-                </p>
+              </li>
+              <li className="py-4">
+                <p className="text-sm text-ink-subtle">Discord</p>
                 <a
                   href="https://discord.gg/2mxraHBVtB"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group/discord inline-flex items-center gap-1.5 text-sm text-violet-400 hover:text-violet-300 font-medium transition-colors duration-300"
+                  className="ctl inline-flex items-center gap-1.5 text-[1.0625rem] font-semibold text-ink hover:text-blue-ink"
                 >
-                  Join Discord
-                  <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover/discord:translate-x-0.5" />
+                  Join the server
+                  <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
                 </a>
+              </li>
+            </ul>
+          </Reveal>
+        </div>
+
+        <Reveal instant delay={300} className="lg:col-span-6 lg:col-start-7">
+          <div className="spot rounded-panel border border-line bg-panel">
+            <div className="border-b border-line px-5 py-3.5">
+              <p className="text-sm font-semibold text-ink">Write to us</p>
+            </div>
+            {opened ? (
+              <div className="ping-in px-5 py-10">
+                <p className="text-display-md text-ink">
+                  Your mail app is open.
+                </p>
+                <p className="mt-3 max-w-reading text-standfirst text-ink-muted">
+                  The message is written; send it from there. If nothing opened,
+                  email hello@wyzie.io directly.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOpened(false);
+                    setBack(true);
+                  }}
+                  className="ctl mt-6 text-sm font-semibold text-blue-ink hover:text-ink"
+                >
+                  Back to the form
+                </button>
               </div>
-            </Reveal>
-          </StaggerItem>
-        </StaggerContainer>
+            ) : (
+              // The browser's own validation bubble looks different in every
+              // browser and sits over the page; this form says what is missing
+              // under the field instead, in the page's own voice.
+              <form
+                noValidate
+                className={`flex flex-col gap-5 px-5 py-6 ${back ? "ping-in" : ""}`}
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const data = new FormData(e.currentTarget);
+                  const subjectText = String(data.get("subject") ?? "").trim();
+                  const messageText = String(data.get("message") ?? "").trim();
+                  const gaps = {
+                    subject: !subjectText,
+                    message: !messageText,
+                  };
+                  if (gaps.subject || gaps.message) {
+                    setMissing(gaps);
+                    play("error");
+                    const form = e.currentTarget;
+                    // Restart the shake even if the last one is still going.
+                    form.classList.remove("shake");
+                    void form.offsetWidth;
+                    form.classList.add("shake");
+                    form
+                      .querySelector<HTMLElement>(
+                        `#${gaps.subject ? "subject" : "message"}`,
+                      )
+                      ?.focus();
+                    return;
+                  }
+                  const subject = encodeURIComponent(subjectText);
+                  const body = encodeURIComponent(messageText);
+                  window.location.href = `mailto:hello@wyzie.io?subject=${subject}&body=${body}`;
+                  play("success");
+                  setOpened(true);
+                }}
+              >
+                <div className="field-wrap">
+                  <label
+                    htmlFor="subject"
+                    className="field-label mb-1.5 block text-sm font-semibold text-ink"
+                  >
+                    Subject
+                  </label>
+                  <input
+                    id="subject"
+                    name="subject"
+                    type="text"
+                    required
+                    maxLength={200}
+                    autoComplete="off"
+                    placeholder="New phones for our office"
+                    aria-invalid={missing.subject || undefined}
+                    aria-describedby={
+                      missing.subject ? "subject-missing" : undefined
+                    }
+                    onInput={() =>
+                      missing.subject &&
+                      setMissing((m) => ({ ...m, subject: false }))
+                    }
+                    className={field}
+                  />
+                  {missing.subject && (
+                    <p
+                      id="subject-missing"
+                      className="ping-in mt-1.5 text-[0.8125rem] text-sunset"
+                    >
+                      Add a line about what it is.
+                    </p>
+                  )}
+                </div>
+                <div className="field-wrap">
+                  <div className="mb-1.5 flex items-baseline justify-between gap-3">
+                    <label
+                      htmlFor="message"
+                      className="field-label block text-sm font-semibold text-ink"
+                    >
+                      Message
+                    </label>
+                    <span
+                      aria-hidden="true"
+                      className={`text-[0.75rem] tabular-nums transition-[opacity,color] duration-300 ${
+                        length === 0
+                          ? "opacity-0"
+                          : length > MESSAGE_MAX * 0.9
+                            ? "text-sunset"
+                            : "text-ink-subtle"
+                      }`}
+                    >
+                      {length.toLocaleString("en-US")} /{" "}
+                      {MESSAGE_MAX.toLocaleString("en-US")}
+                    </span>
+                  </div>
+                  <textarea
+                    id="message"
+                    name="message"
+                    required
+                    rows={7}
+                    maxLength={MESSAGE_MAX}
+                    placeholder="What it should do, who uses it, and when you need it."
+                    aria-invalid={missing.message || undefined}
+                    aria-describedby={
+                      missing.message ? "message-missing" : undefined
+                    }
+                    onInput={(e) => {
+                      setLength(e.currentTarget.value.length);
+                      if (missing.message)
+                        setMissing((m) => ({ ...m, message: false }));
+                    }}
+                    className={field}
+                  />
+                  {missing.message && (
+                    <p
+                      id="message-missing"
+                      className="ping-in mt-1.5 text-[0.8125rem] text-sunset"
+                    >
+                      Tell us a little about it first.
+                    </p>
+                  )}
+                </div>
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <p className="text-[0.8125rem] text-ink-subtle">
+                    Opens your mail app. Nothing is sent to our servers.
+                  </p>
+                  <button
+                    type="submit"
+                    className="ctl press btn-lit inline-flex h-11 items-center justify-center rounded-control bg-blue px-5 text-[0.9375rem] font-semibold text-on-blue hover:bg-blue-hover"
+                  >
+                    Write the Email
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+        </Reveal>
       </div>
     </section>
   );

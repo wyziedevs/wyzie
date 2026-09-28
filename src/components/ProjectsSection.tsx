@@ -1,254 +1,308 @@
-"use client";
-
-import { useState } from "react";
-import { Github, ExternalLink, ChevronDown } from "lucide-react";
-import { Reveal, StaggerContainer, StaggerItem, motion } from "./Motion";
-import { AnimatePresence } from "framer-motion";
-
-const projects = [
-  {
-    name: "Wyzie Subs",
-    description:
-      "Enterprise-grade subtitle API serving millions of requests. Search seven providers in every language, download SRT or WebVTT with timing fixes, translate, or time subtitles to your own video with Wyzie Synced. Free API key to get started, with public status and uptime.",
-    tags: ["TypeScript", "Nitro", "VPS", "REST API"],
-    github: null,
-    demo: "https://sub.wyzie.io",
-    docs: "https://docs.wyzie.io",
-    status: "active",
-    featured: true,
-  },
-  {
-    name: "sudo-flix",
-    description:
-      "A fully open-source movie and TV streaming web app. Fast, modern, and community maintained.",
-    tags: ["TypeScript", "React", "Open Source"],
-    github: null,
-    demo: null,
-    docs: null,
-    status: "sunset",
-    featured: true,
-  },
-  {
-    name: "Wyzie Lib",
-    description:
-      "Official TypeScript/JavaScript SDK for seamless Wyzie Subs integration. Fully typed, tree-shakable, and zero-dependency.",
-    tags: ["TypeScript", "npm", "Vite", "Library"],
-    github: "https://github.com/wyziedevs/wyzie-lib",
-    demo: null,
-    docs: "https://docs.wyzie.io",
-    status: "active",
-    featured: false,
-  },
-  {
-    name: "i6.shark",
-    description:
-      "High-throughput IPv6 proxy server in Go with intelligent IP pool management. Built for speed and reliability.",
-    tags: ["Go", "Proxy", "Infrastructure"],
-    github: "https://github.com/wyziedevs/i6.shark",
-    demo: null,
-    docs: null,
-    status: "active",
-    featured: false,
-  },
-  {
-    name: "coderaft",
-    description:
-      "coderaft creates isolated development environments inside Docker islands. Each project lives in its own disposable container while your code stays organized on the host.",
-    tags: ["Go", "Docker", "Dev Environments"],
-    github: "https://github.com/itzcozi/coderaft",
-    demo: null,
-    docs: null,
-    status: "active",
-    featured: false,
-  },
-  {
-    name: "tinybones",
-    description:
-      "A minimal blog template built with Astro. Perfect for developers who want a clean, fast, and customizable blog without the bloat.",
-    tags: ["Astro", "Blog", "Template"],
-    github: "https://github.com/itzcozi/tinybones",
-    demo: null,
-    docs: null,
-    status: "active",
-    featured: false,
-  },
-];
-
-const statusColors: Record<string, string> = {
-  active: "bg-emerald-500/10 text-emerald-400 border-emerald-500/15",
-  beta: "bg-yellow-500/10 text-yellow-400 border-yellow-500/15",
-  archived: "bg-gray-500/10 text-gray-400 border-gray-500/15",
-  sunset: "bg-red-500/10 text-red-400 border-red-500/15",
-};
+import type { ReactNode } from "react";
+import { ArrowUpRight } from "lucide-react";
+import { ApiPanel } from "./ApiPanel";
+import {
+  catalog,
+  catalogSize,
+  showcase,
+  statusLabel,
+  subs,
+  type Entry,
+  type Group,
+  type Showcase,
+  type Status,
+} from "@/lib/projects";
+import { Headline, Reveal } from "./ui";
 
 export function ProjectsSection() {
-  const featured = projects.filter((p) => p.featured);
-  const rest = projects.filter((p) => !p.featured);
-  const [showAll, setShowAll] = useState(false);
-
   return (
-    <section id="projects" className="py-16 sm:py-28 relative section-glow">
-      <div className="section-divider absolute top-0 inset-x-0" />
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <Reveal className="text-center mb-12 sm:mb-20">
-          <p className="text-blue-brand text-xs font-semibold uppercase tracking-[0.2em] mb-4">
-            Engineering Credibility
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-5">
-            Battle-Tested at Scale
-          </h2>
-          <p className="text-text-muted text-lg max-w-lg mx-auto leading-relaxed">
-            Real-world proof of our engineering caliber. These projects, most
-            of them open source, serve millions of users daily - built to the
-            same standard we bring to every client engagement.
-          </p>
-        </Reveal>
+    <section id="work" className="sweep border-t border-line">
+      <div className="mx-auto w-full max-w-page px-4 py-section sm:px-6">
+        <Headline
+          text="Things We Built and Still Run"
+          className="mb-14 max-w-reading"
+        />
 
-        <StaggerContainer
-          className="grid md:grid-cols-2 gap-5 mb-5"
-          staggerDelay={0.15}
-        >
-          {featured.map((project) => (
-            <StaggerItem key={project.name}>
-              <ProjectCard project={project} large />
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
+        <SubsFeature />
 
-        <AnimatePresence>
-          {showAll && (
-            <motion.div
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-              className="mb-5"
-            >
-              <StaggerContainer
-                className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4"
-                staggerDelay={0.08}
-              >
-                {rest.map((project) => (
-                  <StaggerItem key={project.name}>
-                    <ProjectCard project={project} large={false} />
-                  </StaggerItem>
-                ))}
-              </StaggerContainer>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <div className="mt-24">
+          <div className="grid gap-x-8 gap-y-16 lg:grid-cols-2">
+            {showcase.map((project, i) => (
+              <ProjectShot key={project.id} project={project} delay={i * 120} />
+            ))}
+          </div>
+        </div>
 
-        {!showAll && (
-          <Reveal className="flex justify-center mt-3">
-            <button
-              onClick={() => setShowAll(true)}
-              className="group inline-flex items-center gap-1.5 px-5 py-3 rounded-xl text-sm text-text-muted hover:text-white bg-white/[0.02] hover:bg-white/[0.06] border border-border-subtle hover:border-white/[0.12] transition-all duration-300 cursor-pointer active:translate-y-px"
-            >
-              Show more projects
-              <ChevronDown className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5" />
-            </button>
-          </Reveal>
-        )}
-
-        {showAll && (
-          <Reveal className="mt-12 text-center">
-            <a
-              href="https://github.com/wyziedevs"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-white/[0.08] hover:border-white/[0.15] bg-white/[0.02] hover:bg-white/[0.05] text-sm text-text-muted hover:text-white transition-all duration-300 active:translate-y-px"
-            >
-              View all on GitHub
-              <ExternalLink className="w-3.5 h-3.5" />
-            </a>
-          </Reveal>
-        )}
+        <FullList />
       </div>
     </section>
   );
 }
 
-function ProjectCard({
-  project,
-  large,
-}: {
-  project: (typeof projects)[number];
-  large: boolean;
-}) {
+/* Wyzie Subs, the flagship: one product, shown by what it does. */
+function SubsFeature() {
   return (
-    <div
-      className={`group relative flex flex-col rounded-2xl bg-bg-surface border border-border-subtle overflow-hidden glow-card h-full ${large ? "p-6" : "p-5"}`}
-    >
-      <div className="flex items-start gap-3 mb-3">
-        <div>
-          <div className="flex items-center gap-2 mb-1.5">
-            <h3
-              className={`text-white font-bold leading-snug ${large ? "text-base" : "text-sm"}`}
-            >
-              {project.name}
-            </h3>
-            <span
-              className={`px-1.5 py-0.5 rounded text-[10px] font-medium border ${statusColors[project.status]}`}
-            >
-              {project.status}
-            </span>
-          </div>
-          <p
-            className={`text-text-muted leading-relaxed break-words ${large ? "text-sm" : "text-xs"}`}
+    <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-8">
+      <Reveal className="lg:col-span-5">
+        <h3 className="flex flex-wrap items-baseline gap-x-3 text-display-md text-ink">
+          {subs.name}
+          <span className="text-sm font-normal tracking-normal text-ink-subtle">
+            {subs.kind}
+          </span>
+        </h3>
+        <p className="mt-4 text-standfirst text-ink-muted">{subs.summary}</p>
+        <ul className="ruled mt-7 border-y border-line">
+          {subs.facts.map((fact) => (
+            <li key={fact} className="py-3 text-[0.9375rem] text-ink">
+              {fact}
+            </li>
+          ))}
+        </ul>
+        <p className="mt-5 text-sm text-ink-subtle">{subs.stack}</p>
+        <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
+          {subs.links.map((link) => (
+            <OutLink key={link.href} href={link.href}>
+              {link.label}
+            </OutLink>
+          ))}
+        </div>
+      </Reveal>
+
+      <Reveal delay={160} className="lg:col-span-7">
+        <div className="frame-in">
+          <ApiPanel />
+        </div>
+      </Reveal>
+    </div>
+  );
+}
+
+function ProjectShot({ project, delay }: { project: Showcase; delay: number }) {
+  return (
+    <Reveal as="figure" delay={delay}>
+      {/* The frame tips up to face the reader as it scrolls in, and turns
+          toward the pointer while it is over it (Tactile). */}
+      <div data-field className="frame-in rounded-panel">
+        <div className="tilt glow-under [--tilt:3.5deg]">
+          <a
+            href={project.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ctl spot group block rounded-panel border border-line bg-panel hover:[--spot-line:var(--color-line-strong)]"
           >
-            {project.description}
-          </p>
+            <span className="flex items-center justify-between gap-4 border-b border-line px-4 py-2.5">
+              <span className="ctl truncate text-[0.8125rem] text-ink-subtle group-hover:text-ink-muted">
+                {project.host}
+              </span>
+              <ArrowUpRight
+                aria-hidden="true"
+                className="h-4 w-4 shrink-0 text-ink-subtle transition-[translate,color] duration-300 ease-enter group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-ink"
+              />
+            </span>
+            <span className="shine block aspect-[16/10] overflow-hidden rounded-b-panel bg-page">
+              {/* Pre-sized WebP at two widths; the Pages build has no image optimizer. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`${project.shot.src}-1600.webp`}
+                srcSet={`${project.shot.src}-800.webp 800w, ${project.shot.src}-1600.webp 1600w`}
+                sizes="(min-width: 1024px) 570px, 100vw"
+                width={1600}
+                height={1000}
+                loading="lazy"
+                decoding="async"
+                alt={project.shot.alt}
+                className="h-full w-full object-cover object-top transition-[scale] duration-[1200ms] ease-enter group-hover:scale-[1.025]"
+              />
+            </span>
+          </a>
         </div>
       </div>
+      <figcaption className="mt-5">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+          <h3 className="text-[1.1875rem] font-semibold tracking-[-0.01em] text-ink">
+            {project.name}
+          </h3>
+          {project.status !== "live" && <StatusTag status={project.status} />}
+          <span className="text-sm text-ink-subtle">{project.kind}</span>
+        </div>
+        <p className="mt-2 max-w-reading text-standfirst text-ink-muted">
+          {project.summary}
+        </p>
+        <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1 text-sm">
+          <span className="text-ink-subtle">{project.stack}</span>
+          {project.source && (
+            <OutLink href={project.source} small>
+              Source
+            </OutLink>
+          )}
+        </div>
+      </figcaption>
+    </Reveal>
+  );
+}
 
-      <div className="flex flex-wrap gap-1.5 mt-auto mb-4">
-        {project.tags.map((tag) => (
-          <span
-            key={tag}
-            className="px-2.5 py-1 rounded bg-white/[0.03] border border-border-subtle text-[11px] text-text-subtle font-mono hover:bg-white/[0.06] hover:border-border-muted transition-all duration-300"
-          >
-            {tag}
-          </span>
+/*
+ * Everything, as a dense index rather than more cards: a name, what it is,
+ * what it runs on, and where to find it. The name is the row's link and
+ * stretches over the whole row; the source link sits above that stretch so
+ * both work. The arrow means a site you can open; "Source" means the code.
+ */
+function FullList() {
+  return (
+    <div className="mt-section">
+      <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
+        <Headline
+          text="Everything We've Made"
+          size="md"
+          className="max-w-reading"
+        />
+        <Reveal delay={160}>
+          <p className="text-sm text-ink-subtle">
+            {catalogSize} projects ·{" "}
+            <a
+              href="https://github.com/wyziedevs"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ctl font-semibold text-blue-ink hover:text-ink"
+            >
+              GitHub
+            </a>
+          </p>
+        </Reveal>
+      </div>
+
+      <div className="flex flex-col gap-14">
+        {catalog.map((group) => (
+          <Reveal key={group.group}>
+            <div className="border-b border-line pb-3">
+              <GroupHeading group={group} />
+            </div>
+            <Rows entries={group.entries} flushTop />
+          </Reveal>
         ))}
       </div>
-
-      {(project.github || project.demo || project.docs) && (
-        <div className="flex items-center gap-3 border-t border-white/[0.05] pt-3">
-          {project.github && (
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-sm sm:text-xs py-1 text-text-subtle hover:text-white transition-colors duration-300"
-            >
-              <Github className="w-3.5 h-3.5" />
-              Source Code
-            </a>
-          )}
-          {project.demo && (
-            <a
-              href={project.demo}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-sm sm:text-xs py-1 text-text-subtle hover:text-white transition-colors duration-300"
-            >
-              <ExternalLink className="w-3.5 h-3.5" />
-              Live Demo
-            </a>
-          )}
-          {project.docs && (
-            <a
-              href={project.docs}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-sm sm:text-xs py-1 text-text-subtle hover:text-white transition-colors duration-300"
-            >
-              <ExternalLink className="w-3.5 h-3.5" />
-              Docs
-            </a>
-          )}
-        </div>
-      )}
     </div>
+  );
+}
+
+function GroupHeading({ group }: { group: Group }) {
+  return (
+    <h3 className="text-[1.1875rem] font-semibold tracking-[-0.01em] text-ink">
+      {group.group}
+      <span className="ml-2 text-sm font-normal text-ink-subtle tabular-nums">
+        {group.entries.length}
+      </span>
+    </h3>
+  );
+}
+
+function Rows({ entries, flushTop }: { entries: Entry[]; flushTop?: boolean }) {
+  return (
+    <ul className={`ruled border-b border-line ${flushTop ? "" : "border-t"}`}>
+      {entries.map((entry) => {
+        const target = entry.href ?? entry.source;
+        return (
+          <li
+            key={entry.name}
+            data-tick={target ? "" : undefined}
+            className={`group relative grid grid-cols-[minmax(0,1fr)_auto] gap-x-4 gap-y-1 py-4 sm:grid-cols-12 sm:items-baseline sm:gap-6 ${target ? "row-light" : ""}`}
+          >
+            <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 sm:col-span-3">
+              {target ? (
+                <a
+                  href={target}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ctl text-[1.0625rem] font-semibold text-ink group-hover:text-blue-ink after:absolute after:inset-0 after:content-['']"
+                >
+                  {/* Only the text moves: a moved link would pull the row-wide hit area in with it. */}
+                  <span className="inline-block transition-[translate] duration-300 ease-enter group-hover:translate-x-1">
+                    {entry.name}
+                  </span>
+                </a>
+              ) : (
+                <span className="text-[1.0625rem] font-semibold text-ink">
+                  {entry.name}
+                </span>
+              )}
+              {entry.status !== "live" && <StatusTag status={entry.status} />}
+            </div>
+            <p className="col-start-1 text-[0.9375rem] text-ink-muted sm:col-span-6 sm:col-start-auto">
+              {entry.summary}
+            </p>
+            <p className="col-start-1 text-sm text-ink-subtle sm:col-span-2 sm:col-start-auto">
+              {entry.stack}
+            </p>
+            <div className="col-start-2 row-span-3 row-start-1 flex items-center justify-end gap-3 self-start sm:col-span-1 sm:col-start-auto sm:row-span-1 sm:row-start-auto sm:self-baseline">
+              {entry.source && (
+                <a
+                  href={entry.source}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ctl relative z-10 text-sm text-ink-subtle underline decoration-line-strong underline-offset-4 hover:text-ink hover:decoration-ink-subtle"
+                >
+                  Source
+                </a>
+              )}
+              {/* The arrow's slot is kept even when empty, so every "Source" lines up. */}
+              <span className="flex w-4 shrink-0 justify-end">
+                {entry.href && (
+                  <ArrowUpRight
+                    aria-hidden="true"
+                    className="h-4 w-4 text-ink-subtle transition-[translate,color] duration-300 ease-enter group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-ink"
+                  />
+                )}
+              </span>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+const statusTone: Record<Status, string> = {
+  live: "text-live",
+  beta: "text-blue-ink",
+  sunset: "text-sunset",
+  superseded: "text-ink-subtle",
+};
+
+export function StatusTag({ status }: { status: Status }) {
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 rounded-control border border-line px-1.5 py-0.5 text-overline uppercase ${statusTone[status]}`}
+    >
+      <span
+        aria-hidden="true"
+        className="h-1.5 w-1.5 rounded-full bg-current"
+      />
+      {statusLabel[status]}
+    </span>
+  );
+}
+
+function OutLink({
+  href,
+  children,
+  small,
+}: {
+  href: string;
+  children: ReactNode;
+  small?: boolean;
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`ctl group/out inline-flex items-center gap-1 font-semibold text-blue-ink hover:text-ink ${small ? "text-sm" : "text-[0.9375rem]"}`}
+    >
+      {children}
+      <ArrowUpRight
+        aria-hidden="true"
+        className="h-3.5 w-3.5 transition-[translate] duration-300 ease-enter group-hover/out:translate-x-0.5 group-hover/out:-translate-y-0.5"
+      />
+    </a>
   );
 }
