@@ -18,10 +18,7 @@ export function ProjectsSection() {
   return (
     <section id="work" className="sweep border-t border-line">
       <div className="mx-auto w-full max-w-page px-4 py-section sm:px-6">
-        <Headline
-          text="Things We Built and Still Run"
-          className="mb-14 max-w-reading"
-        />
+        <Headline text="Things We Built" className="mb-14 max-w-reading" />
 
         <SubsFeature />
 
