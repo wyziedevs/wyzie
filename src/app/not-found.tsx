@@ -14,7 +14,7 @@ export default function NotFound() {
   return (
     <>
       <Navigation />
-      <main>
+      <main id="main">
         <section
           data-field
           className="relative isolate flex min-h-[72svh] items-center overflow-hidden"

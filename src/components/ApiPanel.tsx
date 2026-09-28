@@ -85,7 +85,12 @@ export function ApiPanel() {
       </div>
 
       <div className="flex items-start justify-between gap-3 border-b border-line py-2 pr-2 pl-4">
-        <p className="min-w-0 overflow-x-auto py-1 font-mono text-[0.8125rem] leading-relaxed whitespace-nowrap">
+        <p
+          tabIndex={0}
+          role="region"
+          aria-label="Request"
+          className="ctl min-w-0 overflow-x-auto rounded-control py-1 font-mono text-[0.8125rem] leading-relaxed whitespace-nowrap"
+        >
           <span className="font-semibold text-blue-ink">GET</span>{" "}
           <span className="text-ink">{base}</span>
           <span key={lang} className={changed ? "flash text-ink" : "text-ink"}>
@@ -125,7 +130,12 @@ export function ApiPanel() {
         </button>
       </div>
 
-      <pre className="overflow-x-auto px-4 py-4 font-mono text-[0.8125rem] leading-relaxed">
+      <pre
+        tabIndex={0}
+        role="region"
+        aria-label="Response"
+        className="ctl overflow-x-auto px-4 py-4 font-mono text-[0.8125rem] leading-relaxed"
+      >
         {/* A new language streams in sooner than the first response did. */}
         <code
           key={lang}

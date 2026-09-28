@@ -23,16 +23,14 @@ export function Hero() {
               instant
               as="h1"
               size="xl"
-              text="Business Technology, Built and Kept Working"
+              text="Technology Built for Business."
               delay={420}
             />
 
             <Reveal instant delay={900} className="mt-7">
               <p className="max-w-reading text-lead text-balance text-ink-muted">
                 Wyzie builds, sets up and runs what a business depends on:
-                software and websites, phones, networks, the cloud and the
-                support behind them. You work directly with the people doing it,
-                the same team that runs Wyzie Subs, Kilter and PitMaster.
+                software, websites, phones, networks, and the cloud.
               </p>
             </Reveal>
 

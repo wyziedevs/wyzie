@@ -4,7 +4,7 @@ import { Headline, Reveal } from "./ui";
  * What we do, as ruled rows rather than a grid of icon cards. A row ends with
  * where to see it done, when there is somewhere public to see it.
  */
-const services = [
+export const services = [
   {
     title: "Web Apps and Products",
     body: "Customer-facing apps, dashboards and internal tools, designed and built end to end. You get the code, the deployment and the documentation, and you own all three.",
@@ -16,7 +16,7 @@ const services = [
   {
     title: "Websites and Online Stores",
     body: "Fast sites your customers can find, with booking, payments or a full store where you need one. The domain, the hosting and your business email come set up with it.",
-    seen: [],
+    seen: [{ label: "Wyzie Store", href: "https://store.wyzie.io" }],
   },
   {
     title: "Phones and VoIP",
@@ -24,8 +24,13 @@ const services = [
     seen: [],
   },
   {
-    title: "Networks, Wi-Fi and Security",
-    body: "Office networks and Wi-Fi that reach every desk, firewalls, VPNs for people working away from it, and backups that are tested, so a lost laptop or a bad click stays a small problem.",
+    title: "Networks and Wi-Fi",
+    body: "Office networks and Wi-Fi that reach every desk, firewalls at the edge, and backups that are tested, so a lost laptop or a bad click stays a small problem.",
+    seen: [],
+  },
+  {
+    title: "Security and Working From Home",
+    body: "Work computers locked down, with encrypted disks, updates that stay on and a laptop that can be wiped if it goes missing. Two-step sign-in and a password manager for the team, home setups as safe as the office, and staff who can spot a phishing email. Sized to your team, with no enterprise contract.",
     seen: [],
   },
   {
@@ -111,8 +116,7 @@ export function ServicesSection() {
 
         <Reveal className="mt-10 max-w-reading">
           <p className="text-standfirst text-ink-muted">
-            Something else? If your business runs on it, ask. If someone else
-            would do it better, we will say so and point you to them.{" "}
+            Something else? If your business runs on it, ask.{" "}
             <a
               href="/contact"
               className="ctl font-semibold text-blue-ink underline decoration-transparent underline-offset-4 hover:text-ink hover:decoration-ink-subtle"

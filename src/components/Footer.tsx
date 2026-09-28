@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 const columns = [
   {
     heading: "Work",
@@ -25,7 +23,16 @@ const columns = [
     heading: "Company",
     links: [
       { label: "About", href: "/about" },
+      { label: "Our Mission", href: "/mission" },
+      { label: "Our Values", href: "/values" },
+      { label: "How We Work", href: "/how-we-work" },
+      { label: "Open Source", href: "/open-source" },
       { label: "Contact", href: "/contact" },
+    ],
+  },
+  {
+    heading: "Elsewhere",
+    links: [
       { label: "GitHub", href: "https://github.com/wyziedevs" },
       { label: "Discord", href: "https://discord.gg/2mxraHBVtB" },
     ],
@@ -36,13 +43,15 @@ export function Footer() {
   return (
     <footer className="sweep border-t border-line">
       <div className="mx-auto w-full max-w-page px-4 pt-16 pb-10 sm:px-6">
-        <div className="grid gap-10 sm:grid-cols-3 lg:grid-cols-12 lg:gap-8">
-          <div className="sm:col-span-3 lg:col-span-6">
-            <Image
+        <div className="grid grid-cols-2 gap-10 sm:grid-cols-4 lg:grid-cols-12 lg:gap-8">
+          <div className="col-span-2 sm:col-span-4 lg:col-span-4">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src="/logo-header.png"
               alt="Wyzie"
               width={177}
               height={65}
+              loading="lazy"
               className="h-6 w-auto"
             />
             <p className="mt-4 max-w-[22rem] text-sm text-ink-subtle">

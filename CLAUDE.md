@@ -23,6 +23,12 @@ heading, numbered 01/02 rows.
   tailwind-merge config in `src/lib/utils.ts`, or `cn()` drops it.
 - **Components**: `src/components/ui.tsx` (`Reveal`, `Headline`,
   `ButtonLink`). Lists are ruled rows (`.ruled`), not cards.
+- **Company pages** (`/mission`, `/values`, `/how-we-work`, `/open-source`)
+  are built from `src/components/Company.tsx`
+  (`CompanyPage`, `RuledSection`, `MorePages`); a new one goes in
+  `companyPages` there, the footer and `sitemap.ts`. About is their hub.
+  Their copy follows PRODUCT.md: nothing invented (no dates, headcounts or
+  clients).
 - **Motion**: CSS entrances in globals.css, triggered by `MotionObserver`
   (`.reveal`, and `.sweep` for a section rule that catches the light once).
   `instant` on `Reveal`/`Headline` for anything above the fold. Everything is
@@ -49,8 +55,8 @@ heading, numbered 01/02 rows.
   so a move restyles just the element that uses them; a layer further down
   that reads one takes it with `--x: inherit`. Keep it that way: an
   inherited variable written every frame restyles the whole section. The
-  Live Now panel's glow follows the lamp (`--lamp` on `.stage-3d`): dim
-  while it is off, full once the tube has caught. Behind the
+  Live Now panel's glow follows the lamp (`--lamp` on `.stage-3d`): none
+  while it is off, rising evenly round its edges as the tube catches. Behind the
   hero (and in the contact band) is `.light-wall`, a dot panel seen only
   where the beam or the pointer falls. The Live Now panel is 3D
   (`stage-3d`/`float-3d`/`tilt-3d`/`panel-3d` in globals.css): it floats
@@ -85,6 +91,13 @@ view())`, motion on): the `.scroll-beam` under the header fills with the
   (`noValidate`, `aria-invalid`, `error` sound, `.shake`), never with the
   browser's bubble. `main` clips sideways overflow, since blooms reach past
   panels.
+- **SEO**: a page's metadata comes from `pageMetadata()` in
+  `src/lib/seo.tsx` (title, description, canonical, and the link preview with
+  `public/og.png`); a page's own `openGraph` replaces the layout's, so never
+  set one by hand. Structured data goes through `JsonLd`: the organization and
+  its services in the layout, `FAQPage` in the FAQ, `breadcrumbs()` on every
+  other page. A new page also goes in `sitemap.ts`. Every `main` is
+  `id="main"`, the skip link's target.
 - **Projects**: every project on the site lives in `src/lib/projects.ts`.
   Screenshots are pre-sized WebP in `public/work/` (`-800` and `-1600`). Only
   figures that trace to a repo or a live page.

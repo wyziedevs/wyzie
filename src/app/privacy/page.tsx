@@ -1,20 +1,22 @@
+import { JsonLd, breadcrumbs, pageMetadata } from "@/lib/seo";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import type { Metadata } from "next";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Privacy Policy",
-  description: "How Wyzie collects, uses, and protects your information.",
-  alternates: { canonical: "https://wyzie.io/privacy" },
-};
+  description:
+    "How Wyzie collects, uses and protects your information on wyzie.io and in our services, and the choices you have about it.",
+  path: "/privacy",
+});
 
 const lastUpdated = "March 11, 2026";
 
 export default function PrivacyPage() {
   return (
     <>
+      <JsonLd data={breadcrumbs("Privacy Policy", "/privacy")} />
       <Navigation />
-      <main>
+      <main id="main">
         <div className="mx-auto w-full max-w-page px-4 pt-section-tight pb-section sm:px-6">
           <div className="mb-12 max-w-3xl">
             <p className="text-overline uppercase text-ink-subtle mb-4">

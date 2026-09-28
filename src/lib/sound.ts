@@ -139,7 +139,7 @@ function tone(
 }
 
 /* What each sound feels like under a finger (haptics.ts). A hover or a
-   result arriving is heard only. */
+   result arriving is heard only; the mute switch stills both. */
 const FELT: Partial<Record<SoundName, HapticName>> = {
   tap: "tap",
   open: "tap",
@@ -154,10 +154,9 @@ const FELT: Partial<Record<SoundName, HapticName>> = {
 
 /** `pitch` scales a voice's tone; 1 is as written. */
 export function play(name: SoundName, pitch = 1) {
-  if (typeof window === "undefined") return;
+  if (typeof window === "undefined" || !readEnabled()) return;
   const felt = FELT[name];
   if (felt) haptic(felt);
-  if (!readEnabled()) return;
   if (PASSIVE.has(name) && ctx?.state !== "running") return;
   const c = audio();
   if (!c) return;

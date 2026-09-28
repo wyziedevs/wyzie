@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Open_Sans } from "next/font/google";
 import { MotionObserver } from "@/components/MotionObserver";
 import { Tactile } from "@/components/Tactile";
+import { services } from "@/components/ServicesSection";
+import { JsonLd, shareImage, siteUrl } from "@/lib/seo";
 import "./globals.css";
 
 const openSans = Open_Sans({
@@ -10,8 +12,10 @@ const openSans = Open_Sans({
   display: "swap",
 });
 
+const title = "Wyzie: Software, Websites and IT, Built and Kept Working";
+
 const description =
-  "Wyzie builds, sets up and runs business technology: custom software, websites, VoIP phone systems, networks, cloud and IT support, from the team that builds and runs Wyzie Subs, Kilter and pitmaster.cc.";
+  "Wyzie builds, sets up and runs business technology: custom software, websites, VoIP phone systems, networks, security, cloud and IT support, from the team that builds and runs Wyzie Subs, Kilter and pitmaster.cc.";
 
 export const metadata: Metadata = {
   icons: {
@@ -19,7 +23,7 @@ export const metadata: Metadata = {
     apple: "/favicon.png",
   },
   title: {
-    default: "Wyzie: Business Technology, Built and Kept Working",
+    default: title,
     template: "%s | Wyzie",
   },
   description,
@@ -32,6 +36,9 @@ export const metadata: Metadata = {
     "VoIP phone systems",
     "business phone systems",
     "network setup",
+    "IT security",
+    "remote work setup",
+    "endpoint security",
     "IT support",
     "managed IT services",
     "Microsoft 365",
@@ -45,31 +52,24 @@ export const metadata: Metadata = {
     "Wyzie Subs",
     "Kilter",
   ],
-  metadataBase: new URL("https://wyzie.io"),
+  metadataBase: new URL(siteUrl),
   alternates: {
-    canonical: "https://wyzie.io",
+    canonical: siteUrl,
   },
   openGraph: {
-    title: "Wyzie: Business Technology, Built and Kept Working",
+    title,
     description,
-    url: "https://wyzie.io",
+    url: siteUrl,
     siteName: "Wyzie",
     type: "website",
     locale: "en_US",
-    images: [
-      {
-        url: "/header.png",
-        width: 350,
-        height: 150,
-        alt: "Wyzie",
-      },
-    ],
+    images: [shareImage],
   },
   twitter: {
-    card: "summary",
-    title: "Wyzie: Business Technology, Built and Kept Working",
+    card: "summary_large_image",
+    title,
     description,
-    images: ["/header.png"],
+    images: [shareImage],
   },
   robots: {
     index: true,
@@ -105,6 +105,19 @@ const jsonLd = {
       },
       sameAs: ["https://github.com/wyziedevs", "https://discord.gg/2mxraHBVtB"],
       description,
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Services",
+        itemListElement: services.map((service) => ({
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: service.title,
+            description: service.body,
+            provider: { "@id": "https://wyzie.io/#organization" },
+          },
+        })),
+      },
     },
     {
       "@type": "WebSite",
@@ -140,10 +153,7 @@ export default function RootLayout({
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: motionScript }} />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <JsonLd data={jsonLd} />
       </head>
       <body>
         <MotionObserver />

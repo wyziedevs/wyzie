@@ -1,4 +1,5 @@
 import { Plus } from "lucide-react";
+import { JsonLd } from "@/lib/seo";
 import { Headline, Reveal } from "./ui";
 
 const faqs = [
@@ -42,6 +43,17 @@ const faqs = [
 export function FAQSection() {
   return (
     <section className="sweep border-t border-line">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqs.map((faq) => ({
+            "@type": "Question",
+            name: faq.question,
+            acceptedAnswer: { "@type": "Answer", text: faq.answer },
+          })),
+        }}
+      />
       <div className="mx-auto grid w-full max-w-page gap-10 px-4 py-section sm:px-6 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-4">
           <Headline text="Before You Write" />

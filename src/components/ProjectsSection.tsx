@@ -42,7 +42,7 @@ function SubsFeature() {
     <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-8">
       <Reveal className="lg:col-span-5">
         <h3 className="flex flex-wrap items-baseline gap-x-3 text-display-md text-ink">
-          {subs.name}
+          {subs.name}{" "}
           <span className="text-sm font-normal tracking-normal text-ink-subtle">
             {subs.kind}
           </span>
@@ -102,7 +102,7 @@ function ProjectShot({ project, delay }: { project: Showcase; delay: number }) {
               <img
                 src={`${project.shot.src}-1600.webp`}
                 srcSet={`${project.shot.src}-800.webp 800w, ${project.shot.src}-1600.webp 1600w`}
-                sizes="(min-width: 1024px) 570px, 100vw"
+                sizes="(min-width: 1024px) 570px, calc(100vw - 2.5rem)"
                 width={1600}
                 height={1000}
                 loading="lazy"
@@ -182,18 +182,24 @@ function FullList() {
   );
 }
 
-function GroupHeading({ group }: { group: Group }) {
+export function GroupHeading({ group }: { group: Group }) {
   return (
     <h3 className="text-[1.1875rem] font-semibold tracking-[-0.01em] text-ink">
-      {group.group}
-      <span className="ml-2 text-sm font-normal text-ink-subtle tabular-nums">
+      {group.group}{" "}
+      <span className="ml-1 text-sm font-normal text-ink-subtle tabular-nums">
         {group.entries.length}
       </span>
     </h3>
   );
 }
 
-function Rows({ entries, flushTop }: { entries: Entry[]; flushTop?: boolean }) {
+export function Rows({
+  entries,
+  flushTop,
+}: {
+  entries: Entry[];
+  flushTop?: boolean;
+}) {
   return (
     <ul className={`ruled border-b border-line ${flushTop ? "" : "border-t"}`}>
       {entries.map((entry) => {

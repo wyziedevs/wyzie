@@ -1517,20 +1517,33 @@ textarea.field {
 :root[data-motion="on"] .panel-plate {
   display: block;
   position: absolute;
-  inset: 1rem 0.25rem -1.75rem;
+  /* Level all round (a touch high, since the panel leans back and shows
+     more of what is under it), so the light rises at every edge at once. */
+  inset: -0.5rem -0.25rem 0.5rem;
   border-radius: inherit;
   pointer-events: none;
   translate: 0 0 -48px;
   background: linear-gradient(
-    160deg,
-    oklch(0.7 0.2 262 / 0.95),
-    oklch(0.5 0.18 264 / 0.5) 55%,
-    oklch(0.64 0.21 263 / 0.85)
+    180deg,
+    oklch(0.72 0.2 262 / 0.95),
+    oklch(0.58 0.2 263 / 0.72) 50%,
+    oklch(0.62 0.21 263 / 0.8)
   );
   filter: blur(38px);
-  /* Barely there in the dark; with the lamp on, bright and a little wider. */
-  opacity: calc(0.18 + var(--lamp) * 0.82);
-  scale: calc(0.88 + var(--lamp) * 0.18);
+  /* None in the dark: it comes in as the lamp catches, from the panel's own
+     edges outward, and goes as it goes out. */
+  opacity: calc(var(--lamp) * 0.95);
+  scale: calc(0.94 + var(--lamp) * 0.1);
+  /* On arrival it waits for the panel to land, then spreads out from under
+     every edge at once. (No end keyframe: it lands on whatever the lamp
+     says.) */
+  animation: plate-in 1500ms var(--ease-standard) 1350ms backwards;
+}
+@keyframes plate-in {
+  from {
+    opacity: 0;
+    scale: 0.9;
+  }
 }
 
 /* ------------------------------------------------------------------------ */

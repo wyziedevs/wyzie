@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, type CSSProperties } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { SoundToggle } from "./SoundToggle";
@@ -26,6 +25,13 @@ export function Navigation() {
 
   return (
     <header className="site-header sticky top-0 z-50 border-b border-line bg-page">
+      <a
+        href="#main"
+        data-sound="none"
+        className="sr-only rounded-control bg-blue px-4 py-2 text-sm font-semibold text-on-blue focus-visible:not-sr-only focus-visible:absolute focus-visible:top-2 focus-visible:left-4 focus-visible:z-10"
+      >
+        Skip to content
+      </a>
       <nav
         aria-label="Main"
         className="mx-auto flex h-14 w-full max-w-page items-center justify-between px-4 sm:px-6"
@@ -35,12 +41,13 @@ export function Navigation() {
           className="ctl -mx-1 flex items-center rounded-control px-1 py-1"
         >
           <span className="logo-glint">
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src="/logo-header.png"
               alt="Wyzie"
               width={177}
               height={65}
-              priority
+              fetchPriority="high"
               className="h-6 w-auto"
             />
           </span>

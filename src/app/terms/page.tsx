@@ -1,20 +1,22 @@
+import { JsonLd, breadcrumbs, pageMetadata } from "@/lib/seo";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import type { Metadata } from "next";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Terms of Service",
-  description: "Terms governing use of wyzie.io and Wyzie consulting services.",
-  alternates: { canonical: "https://wyzie.io/terms" },
-};
+  description:
+    "The terms for using wyzie.io and for Wyzie's software, website, phone, network and IT consulting services.",
+  path: "/terms",
+});
 
 const lastUpdated = "March 11, 2026";
 
 export default function TermsPage() {
   return (
     <>
+      <JsonLd data={breadcrumbs("Terms of Service", "/terms")} />
       <Navigation />
-      <main>
+      <main id="main">
         <div className="mx-auto w-full max-w-page px-4 pt-section-tight pb-section sm:px-6">
           <div className="mb-12 max-w-3xl">
             <p className="text-overline uppercase text-ink-subtle mb-4">
