@@ -71,6 +71,14 @@ view())`, motion on): the `.scroll-beam` under the header fills with the
   delegation; `data-sound="<name>|none"` overrides, `data-tick` makes a row
   or button tick on hover. Hover and result sounds (`tick`, `blip`) never
   wake the audio. `SoundToggle` in the header mutes it (localStorage).
+- **Phones**: `play()` also buzzes (`src/lib/haptics.ts`: `vibrate` on
+  Android, a hidden switch flipped on iOS), and the cord clicks as a pull
+  passes the switch point. A finger stands in for the pointer while it is
+  down (a `.spot` lights round it, a `.row-light` row gets
+  `data-pressed`). `src/lib/tilt.ts` reads the phone's turn (Android only;
+  iOS would prompt): the hero field turns with it and the cord hangs toward
+  the real floor. No `:hover` rule outside `@media (hover: hover)`, or it
+  sticks after a tap. The open menu dims the page; a tap there shuts it.
 - **Browser chrome**: one focus ring (`:focus-visible` in `@layer base`, so
   utilities can override it); text fields use `.field` (their own lit
   focus, autofill and resize handled); the contact form validates inline

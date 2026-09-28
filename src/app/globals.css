@@ -354,10 +354,15 @@ textarea.field {
   transform-origin: right;
   transition: scale 380ms var(--ease-enter);
 }
-.draw-line:hover::after,
 .draw-line[aria-current="page"]::after {
   scale: 1 1;
   transform-origin: left;
+}
+@media (hover: hover) {
+  .draw-line:hover::after {
+    scale: 1 1;
+    transform-origin: left;
+  }
 }
 
 /* A hairline between rows of a list, and none under the last one. */
@@ -569,6 +574,11 @@ textarea.field {
   .row-light:hover::before {
     opacity: 1;
   }
+}
+/* On a phone, the row a finger is on warms at once, and cools as slowly. */
+.row-light[data-pressed]::before {
+  opacity: 1;
+  transition-duration: 120ms;
 }
 
 /*
@@ -923,6 +933,13 @@ textarea.field {
 }
 .lamp-cord:active {
   cursor: grabbing;
+}
+/* A finger needs more to take hold of than a pointer does. */
+@media (pointer: coarse) {
+  .lamp-cord {
+    width: 2.75rem;
+    margin-left: -1.375rem;
+  }
 }
 .lamp-cord-string {
   position: absolute;
@@ -1793,6 +1810,28 @@ svg[data-on] .mute {
 :root[data-motion="on"] .mobile-menu[data-open] :is(li, ul + div) {
   animation: rise-small 460ms var(--ease-enter) both;
   animation-delay: calc(60ms + var(--i, 0) * 45ms);
+}
+
+/* Under the open menu, the page dims; a tap on it shuts the menu. */
+.menu-scrim {
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  z-index: -1;
+  height: 100dvh;
+  background: oklch(0.1 0.02 264 / 0.62);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 360ms var(--ease-standard),
+    visibility 0s 360ms;
+}
+.menu-scrim[data-open] {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 260ms var(--ease-standard),
+    visibility 0s;
 }
 
 /* A value that has just changed catches the light, then lets it go. */

@@ -46,7 +46,7 @@ export function Footer() {
               className="h-6 w-auto"
             />
             <p className="mt-4 max-w-[22rem] text-sm text-ink-subtle">
-              Business technology, built and kept running.
+              Business technology, built and kept working.
             </p>
             <a
               href="mailto:hello@wyzie.io"

@@ -8,6 +8,8 @@
  * each time so the hundredth press does not sound like a recording.
  */
 
+import { haptic, type HapticName } from "./haptics";
+
 export type SoundName =
   | "tap"
   | "tick"
@@ -136,9 +138,26 @@ function tone(
   osc.stop(t + dur + 0.02);
 }
 
+/* What each sound feels like under a finger (haptics.ts). A hover or a
+   result arriving is heard only. */
+const FELT: Partial<Record<SoundName, HapticName>> = {
+  tap: "tap",
+  open: "tap",
+  close: "tap",
+  switch: "switch",
+  "lamp-on": "switch",
+  "lamp-off": "switch",
+  tug: "soft",
+  error: "error",
+  success: "success",
+};
+
 /** `pitch` scales a voice's tone; 1 is as written. */
 export function play(name: SoundName, pitch = 1) {
-  if (typeof window === "undefined" || !readEnabled()) return;
+  if (typeof window === "undefined") return;
+  const felt = FELT[name];
+  if (felt) haptic(felt);
+  if (!readEnabled()) return;
   if (PASSIVE.has(name) && ctx?.state !== "running") return;
   const c = audio();
   if (!c) return;

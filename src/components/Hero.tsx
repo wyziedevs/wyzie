@@ -23,7 +23,7 @@ export function Hero() {
               instant
               as="h1"
               size="xl"
-              text="Business Technology, Built and Kept Running"
+              text="Business Technology, Built and Kept Working"
               delay={420}
             />
 

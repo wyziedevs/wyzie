@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useId, useRef } from "react";
+import { haptic } from "@/lib/haptics";
 import { play } from "@/lib/sound";
+import { onTilt } from "@/lib/tilt";
 import { sparks } from "@/lib/sparks";
 
 type Mote = {
@@ -40,6 +42,8 @@ const FIRST_PUFF = 0.4;
 const LINKS = 16;
 /* Per 60th of a second: gravity, the air's drag, the fastest a link moves. */
 const GRAVITY = 0.5;
+/* How far past its length the cord must be pulled to switch the lamp. */
+const TOGGLE_PULL = 14;
 const DRAG = 0.991;
 const MAX_SPEED = 4.5;
 /* The knob outweighs a link of string several times over. */
@@ -354,6 +358,14 @@ export function Lightbar({ broken = false }: { broken?: boolean }) {
     let cordRaf = 0;
     let cordLast = 0;
     let calm = 0;
+    // Pulled far enough to switch on letting go: the pull clicks as it
+    // passes that point, both ways.
+    let armed = false;
+    // Which way is down. On a phone it is the real floor, so tipping the
+    // phone swings the cord.
+    let down = 0;
+    let gravX = 0;
+    let gravY = GRAVITY;
 
     const paintCord = () => {
       // A smooth curve through the links: each bend is rounded off between
@@ -411,8 +423,8 @@ export function Lightbar({ broken = false }: { broken?: boolean }) {
       }
       for (let i = 1; i <= LINKS; i++) {
         const l = links[i];
-        let vx = (l.x - l.px) * DRAG;
-        let vy = (l.y - l.py) * DRAG + GRAVITY;
+        let vx = (l.x - l.px) * DRAG + gravX;
+        let vy = (l.y - l.py) * DRAG + gravY;
         const v = Math.hypot(vx, vy);
         if (v > MAX_SPEED) {
           vx *= MAX_SPEED / v;
@@ -458,6 +470,11 @@ export function Lightbar({ broken = false }: { broken?: boolean }) {
       cordLast = now;
       for (let i = 0; i < steps; i++) tick();
       paintCord();
+      if (dragging && pull > TOGGLE_PULL !== armed) {
+        armed = !armed;
+        play("tick", armed ? 1.3 : 0.9);
+        haptic("detent");
+      }
       let speed = Math.abs(pullV) + Math.abs(pull) * 0.2;
       for (const l of links) {
         speed = Math.max(speed, Math.abs(l.x - l.px), Math.abs(l.y - l.py));
@@ -495,6 +512,7 @@ export function Lightbar({ broken = false }: { broken?: boolean }) {
       measureCord();
       dragging = true;
       moved = false;
+      armed = false;
       startX = e.clientX;
       startY = e.clientY;
       // Held wherever it was taken: the knob, or the nearest bit of string.
@@ -577,7 +595,7 @@ export function Lightbar({ broken = false }: { broken?: boolean }) {
     const onCordUp = () => {
       if (!dragging) return;
       dragging = false;
-      if (!moved || pull > 14) {
+      if (!moved || pull > TOGGLE_PULL) {
         toggle();
         // A click with no drag still tugs the cord.
         if (!moved) pullV += 6;
@@ -591,6 +609,15 @@ export function Lightbar({ broken = false }: { broken?: boolean }) {
       measureCord();
       wake();
     };
+
+    const offTilt = onTilt((t) => {
+      const next = down + (t.down - down) * 0.2;
+      if (Math.abs(next - down) < 0.002) return;
+      down = next;
+      gravX = GRAVITY * Math.sin(down);
+      gravY = GRAVITY * Math.cos(down);
+      wake();
+    });
 
     cord.addEventListener("pointerdown", onCordDown);
     cord.addEventListener("pointermove", onCordMove);
@@ -607,6 +634,7 @@ export function Lightbar({ broken = false }: { broken?: boolean }) {
       clearTimeout(blinkTimer);
       sparkTimers.forEach(clearTimeout);
       io.disconnect();
+      offTilt();
       cord.removeEventListener("pointerdown", onCordDown);
       cord.removeEventListener("pointermove", onCordMove);
       cord.removeEventListener("pointerup", onCordUp);

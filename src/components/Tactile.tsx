@@ -2,7 +2,9 @@
 
 import { useEffect, useRef } from "react";
 import { play, type SoundName } from "@/lib/sound";
+import { isHapticClick } from "@/lib/haptics";
 import { sparks, sparksFrom } from "@/lib/sparks";
+import { onTilt } from "@/lib/tilt";
 
 const PRESSABLE =
   'a[href], button, summary, [role="button"], input[type="submit"]';
@@ -57,6 +59,11 @@ const clamp = (n: number, lo = -1, hi = 1) => Math.min(hi, Math.max(lo, n));
  * measured from its own center. CSS decides what each of those moves; all
  * of it eases, none of it runs under reduced motion. Buttons stay put.
  *
+ * On a phone there is no pointer to follow, so the finger stands in for it
+ * while it is down: a panel lights round the press, a row warms under it,
+ * and a panel in a field tips toward it. Between presses the field turns as
+ * the phone does instead (tilt.ts).
+ *
  * Every number is written only when it changes, and a panel's light only
  * while it is lit: each write restyles its element (the properties are
  * registered as not inherited in globals.css, so only that element).
@@ -79,7 +86,7 @@ export function Tactile() {
     }
 
     function onPointerDown(e: PointerEvent) {
-      if (e.button !== 0) return;
+      if (e.button !== 0 || isHapticClick(e.target)) return;
       const el = (e.target as Element).closest(`[data-sound], ${PRESSABLE}`);
       const name = el && soundFor(el);
       if (name) play(name);
@@ -100,10 +107,13 @@ export function Tactile() {
 
     document.addEventListener("pointerdown", onPointerDown, { passive: true });
     document.addEventListener("keydown", onKeyDown);
+    // iOS only shows `:active` (the press) once the page listens for touch.
+    const noop = () => {};
+    document.addEventListener("touchstart", noop, { passive: true });
 
     let cleanupPointer = () => {};
-    if (fine) {
-      const glow = glowRef.current;
+    {
+      const glow = fine ? glowRef.current : null;
       const follows = new Map<HTMLElement, Follow>();
       const flares = new Map<HTMLElement, Flare>();
       let x = -1000;
@@ -115,6 +125,11 @@ export function Tactile() {
       let raf = 0;
       let seen = false;
       let dirty = false;
+      // Any panel still holding light, so a phone can skip them when none is.
+      let lighting = false;
+      // The phone's turn, between presses (null until it has one).
+      let tilt: { x: number; y: number } | null = null;
+      let pressed: HTMLElement | null = null;
 
       const aim = (
         el: HTMLElement,
@@ -166,7 +181,9 @@ export function Tactile() {
           put(lit, "--mx", `${(x - r.left).toFixed(1)}px`);
         }
 
-        for (const el of document.querySelectorAll<HTMLElement>(".spot")) {
+        for (const el of fine || seen || lighting
+          ? document.querySelectorAll<HTMLElement>(".spot")
+          : []) {
           const r = el.getBoundingClientRect();
           if (r.bottom < -SPOT_REACH || r.top > innerHeight + SPOT_REACH) {
             continue;
@@ -222,6 +239,16 @@ export function Tactile() {
           const hw = r.width / 2;
           const hh = r.height / 2;
           const tilts = [...field.querySelectorAll<HTMLElement>(".tilt")];
+          // No finger on it: a phone's own turn, while the field is in view.
+          const turned =
+            !inside && tilt && r.bottom > 0 && r.top < innerHeight
+              ? tilt
+              : null;
+          if (turned) {
+            aim(field, "field", turned.x, turned.y, 1).also = tilts;
+            for (const el of tilts) aim(el, "tilt", turned.x, turned.y);
+            continue;
+          }
           aim(
             field,
             "field",
@@ -246,6 +273,7 @@ export function Tactile() {
         raf = 0;
         if (dirty) measure();
         let moving = false;
+        lighting = false;
 
         for (const [el, f] of flares) {
           if (!el.isConnected) {
@@ -267,6 +295,7 @@ export function Tactile() {
             }
           }
           if (!settled) moving = true;
+          if (!(dark(f.now) && dark(f.to))) lighting = true;
           // A dark panel's light is left alone once it has gone out, and
           // painted again the moment it lights.
           if (changed) {
@@ -352,13 +381,63 @@ export function Tactile() {
         schedule();
       };
 
-      document.addEventListener("pointermove", onMove, { passive: true });
-      document.documentElement.addEventListener("pointerleave", onLeave);
+      // A finger: lit while it is down, gone the moment it lifts or the
+      // page takes it for a scroll.
+      const onTouchDown = (e: PointerEvent) => {
+        if (e.pointerType === "mouse" || isHapticClick(e.target)) return;
+        x = e.clientX;
+        y = e.clientY;
+        target = e.target as Element;
+        seen = true;
+        pressed?.removeAttribute("data-pressed");
+        pressed = target.closest<HTMLElement>(".row-light");
+        pressed?.setAttribute("data-pressed", "");
+        schedule();
+      };
+      const onTouchMove = (e: PointerEvent) => {
+        if (e.pointerType === "mouse" || !seen) return;
+        x = e.clientX;
+        y = e.clientY;
+        schedule();
+      };
+      const onTouchUp = (e: PointerEvent) => {
+        if (e.pointerType === "mouse" || !seen) return;
+        seen = false;
+        pressed?.removeAttribute("data-pressed");
+        pressed = null;
+        schedule();
+      };
+
+      const offTilt = onTilt((t) => {
+        tilt = t;
+        schedule();
+      });
+
+      if (fine) {
+        document.addEventListener("pointermove", onMove, { passive: true });
+        document.documentElement.addEventListener("pointerleave", onLeave);
+      } else {
+        document.addEventListener("pointerdown", onTouchDown, {
+          passive: true,
+        });
+        document.addEventListener("pointermove", onTouchMove, {
+          passive: true,
+        });
+        document.addEventListener("pointerup", onTouchUp, { passive: true });
+        document.addEventListener("pointercancel", onTouchUp, {
+          passive: true,
+        });
+      }
       addEventListener("scroll", schedule, { passive: true });
       cleanupPointer = () => {
         document.removeEventListener("pointermove", onMove);
         document.documentElement.removeEventListener("pointerleave", onLeave);
+        document.removeEventListener("pointerdown", onTouchDown);
+        document.removeEventListener("pointermove", onTouchMove);
+        document.removeEventListener("pointerup", onTouchUp);
+        document.removeEventListener("pointercancel", onTouchUp);
         removeEventListener("scroll", schedule);
+        offTilt();
         cancelAnimationFrame(raf);
       };
     }
@@ -366,6 +445,7 @@ export function Tactile() {
     return () => {
       document.removeEventListener("pointerdown", onPointerDown);
       document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("touchstart", noop);
       cleanupPointer();
     };
   }, []);

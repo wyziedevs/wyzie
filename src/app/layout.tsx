@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     apple: "/favicon.png",
   },
   title: {
-    default: "Wyzie: Business Technology, Built and Kept Running",
+    default: "Wyzie: Business Technology, Built and Kept Working",
     template: "%s | Wyzie",
   },
   description,
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     canonical: "https://wyzie.io",
   },
   openGraph: {
-    title: "Wyzie: Business Technology, Built and Kept Running",
+    title: "Wyzie: Business Technology, Built and Kept Working",
     description,
     url: "https://wyzie.io",
     siteName: "Wyzie",
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
-    title: "Wyzie: Business Technology, Built and Kept Running",
+    title: "Wyzie: Business Technology, Built and Kept Working",
     description,
     images: ["/header.png"],
   },

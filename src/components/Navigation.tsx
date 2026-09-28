@@ -88,6 +88,14 @@ export function Navigation() {
         </div>
       </nav>
 
+      <div
+        aria-hidden="true"
+        data-open={open ? "" : undefined}
+        data-sound="close"
+        onClick={() => setOpen(false)}
+        className="menu-scrim md:hidden"
+      />
+
       {/* Drops from under the header and folds back up into it; while shut
           it is inert, so neither focus nor a screen reader finds it. */}
       <div
