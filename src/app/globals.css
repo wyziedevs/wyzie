@@ -1451,6 +1451,14 @@ textarea.field {
 .panel-3d,
 .panel-3d > .panel-rows {
   transform-style: preserve-3d;
+  /* Leaning back, the lower rows sink behind these wrappers' own planes,
+     and a wrapper would take their clicks; only the rows and the header
+     answer the pointer. */
+  pointer-events: none;
+}
+.panel-3d > .panel-head,
+.panel-3d > .panel-rows > li {
+  pointer-events: auto;
 }
 .tilt-3d {
   transform: translate3d(
