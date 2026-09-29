@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef } from "react";
 import { haptic } from "@/lib/haptics";
 import { play } from "@/lib/sound";
-import { onTilt } from "@/lib/tilt";
+import { askTilt, onJolt, onTilt } from "@/lib/tilt";
 import { sparks } from "@/lib/sparks";
 
 type Mote = {
@@ -13,7 +13,9 @@ type Mote = {
   y: number;
   vx: number;
   vy: number;
+  drift: number;
   fall: number;
+  depth: number;
   r: number;
   bright: number;
   age: number;
@@ -38,6 +40,11 @@ const EMERGE = 50;
 /* Of all the dust, the share the tube throws off as it first strikes. */
 const FIRST_PUFF = 0.4;
 
+/* On a phone: how far the nearest dust shifts as the phone turns, so the
+   air reads as deep, and how hard a shake knocks the tube. */
+const PARALLAX = 28;
+const KNOCK = 13;
+
 /* The cord is a string of links, each a point that swings free. */
 const LINKS = 16;
 /* Per 60th of a second: gravity, the air's drag, the fastest a link moves. */
@@ -60,7 +67,10 @@ type Link = { x: number; y: number; px: number; py: number };
  * the tube: a puff as it first strikes, then one at a time as others fall out
  * of the hero, so none appears from nowhere. Switched off and on again, the
  * dust already in the air stays where it was. The dust is the air's, not the
- * pointer's: nothing the visitor does pushes it around. It animates
+ * pointer's: nothing the pointer does pushes it around. On a phone it is the
+ * room's: it falls toward the real floor, the near motes shift against the
+ * far ones as the phone turns, shaking stirs it, and a hard knock makes the
+ * tube catch and shakes a little more loose. It animates
  * only while the lamp is on screen and the tab is visible; under reduced
  * motion it is still. A pull cord hangs off the tube, and L works too.
  *
@@ -128,9 +138,12 @@ export function Lightbar({ broken = false }: { broken?: boolean }) {
       m.r = near ? 2.4 + Math.random() * 2 : 0.45 + Math.random() * 1.1;
       m.bright = near ? 0.3 : 0.65 + Math.random() * 0.35;
       m.fall = (near ? 0.45 : 0.18) + Math.random() * 0.36;
+      // The big ones are nearest; the finest are furthest back.
+      m.depth = near ? 0.75 + Math.random() * 0.25 : 0.1 + (m.r - 0.45) * 0.3;
       // Off the tube slowly, then settling into its own speed.
-      m.vy = anywhere ? m.fall : m.fall * 0.25;
-      m.vx = Math.tan(ray) * m.fall * 0.85;
+      m.drift = Math.tan(ray) * m.fall * 0.85;
+      m.vy = (anywhere ? m.fall : m.fall * 0.25) * gy;
+      m.vx = m.drift + (anywhere ? m.fall : m.fall * 0.25) * gx;
       m.sway = 0.04 + Math.random() * 0.12;
       m.swayRate = 0.004 + Math.random() * 0.01;
       m.phase = Math.random() * Math.PI * 2;
@@ -139,6 +152,20 @@ export function Lightbar({ broken = false }: { broken?: boolean }) {
       m.age = anywhere ? EMERGE : 0;
       return m;
     };
+    // Which way the dust falls, and how hard: straight down the page, or on
+    // a phone, toward the real floor (weaker with the phone laid back). Each
+    // eases toward what the phone says, so the dust turns, never jumps.
+    let gx = 0;
+    let gy = 1;
+    let gs = 1;
+    let aim = { down: 0, gs: 1, px: 0, py: 0 };
+    // The near dust's shift as the phone turns.
+    let px = 0;
+    let py = 0;
+    // A shake since the last frame: its push, and how much it stirred.
+    let kickX = 0;
+    let kickY = 0;
+    let stir = 0;
     const motes: Mote[] = Array.from(
       { length: count },
       () => ({ alive: false }) as Mote,
@@ -160,6 +187,14 @@ export function Lightbar({ broken = false }: { broken?: boolean }) {
     let owed = 0;
     const step = (f: number) => {
       owed += (count / 1500) * f;
+      const ease = 1 - 0.93 ** f;
+      const down = Math.atan2(gx, gy);
+      const turn = down + (aim.down - down) * ease;
+      gx = Math.sin(turn);
+      gy = Math.cos(turn);
+      gs += (aim.gs - gs) * ease;
+      px += (aim.px - px) * ease;
+      py += (aim.py - py) * ease;
       for (const m of motes) {
         if (!m.alive) {
           if (puffed && owed >= 1) {
@@ -173,12 +208,30 @@ export function Lightbar({ broken = false }: { broken?: boolean }) {
           continue;
         }
         m.age += f;
-        m.vy += (m.fall - m.vy) * 0.02 * f;
-        m.x += (m.vx + Math.sin(m.age * m.swayRate + m.phase) * m.sway) * f;
-        m.y += m.vy * f;
+        const fall = m.fall * gs;
+        m.vx += (m.drift + gx * fall - m.vx) * 0.02 * f;
+        m.vy += (gy * fall - m.vy) * 0.02 * f;
+        if (kickX || kickY || stir) {
+          // Light dust is thrown about more; the near motes most.
+          const give = 0.5 + m.depth;
+          m.vx += kickX * give + (Math.random() - 0.5) * stir * give;
+          m.vy += kickY * give + (Math.random() - 0.5) * stir * give;
+          const v = Math.hypot(m.vx, m.vy);
+          if (v > 5) {
+            m.vx *= 5 / v;
+            m.vy *= 5 / v;
+          }
+        }
+        // It sways across the way it falls.
+        const sway = Math.sin(m.age * m.swayRate + m.phase) * m.sway;
+        m.x += (m.vx + gy * sway) * f;
+        m.y += (m.vy - gx * sway) * f;
         m.spin += m.spinRate * f;
-        if (m.y > h + 20 || m.x < -20 || m.x > w + 20) m.alive = false;
+        if (m.y > h + 20 || m.y < -40 || m.x < -40 || m.x > w + 40) {
+          m.alive = false;
+        }
       }
+      kickX = kickY = stir = 0;
       owed = Math.min(owed, 1);
     };
 
@@ -187,10 +240,13 @@ export function Lightbar({ broken = false }: { broken?: boolean }) {
       const dim = root.dataset.lights === "broken" ? 0.3 : 1;
       for (const m of motes) {
         if (!m.alive || m.wait > 0) continue;
+        // Where it shows: shifted by its depth as the phone turns.
+        const x = m.x + px * m.depth;
+        const y = m.y + py * m.depth;
         // Brightens as it leaves the tube, fades as it nears the floor.
         const emerge = Math.min(1, m.age / EMERGE);
-        const floor = Math.min(1, (h - m.y) / (h * 0.22));
-        const off = Math.abs(Math.atan2(m.x - w / 2, m.y + APEX));
+        const floor = Math.max(0, Math.min(1, (h - y) / (h * 0.22)));
+        const off = Math.abs(Math.atan2(x - w / 2, Math.max(1, y + APEX)));
         const beam = Math.min(
           1,
           Math.max(0, (BEAM_EDGE - off) / (BEAM_EDGE - BEAM_CORE)),
@@ -201,14 +257,14 @@ export function Lightbar({ broken = false }: { broken?: boolean }) {
           emerge *
           floor *
           (0.1 + 0.9 * beam) *
-          (1 - (m.y / h) * 0.4) *
+          (1 - (Math.max(0, y) / h) * 0.4) *
           glint *
           m.bright *
           dim;
         if (alpha <= 0.01) continue;
         const size = m.r * 7;
         ctx.globalAlpha = Math.min(1, alpha);
-        ctx.drawImage(sprite, m.x - size / 2, m.y - size / 2, size, size);
+        ctx.drawImage(sprite, x - size / 2, y - size / 2, size, size);
       }
     };
 
@@ -361,9 +417,12 @@ export function Lightbar({ broken = false }: { broken?: boolean }) {
     // Pulled far enough to switch on letting go: the pull clicks as it
     // passes that point, both ways.
     let armed = false;
-    // Which way is down. On a phone it is the real floor, so tipping the
-    // phone swings the cord.
+    // Which way is down, and how hard. On a phone it is the real floor, so
+    // tipping the phone swings the cord, and laid back it swings lazier.
     let down = 0;
+    let downAim = 0;
+    let weight = 1;
+    let weightAim = 1;
     let gravX = 0;
     let gravY = GRAVITY;
 
@@ -416,6 +475,14 @@ export function Lightbar({ broken = false }: { broken?: boolean }) {
           : 1;
 
     const tick = () => {
+      if (down !== downAim || weight !== weightAim) {
+        down += (downAim - down) * 0.12;
+        weight += (weightAim - weight) * 0.12;
+        if (Math.abs(downAim - down) < 0.0005) down = downAim;
+        if (Math.abs(weightAim - weight) < 0.0005) weight = weightAim;
+        gravX = GRAVITY * weight * Math.sin(down);
+        gravY = GRAVITY * weight * Math.cos(down);
+      }
       if (!dragging) {
         // Let go, the stretch springs back and overshoots a little.
         pullV = (pullV - pull * 0.1) * 0.74;
@@ -592,9 +659,12 @@ export function Lightbar({ broken = false }: { broken?: boolean }) {
         wake();
       }
     };
-    const onCordUp = () => {
+    const onCordUp = (e: PointerEvent) => {
       if (!dragging) return;
       dragging = false;
+      // An iPhone keeps its sensors behind a prompt; the cord is the one
+      // physical thing here worth asking for them.
+      if (e.type === "pointerup") askTilt();
       if (!moved || pull > TOGGLE_PULL) {
         toggle();
         // A click with no drag still tugs the cord.
@@ -611,12 +681,64 @@ export function Lightbar({ broken = false }: { broken?: boolean }) {
     };
 
     const offTilt = onTilt((t) => {
-      const next = down + (t.down - down) * 0.2;
-      if (Math.abs(next - down) < 0.002) return;
-      down = next;
-      gravX = GRAVITY * Math.sin(down);
-      gravY = GRAVITY * Math.cos(down);
+      // Laid back, less of gravity pulls across the screen.
+      const gs = 0.5 + 0.5 * Math.min(1, t.pull / 0.8);
+      aim = {
+        down: t.down,
+        gs,
+        px: -t.x * PARALLAX,
+        py: -t.y * PARALLAX * 0.6,
+      };
+      const cordDown = Math.max(-0.85, Math.min(0.85, t.down));
+      if (
+        Math.abs(cordDown - downAim) < 0.002 &&
+        Math.abs(gs - weightAim) < 0.002
+      ) {
+        return;
+      }
+      downAim = cordDown;
+      weightAim = gs;
       wake();
+    });
+
+    // Shaken: the dust sloshes the other way and swirls, the cord swings
+    // behind the phone, and a hard enough knock makes the tube catch and
+    // shakes a few more motes off it.
+    let knocked = 0;
+    const offJolt = onJolt((j) => {
+      kickX -= j.x * j.dt * 1.1;
+      kickY -= j.y * j.dt * 1.1;
+      stir += Math.hypot(j.x, j.y) * j.dt * 0.9;
+      if (!dragging) {
+        for (let i = 1; i <= LINKS; i++) {
+          links[i].px += j.x * j.dt * 2.4;
+          links[i].py += j.y * j.dt * 2.4;
+        }
+        wake();
+      }
+      const now = performance.now();
+      if (
+        Math.hypot(j.x, j.y) < KNOCK ||
+        now - knocked < 1400 ||
+        root.dataset.lights !== "on" ||
+        !visible
+      ) {
+        return;
+      }
+      knocked = now;
+      delete root.dataset.blink;
+      requestAnimationFrame(() => {
+        root.dataset.blink = "";
+        setTimeout(() => delete root.dataset.blink, 460);
+      });
+      haptic("soft");
+      let loose = Math.round(count * 0.06);
+      for (const m of motes) {
+        if (loose <= 0) break;
+        if (m.alive) continue;
+        spawn(m, false).wait = Math.random() * 20;
+        loose--;
+      }
     });
 
     cord.addEventListener("pointerdown", onCordDown);
@@ -635,6 +757,7 @@ export function Lightbar({ broken = false }: { broken?: boolean }) {
       sparkTimers.forEach(clearTimeout);
       io.disconnect();
       offTilt();
+      offJolt();
       cord.removeEventListener("pointerdown", onCordDown);
       cord.removeEventListener("pointermove", onCordMove);
       cord.removeEventListener("pointerup", onCordUp);

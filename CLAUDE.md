@@ -81,9 +81,14 @@ view())`, motion on): the `.scroll-beam` under the header fills with the
   Android, a hidden switch flipped on iOS), and the cord clicks as a pull
   passes the switch point. A finger stands in for the pointer while it is
   down (a `.spot` lights round it, a `.row-light` row gets
-  `data-pressed`). `src/lib/tilt.ts` reads the phone's turn (Android only;
-  iOS would prompt): the hero field turns with it and the cord hangs toward
-  the real floor. No `:hover` rule outside `@media (hover: hover)`, or it
+  `data-pressed`). `src/lib/tilt.ts` reads the phone (`onTilt`: turn,
+  true down, how upright; `onJolt`: shakes). The hero field turns with it
+  and sloshes when shaken, the cord hangs toward the real floor, the lamp's
+  dust falls that way and the band's motes rise the other, both with depth
+  parallax, a shake stirs them, and a hard knock makes the tube catch. That
+  is the room, not the pointer, so the no-pointer rule for particles holds.
+  Android gives the sensors freely; iOS only after `askTilt()`, called from a
+  cord pull (never on load, never from a link). No `:hover` rule outside `@media (hover: hover)`, or it
   sticks after a tap. The open menu dims the page; a tap there shuts it.
 - **Browser chrome**: one focus ring (`:focus-visible` in `@layer base`, so
   utilities can override it); text fields use `.field` (their own lit
