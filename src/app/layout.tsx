@@ -15,7 +15,7 @@ const openSans = Open_Sans({
 const title = "Wyzie: Software, Websites and IT, Built and Kept Working";
 
 const description =
-  "Wyzie builds, sets up and runs business technology: custom software, websites, VoIP phone systems, networks, security, cloud and IT support, from the team that builds and runs Wyzie Subs, Kilter and pitmaster.cc.";
+  "Wyzie builds, sets up and runs business technology: custom software, websites, VoIP phone systems, networks, security, cloud and IT support.";
 
 export const metadata: Metadata = {
   icons: {
